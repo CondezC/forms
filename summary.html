@@ -28,7 +28,6 @@
             margin: 0 auto;
         }
 
-        /* Header */
         .sss-header {
             background: linear-gradient(135deg, #003c8f, #1976d2);
             color: white;
@@ -55,7 +54,6 @@
             margin-top: 5px;
         }
 
-        /* Cards */
         .card {
             background: white;
             border-radius: 0 0 15px 15px;
@@ -78,7 +76,6 @@
             padding: 20px;
         }
 
-        /* Info Grid */
         .info-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -107,7 +104,6 @@
             word-break: break-word;
         }
 
-        /* Tables */
         .officials-table {
             width: 100%;
             border-collapse: collapse;
@@ -134,7 +130,6 @@
             font-weight: 500;
         }
 
-        /* Signature Images */
         .signature-container {
             display: flex;
             flex-wrap: wrap;
@@ -180,7 +175,6 @@
             font-size: 0.9rem;
         }
 
-        /* Photo */
         .photo-container {
             display: flex;
             justify-content: center;
@@ -202,7 +196,6 @@
             object-fit: cover;
         }
 
-        /* Noted Section */
         .noted-section {
             margin-top: 30px;
             text-align: center;
@@ -232,7 +225,6 @@
             font-style: italic;
         }
 
-        /* Footer */
         .footer {
             text-align: center;
             margin: 20px 0;
@@ -250,7 +242,6 @@
             border-radius: 5px;
         }
 
-        /* Loading & Error */
         .loading, .error-message {
             text-align: center;
             padding: 50px;
@@ -267,7 +258,6 @@
             color: #f44336;
         }
 
-        /* Mobile Responsive */
         @media (max-width: 600px) {
             body {
                 padding: 10px;
@@ -308,7 +298,6 @@
             }
         }
 
-        /* Print */
         @media print {
             body {
                 background: white;
@@ -335,7 +324,6 @@
             appId: "1:81090026028:web:91dfd833462e2d95434f89"
         };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
@@ -375,7 +363,6 @@
             
             let html = '';
 
-            // HEADER
             html += '<div class="sss-header">';
             html += '<h1>Social Security System</h1>';
             html += '<div class="branch">EASTWOOD BRANCH</div>';
@@ -383,12 +370,10 @@
             html += '<div class="details">Tel. Nos.: 8351-1605; 8351-1623</div>';
             html += '</div>';
 
-            // FIRST FORM CARD
             html += '<div class="card">';
             html += '<div class="card-header">📋 COMPANY REPRESENTATIVE AUTHORIZATION</div>';
             html += '<div class="card-body">';
 
-            // PHOTO (if exists)
             if (first.photo && first.photo !== '#' && first.photo !== '') {
                 html += '<div class="photo-container">';
                 html += '<div class="photo-frame">';
@@ -397,7 +382,6 @@
                 html += '</div>';
             }
 
-            // Company Info Grid
             html += '<div class="info-grid">';
             html += '<div class="info-item"><span class="info-label">Employer Name:</span><span class="info-value">' + (first.employerName || 'N/A') + '</span></div>';
             html += '<div class="info-item"><span class="info-label">Employer ID No.:</span><span class="info-value">' + (first.employerId || 'N/A') + '</span></div>';
@@ -407,10 +391,8 @@
             html += '<div class="info-item"><span class="info-label">SS Number:</span><span class="info-value">' + (first.ssNumber || 'N/A') + '</span></div>';
             html += '</div>';
 
-            // Specimen Signatures
             html += '<div class="signature-container">';
             
-            // Specimen 1
             if (first.specimenSignature1) {
                 html += '<div class="signature-box">';
                 html += '<div class="signature-title">Specimen Signature 1</div>';
@@ -419,7 +401,6 @@
                 html += '</div>';
             }
             
-            // Specimen 2
             if (first.specimenSignature2) {
                 html += '<div class="signature-box">';
                 html += '<div class="signature-title">Specimen Signature 2</div>';
@@ -430,7 +411,6 @@
             
             html += '</div>';
 
-            // Employer Signature
             if (first.employerSignature) {
                 html += '<div class="signature-box" style="max-width: 100%;">';
                 html += '<div class="signature-title">Signature Over Printed Name (Employer/Owner)</div>';
@@ -439,27 +419,23 @@
                 html += '</div>';
             }
 
-            // Noted By
             html += '<div class="noted-section">';
             html += '<div class="noted-line"></div>';
             html += '<div class="noted-name">ELEANOR F. DEATO</div>';
             html += '<div class="noted-title">Branch Head</div>';
             html += '</div>';
 
-            html += '</div></div>'; // Close first form card
+            html += '</div></div>'; 
 
-            // SECOND FORM CARD
             html += '<div class="card">';
             html += '<div class="card-header">📋 SPECIMEN SIGNATURE CARD (SSS Form L-501)</div>';
             html += '<div class="card-body">';
 
-            // Republic Header
             html += '<div style="text-align: center; margin-bottom: 20px;">';
             html += '<h3 style="color: #003c8f;">Republic of the Philippines</h3>';
             html += '<h4 style="color: #1976d2;">SOCIAL SECURITY SYSTEM</h4>';
             html += '</div>';
 
-            // Company Info
             html += '<div class="info-grid">';
             html += '<div class="info-item"><span class="info-label">Registered Name:</span><span class="info-value">' + (second.registeredName || first.employerName || 'N/A') + '</span></div>';
             html += '<div class="info-item"><span class="info-label">ID Number:</span><span class="info-value">' + (second.idNumber || first.employerId || 'N/A') + '</span></div>';
@@ -467,7 +443,6 @@
             html += '<div class="info-item"><span class="info-label">Telephone:</span><span class="info-value">' + (second.telNumber || first.telephone || 'N/A') + '</span></div>';
             html += '</div>';
 
-            // Officials Table
             if (officials.length > 0) {
                 html += '<h4 style="color: #003c8f; margin: 20px 0 10px;">Authorized Officials</h4>';
                 html += '<table class="officials-table">';
@@ -490,7 +465,6 @@
                 html += '</tbody></table>';
             }
 
-            // Granting Authority
             if (granting.name || granting.signature) {
                 html += '<div style="margin-top: 20px; padding: 15px; background: #f8f9ff; border-radius: 8px;">';
                 html += '<h4 style="color: #003c8f; margin-bottom: 10px;">Granting Authority</h4>';
@@ -509,11 +483,9 @@
                 html += '</div>';
             }
 
-            // Footer
             html += '<div class="footer">Internet Edition (7/2000)</div>';
-            html += '</div></div>'; // Close second form card
+            html += '</div></div>'; 
 
-            // Timestamp
             if (data.timestamp) {
                 html += '<div class="timestamp">';
                 html += '📅 Generated: ' + new Date(data.timestamp).toLocaleString();
