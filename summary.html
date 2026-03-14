@@ -2,61 +2,327 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>SSS Form Summary</title>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
     <style>
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f0f0f0;
-            padding: 20px;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            padding: 15px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+        }
+
         .container {
-            max-width: 900px;
+            max-width: 800px;
+            width: 100%;
             margin: 0 auto;
         }
+
+        /* Header */
+        .sss-header {
+            background: linear-gradient(135deg, #003c8f, #1976d2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+        }
+
+        .sss-header h1 {
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 5px;
+        }
+
+        .sss-header .branch {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .sss-header .details {
+            font-size: 0.9rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* Cards */
         .card {
             background: white;
-            border-radius: 10px;
-            padding: 20px;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
         }
-        h2 {
-            color: #003c8f;
+
+        .card-header {
+            background: #f8f9fa;
+            padding: 15px 20px;
             border-bottom: 2px solid #1976d2;
-            padding-bottom: 10px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #003c8f;
+            text-transform: uppercase;
         }
-        table {
+
+        .card-body {
+            padding: 20px;
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 8px;
+        }
+
+        .info-label {
+            font-weight: 600;
+            color: #003c8f;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .info-value {
+            font-size: 1rem;
+            color: #333;
+            word-break: break-word;
+        }
+
+        /* Tables */
+        .officials-table {
             width: 100%;
             border-collapse: collapse;
+            margin: 15px 0;
+            font-size: 0.9rem;
         }
-        td {
+
+        .officials-table th {
+            background: #003c8f;
+            color: white;
+            padding: 10px;
+            text-align: left;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+
+        .officials-table td {
             padding: 10px;
             border: 1px solid #ddd;
+            vertical-align: middle;
         }
-        td:first-child {
-            font-weight: bold;
-            background: #f5f5f5;
-            width: 200px;
+
+        .officials-table td:first-child {
+            font-weight: 500;
         }
-        .signature-img {
-            max-width: 200px;
-            max-height: 60px;
-            border: 1px dashed #003c8f;
+
+        /* Signature Images */
+        .signature-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px 0;
+        }
+
+        .signature-box {
+            flex: 1 1 calc(50% - 15px);
+            min-width: 200px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 15px;
+            background: #fafafa;
+        }
+
+        .signature-title {
+            font-weight: 600;
+            color: #003c8f;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .signature-image {
+            max-width: 100%;
+            height: auto;
+            max-height: 80px;
+            display: block;
+            margin: 0 auto 10px;
+            border: 1px dashed #1976d2;
             padding: 5px;
+            background: white;
         }
-        .loading {
+
+        .signature-name {
+            text-align: center;
+            font-weight: 500;
+            padding: 5px;
+            background: #e3f2fd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        /* Photo */
+        .photo-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .photo-frame {
+            width: 120px;
+            height: 120px;
+            border: 3px solid #003c8f;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f0f0f0;
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Noted Section */
+        .noted-section {
+            margin-top: 30px;
+            text-align: center;
+            padding: 20px;
+            background: #f0f7ff;
+            border-radius: 8px;
+        }
+
+        .noted-line {
+            width: 80%;
+            max-width: 300px;
+            height: 2px;
+            background: #003c8f;
+            margin: 10px auto;
+        }
+
+        .noted-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #003c8f;
+            margin: 5px 0;
+        }
+
+        .noted-title {
+            color: #666;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin: 20px 0;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        .timestamp {
+            text-align: center;
+            color: #888;
+            font-size: 0.8rem;
+            margin: 10px 0;
+            padding: 10px;
+            background: #f5f5f5;
+            border-radius: 5px;
+        }
+
+        /* Loading & Error */
+        .loading, .error-message {
             text-align: center;
             padding: 50px;
-            font-size: 1.2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .loading {
+            color: #1976d2;
+        }
+
+        .error-message {
+            color: #f44336;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .sss-header h1 {
+                font-size: 1.4rem;
+            }
+
+            .card-header {
+                font-size: 1rem;
+                padding: 12px 15px;
+            }
+
+            .card-body {
+                padding: 15px;
+            }
+
+            .signature-box {
+                flex: 1 1 100%;
+            }
+
+            .officials-table {
+                font-size: 0.8rem;
+            }
+
+            .officials-table th,
+            .officials-table td {
+                padding: 6px;
+            }
+
+            .info-label {
+                font-size: 0.8rem;
+            }
+
+            .info-value {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Print */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .container {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container" id="content">
-        <div class="loading">Loading data...</div>
+        <div class="loading">Loading data from cloud...</div>
     </div>
 
     <script>
@@ -69,6 +335,7 @@
             appId: "1:81090026028:web:91dfd833462e2d95434f89"
         };
 
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
@@ -77,101 +344,182 @@
             const id = urlParams.get('id');
             
             if (!id) {
-                document.getElementById('content').innerHTML = '<div class="card">No ID found</div>';
+                document.getElementById('content').innerHTML = '<div class="error-message">❌ No ID found in URL</div>';
                 return;
             }
 
             try {
+                console.log('Fetching data for ID:', id);
                 const doc = await db.collection('sss-submissions').doc(id).get();
                 
                 if (!doc.exists) {
-                    document.getElementById('content').innerHTML = '<div class="card">Data not found</div>';
+                    document.getElementById('content').innerHTML = '<div class="error-message">❌ Data not found in cloud</div>';
                     return;
                 }
 
                 const data = doc.data();
-                displayData(data);
+                console.log('Data loaded successfully');
+                displaySummary(data);
                 
             } catch (error) {
-                document.getElementById('content').innerHTML = '<div class="card">Error loading data</div>';
+                console.error('Error loading data:', error);
+                document.getElementById('content').innerHTML = '<div class="error-message">❌ Error loading data: ' + error.message + '</div>';
             }
         };
 
-        function displayData(data) {
+        function displaySummary(data) {
             const first = data.firstForm || {};
             const second = data.secondForm || {};
             const officials = second.officials || [];
             const granting = second.grantingAuthority || {};
             
-            let html = '<div class="card">';
-            html += '<h2>COMPANY REPRESENTATIVE AUTHORIZATION</h2>';
-            html += '<table>';
-            html += '<tr><td>Employer Name</td><td>' + (first.employerName || 'N/A') + '</td></tr>';
-            html += '<tr><td>Employer ID</td><td>' + (first.employerId || 'N/A') + '</td></tr>';
-            html += '<tr><td>Address</td><td>' + (first.address || 'N/A') + '</td></tr>';
-            html += '<tr><td>Telephone</td><td>' + (first.telephone || 'N/A') + '</td></tr>';
-            html += '</table>';
-            
-            if (first.photo) {
-                html += '<h3>Photo</h3><img src="' + first.photo + '" style="max-width: 120px; border: 1px solid #003c8f;">';
-            }
-            
-            html += '<h3>Specimen Signatures</h3>';
-            html += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">';
-            
-            if (first.specimenSignature1) {
-                html += '<div><strong>Signature 1</strong><br><img src="' + first.specimenSignature1 + '" class="signature-img"><br>' + (first.specimenName1 || '') + '</div>';
-            }
-            if (first.specimenSignature2) {
-                html += '<div><strong>Signature 2</strong><br><img src="' + first.specimenSignature2 + '" class="signature-img"><br>' + (first.specimenName2 || '') + '</div>';
-            }
+            let html = '';
+
+            // HEADER
+            html += '<div class="sss-header">';
+            html += '<h1>Social Security System</h1>';
+            html += '<div class="branch">EASTWOOD BRANCH</div>';
+            html += '<div class="details">187 ABQ Building, E. Rodriguez Jr. Ave., Bagumbayan, QC</div>';
+            html += '<div class="details">Tel. Nos.: 8351-1605; 8351-1623</div>';
             html += '</div>';
-            
-            if (first.employerSignature) {
-                html += '<h3>Employer Signature</h3>';
-                html += '<img src="' + first.employerSignature + '" class="signature-img"><br>' + (first.employerName2 || '');
-            }
-            
-            html += '</div>';
-            
+
+            // FIRST FORM CARD
             html += '<div class="card">';
-            html += '<h2>SPECIMEN SIGNATURE CARD</h2>';
-            html += '<table>';
-            html += '<tr><td>Registered Name</td><td>' + (second.registeredName || first.employerName || 'N/A') + '</td></tr>';
-            html += '<tr><td>ID Number</td><td>' + (second.idNumber || first.employerId || 'N/A') + '</td></tr>';
-            html += '<tr><td>Address</td><td>' + (second.companyAddress || first.address || 'N/A') + '</td></tr>';
-            html += '<tr><td>Telephone</td><td>' + (second.telNumber || first.telephone || 'N/A') + '</td></tr>';
-            html += '</table>';
+            html += '<div class="card-header">📋 COMPANY REPRESENTATIVE AUTHORIZATION</div>';
+            html += '<div class="card-body">';
+
+            // PHOTO (if exists)
+            if (first.photo && first.photo !== '#' && first.photo !== '') {
+                html += '<div class="photo-container">';
+                html += '<div class="photo-frame">';
+                html += `<img src="${first.photo}" alt="1x1 Photo" onerror="this.style.display=\'none\'">`;
+                html += '</div>';
+                html += '</div>';
+            }
+
+            // Company Info Grid
+            html += '<div class="info-grid">';
+            html += '<div class="info-item"><span class="info-label">Employer Name:</span><span class="info-value">' + (first.employerName || 'N/A') + '</span></div>';
+            html += '<div class="info-item"><span class="info-label">Employer ID No.:</span><span class="info-value">' + (first.employerId || 'N/A') + '</span></div>';
+            html += '<div class="info-item"><span class="info-label">Address:</span><span class="info-value">' + (first.address || 'N/A') + '</span></div>';
+            html += '<div class="info-item"><span class="info-label">Telephone No.:</span><span class="info-value">' + (first.telephone || 'N/A') + '</span></div>';
+            html += '<div class="info-item"><span class="info-label">Certified Name:</span><span class="info-value">' + (first.certName || 'N/A') + '</span></div>';
+            html += '<div class="info-item"><span class="info-label">SS Number:</span><span class="info-value">' + (first.ssNumber || 'N/A') + '</span></div>';
+            html += '</div>';
+
+            // Specimen Signatures
+            html += '<div class="signature-container">';
             
+            // Specimen 1
+            if (first.specimenSignature1) {
+                html += '<div class="signature-box">';
+                html += '<div class="signature-title">Specimen Signature 1</div>';
+                html += `<img src="${first.specimenSignature1}" class="signature-image" alt="Signature 1">`;
+                html += '<div class="signature-name">' + (first.specimenName1 || '') + '</div>';
+                html += '</div>';
+            }
+            
+            // Specimen 2
+            if (first.specimenSignature2) {
+                html += '<div class="signature-box">';
+                html += '<div class="signature-title">Specimen Signature 2</div>';
+                html += `<img src="${first.specimenSignature2}" class="signature-image" alt="Signature 2">`;
+                html += '<div class="signature-name">' + (first.specimenName2 || '') + '</div>';
+                html += '</div>';
+            }
+            
+            html += '</div>';
+
+            // Employer Signature
+            if (first.employerSignature) {
+                html += '<div class="signature-box" style="max-width: 100%;">';
+                html += '<div class="signature-title">Signature Over Printed Name (Employer/Owner)</div>';
+                html += `<img src="${first.employerSignature}" class="signature-image" style="max-height: 100px;" alt="Employer Signature">`;
+                html += '<div class="signature-name">' + (first.employerName2 || first.employerName || '') + '</div>';
+                html += '</div>';
+            }
+
+            // Noted By
+            html += '<div class="noted-section">';
+            html += '<div class="noted-line"></div>';
+            html += '<div class="noted-name">ELEANOR F. DEATO</div>';
+            html += '<div class="noted-title">Branch Head</div>';
+            html += '</div>';
+
+            html += '</div></div>'; // Close first form card
+
+            // SECOND FORM CARD
+            html += '<div class="card">';
+            html += '<div class="card-header">📋 SPECIMEN SIGNATURE CARD (SSS Form L-501)</div>';
+            html += '<div class="card-body">';
+
+            // Republic Header
+            html += '<div style="text-align: center; margin-bottom: 20px;">';
+            html += '<h3 style="color: #003c8f;">Republic of the Philippines</h3>';
+            html += '<h4 style="color: #1976d2;">SOCIAL SECURITY SYSTEM</h4>';
+            html += '</div>';
+
+            // Company Info
+            html += '<div class="info-grid">';
+            html += '<div class="info-item"><span class="info-label">Registered Name:</span><span class="info-value">' + (second.registeredName || first.employerName || 'N/A') + '</span></div>';
+            html += '<div class="info-item"><span class="info-label">ID Number:</span><span class="info-value">' + (second.idNumber || first.employerId || 'N/A') + '</span></div>';
+            html += '<div class="info-item"><span class="info-label">Address:</span><span class="info-value">' + (second.companyAddress || first.address || 'N/A') + '</span></div>';
+            html += '<div class="info-item"><span class="info-label">Telephone:</span><span class="info-value">' + (second.telNumber || first.telephone || 'N/A') + '</span></div>';
+            html += '</div>';
+
+            // Officials Table
             if (officials.length > 0) {
-                html += '<h3>Officials</h3>';
-                html += '<table>';
-                html += '<tr><th>Name</th><th>Designation</th><th>Initials</th><th>Signature</th></tr>';
-                officials.forEach(o => {
+                html += '<h4 style="color: #003c8f; margin: 20px 0 10px;">Authorized Officials</h4>';
+                html += '<table class="officials-table">';
+                html += '<thead><tr><th>Name</th><th>Designation</th><th>Initials</th><th>Signature</th></tr></thead>';
+                html += '<tbody>';
+                
+                officials.forEach(official => {
                     html += '<tr>';
-                    html += '<td>' + (o.name || '') + '</td>';
-                    html += '<td>' + (o.designation || '') + '</td>';
-                    html += '<td>' + (o.initial || '') + '</td>';
-                    html += '<td>' + (o.signature ? '<img src="' + o.signature + '" class="signature-img">' : '') + '</td>';
+                    html += '<td>' + (official.name || '') + '</td>';
+                    html += '<td>' + (official.designation || '') + '</td>';
+                    html += '<td>' + (official.initial || '') + '</td>';
+                    html += '<td>';
+                    if (official.signature) {
+                        html += `<img src="${official.signature}" style="max-width: 100px; max-height: 40px;" alt="Signature">`;
+                    }
+                    html += '</td>';
                     html += '</tr>';
                 });
-                html += '</table>';
+                
+                html += '</tbody></table>';
             }
-            
-            if (granting.name) {
-                html += '<h3>Granting Authority</h3>';
-                html += '<p><strong>' + granting.name + '</strong></p>';
+
+            // Granting Authority
+            if (granting.name || granting.signature) {
+                html += '<div style="margin-top: 20px; padding: 15px; background: #f8f9ff; border-radius: 8px;">';
+                html += '<h4 style="color: #003c8f; margin-bottom: 10px;">Granting Authority</h4>';
+                html += '<div class="info-item"><span class="info-label">Name & Position:</span><span class="info-value">' + (granting.name || 'N/A') + '</span></div>';
+                
                 if (granting.signature) {
-                    html += '<img src="' + granting.signature + '" class="signature-img"><br>';
+                    html += '<div style="margin: 10px 0;">';
+                    html += '<span class="info-label">Signature:</span>';
+                    html += `<img src="${granting.signature}" style="max-width: 200px; max-height: 60px; display: block; margin-top: 5px;" alt="Granting Signature">`;
+                    html += '</div>';
                 }
+                
                 if (granting.date) {
-                    html += '<p>Date: ' + granting.date + '</p>';
+                    html += '<div class="info-item"><span class="info-label">Date Granted:</span><span class="info-value">' + granting.date + '</span></div>';
                 }
+                html += '</div>';
             }
-            
-            html += '<p><em>Generated: ' + new Date(data.timestamp).toLocaleString() + '</em></p>';
-            html += '</div>';
-            
+
+            // Footer
+            html += '<div class="footer">Internet Edition (7/2000)</div>';
+            html += '</div></div>'; // Close second form card
+
+            // Timestamp
+            if (data.timestamp) {
+                html += '<div class="timestamp">';
+                html += '📅 Generated: ' + new Date(data.timestamp).toLocaleString();
+                html += '</div>';
+            }
+
             document.getElementById('content').innerHTML = html;
         }
     </script>
