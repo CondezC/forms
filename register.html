@@ -60,120 +60,389 @@
     </div>
 
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyCfQTN7UTRcW9lBm-rhRqyAOcT5gFZDJIs",
-            authDomain: "sss-qr-system-39b59.firebaseapp.com",
-            projectId: "sss-qr-system-39b59",
-            storageBucket: "sss-qr-system-39b59.firebasestorage.app",
-            messagingSenderId: "81090026028",
-            appId: "1:81090026028:web:91dfd833462e2d95434f89"
-        };
+    const firebaseConfig = {
+        apiKey: "AIzaSyCfQTN7UTRcW9lBm-rhRqyAOcT5gFZDJIs",
+        authDomain: "sss-qr-system-39b59.firebaseapp.com",
+        projectId: "sss-qr-system-39b59",
+        storageBucket: "sss-qr-system-39b59.firebasestorage.app",
+        messagingSenderId: "81090026028",
+        appId: "1:81090026028:web:91dfd833462e2d95434f89"
+    };
 
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
 
-        window.onload = async function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const id = urlParams.get('id');
-            
-            if (!id) {
-                document.getElementById('content').innerHTML = '<div class="card">No ID found</div>';
-                return;
-            }
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
+    let firstFormData = null;
+    let currentCanvas = null;
+    let currentCanvasId = null;
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+    let currentSubmissionId = null;
+
+    const canvasSigned = {
+        officialSignature1: false,
+        officialSignature2: false,
+        officialSignature3: false,
+        grantingSignature: false
+    };
+
+    function loadFirstFormData() {
+        console.log("Loading first form data...");
+        
+        const savedData = localStorage.getItem('firstFormData');
+        
+        if (savedData) {
             try {
-                const doc = await db.collection('sss-submissions').doc(id).get();
+                firstFormData = JSON.parse(savedData);
+                console.log("✅ First form data loaded from localStorage");
                 
-                if (!doc.exists) {
-                    document.getElementById('content').innerHTML = '<div class="card">Data not found</div>';
-                    return;
-                }
-
-                const data = doc.data();
-                displayData(data);
+                document.getElementById('registeredName').value = firstFormData.employerName || '';
+                document.getElementById('idNumber').value = firstFormData.employerId || '';
+                document.getElementById('companyAddress').value = firstFormData.address || '';
+                document.getElementById('telNumber').value = firstFormData.telephone || '';
                 
-            } catch (error) {
-                document.getElementById('content').innerHTML = '<div class="card">Error loading data</div>';
+            } catch (e) {
+                console.error("Error parsing first form data:", e);
+                document.getElementById('registeredName').value = 'Error loading data';
             }
+        } else {
+            console.warn("No first form data found in localStorage");
+            document.getElementById('registeredName').value = 'Please complete first form first';
+        }
+    }
+
+    window.onload = function() {
+        console.log("✅ Register form loaded");
+        
+        loadFirstFormData();
+        
+        const canvases = [
+            'officialSignature1', 'officialSignature2', 'officialSignature3',
+            'grantingSignature'
+        ];
+        canvases.forEach(id => clearCanvas(id));
+        
+        document.getElementById('qrCanvas').style.display = 'none';
+        document.getElementById('qrPlaceholder').style.display = 'block';
+        document.getElementById('saveSection').style.display = 'none';
+        document.getElementById('qrSuccess').style.display = 'none';
+    };
+
+    function clearCanvas(canvasId) {
+        const canvas = document.getElementById(canvasId);
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        canvasSigned[canvasId] = false;
+    }
+
+    function openModal(canvasId) {
+        currentCanvasId = canvasId;
+        currentCanvas = document.getElementById(canvasId);
+        
+        const modal = document.getElementById('signatureModal');
+        const modalCanvas = document.getElementById('modalCanvas');
+        const ctx = modalCanvas.getContext('2d');
+        
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, modalCanvas.width, modalCanvas.height);
+        ctx.strokeStyle = '#003c8f';
+        ctx.lineWidth = 3;
+        
+        modal.style.display = 'flex';
+        
+        modalCanvas.addEventListener('mousedown', startDrawing);
+        modalCanvas.addEventListener('mousemove', draw);
+        modalCanvas.addEventListener('mouseup', stopDrawing);
+        modalCanvas.addEventListener('mouseout', stopDrawing);
+        modalCanvas.addEventListener('touchstart', startDrawingTouch);
+        modalCanvas.addEventListener('touchmove', drawTouch);
+        modalCanvas.addEventListener('touchend', stopDrawing);
+    }
+
+    function closeModal() {
+        document.getElementById('signatureModal').style.display = 'none';
+    }
+
+    function clearModalCanvas() {
+        const modalCanvas = document.getElementById('modalCanvas');
+        const ctx = modalCanvas.getContext('2d');
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, modalCanvas.width, modalCanvas.height);
+    }
+
+    function saveSignature() {
+        if (currentCanvasId && currentCanvas) {
+            const modalCanvas = document.getElementById('modalCanvas');
+            const ctx = currentCanvas.getContext('2d');
+            
+            ctx.fillStyle = 'white';
+            ctx.fillRect(0, 0, currentCanvas.width, currentCanvas.height);
+            ctx.drawImage(modalCanvas, 0, 0, currentCanvas.width, currentCanvas.height);
+            
+            canvasSigned[currentCanvasId] = true;
+            
+            const errorMap = {
+                officialSignature1: 'officialError1',
+                officialSignature2: 'officialError2',
+                officialSignature3: 'officialError3',
+                grantingSignature: 'grantingError'
+            };
+            
+            const errorId = errorMap[currentCanvasId];
+            if (errorId) {
+                document.getElementById(errorId).style.display = 'none';
+            }
+        }
+        closeModal();
+    }
+
+    function startDrawing(e) {
+        e.preventDefault();
+        const canvas = e.target;
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        
+        isDrawing = true;
+        lastX = (e.clientX - rect.left) * scaleX;
+        lastY = (e.clientY - rect.top) * scaleY;
+        
+        const ctx = canvas.getContext('2d');
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+    }
+
+    function startDrawingTouch(e) {
+        e.preventDefault();
+        const canvas = e.target;
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        
+        isDrawing = true;
+        lastX = (touch.clientX - rect.left) * scaleX;
+        lastY = (touch.clientY - rect.top) * scaleY;
+        
+        const ctx = canvas.getContext('2d');
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+    }
+
+    function draw(e) {
+        e.preventDefault();
+        if (!isDrawing) return;
+        
+        const canvas = e.target;
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        
+        const x = (e.clientX - rect.left) * scaleX;
+        const y = (e.clientY - rect.top) * scaleY;
+        
+        const ctx = canvas.getContext('2d');
+        ctx.lineTo(x, y);
+        ctx.stroke();
+    }
+
+    function drawTouch(e) {
+        e.preventDefault();
+        if (!isDrawing) return;
+        
+        const canvas = e.target;
+        const touch = e.touches[0];
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        
+        const x = (touch.clientX - rect.left) * scaleX;
+        const y = (touch.clientY - rect.top) * scaleY;
+        
+        const ctx = canvas.getContext('2d');
+        ctx.lineTo(x, y);
+        ctx.stroke();
+    }
+
+    function stopDrawing() {
+        isDrawing = false;
+    }
+
+    function validateForm() {
+        let isValid = true;
+        
+        for (let i = 1; i <= 3; i++) {
+            const nameField = document.getElementById(`officialName${i}`);
+            const desigField = document.getElementById(`officialDesignation${i}`);
+            const initialField = document.getElementById(`officialInitial${i}`);
+            
+            if (!nameField.value.trim()) {
+                isValid = false;
+                nameField.style.borderColor = '#f44336';
+            }
+            if (!desigField.value.trim()) {
+                isValid = false;
+                desigField.style.borderColor = '#f44336';
+            }
+            if (!initialField.value.trim()) {
+                isValid = false;
+                initialField.style.borderColor = '#f44336';
+            }
+        }
+        
+        const grantingName = document.getElementById('grantingName');
+        if (!grantingName.value.trim()) {
+            isValid = false;
+            grantingName.style.borderColor = '#f44336';
+        }
+        
+        const grantingDate = document.getElementById('grantingDate');
+        if (!grantingDate.value) {
+            isValid = false;
+            grantingDate.style.borderColor = '#f44336';
+        }
+        
+        for (let i = 1; i <= 3; i++) {
+            if (!canvasSigned[`officialSignature${i}`]) {
+                isValid = false;
+                document.getElementById(`officialError${i}`).style.display = 'block';
+            }
+        }
+        if (!canvasSigned.grantingSignature) {
+            isValid = false;
+            document.getElementById('grantingError').style.display = 'block';
+        }
+        
+        return isValid;
+    }
+
+    async function uploadToFirebase() {
+        if (!firstFormData) {
+            throw new Error("No first form data found. Please complete the first form first.");
+        }
+        
+        const allData = {
+            firstForm: firstFormData,
+            secondForm: {
+                registeredName: document.getElementById('registeredName').value,
+                idNumber: document.getElementById('idNumber').value,
+                companyAddress: document.getElementById('companyAddress').value,
+                telNumber: document.getElementById('telNumber').value,
+                officials: [
+                    {
+                        name: document.getElementById('officialName1').value,
+                        designation: document.getElementById('officialDesignation1').value,
+                        initial: document.getElementById('officialInitial1').value,
+                        signature: document.getElementById('officialSignature1').toDataURL()
+                    },
+                    {
+                        name: document.getElementById('officialName2').value,
+                        designation: document.getElementById('officialDesignation2').value,
+                        initial: document.getElementById('officialInitial2').value,
+                        signature: document.getElementById('officialSignature2').toDataURL()
+                    },
+                    {
+                        name: document.getElementById('officialName3').value,
+                        designation: document.getElementById('officialDesignation3').value,
+                        initial: document.getElementById('officialInitial3').value,
+                        signature: document.getElementById('officialSignature3').toDataURL()
+                    }
+                ],
+                grantingAuthority: {
+                    name: document.getElementById('grantingName').value,
+                    signature: document.getElementById('grantingSignature').toDataURL(),
+                    date: document.getElementById('grantingDate').value
+                }
+            },
+            timestamp: new Date().toISOString()
         };
 
-        function displayData(data) {
-            const first = data.firstForm || {};
-            const second = data.secondForm || {};
-            const officials = second.officials || [];
-            const granting = second.grantingAuthority || {};
-            
-            let html = '<div class="card">';
-            html += '<h2>COMPANY REPRESENTATIVE AUTHORIZATION</h2>';
-            html += '<table>';
-            html += '<tr><td>Employer Name</td><td>' + (first.employerName || 'N/A') + '</td></tr>';
-            html += '<tr><td>Employer ID</td><td>' + (first.employerId || 'N/A') + '</td></tr>';
-            html += '<tr><td>Address</td><td>' + (first.address || 'N/A') + '</td></tr>';
-            html += '<tr><td>Telephone</td><td>' + (first.telephone || 'N/A') + '</td></tr>';
-            html += '</table>';
-            
-            if (first.photo) {
-                html += '<h3>Photo</h3><img src="' + first.photo + '" style="max-width: 120px; border: 1px solid #003c8f;">';
+        currentSubmissionId = 'SSS_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+        
+        await db.collection('sss-submissions').doc(currentSubmissionId).set(allData);
+        console.log('✅ Uploaded with ID:', currentSubmissionId);
+        
+        return currentSubmissionId;
+    }
+
+    async function generateQRCode() {
+        const baseUrl = window.location.href.split('?')[0].replace('register.html', '');
+        const summaryUrl = baseUrl + 'summary.html?id=' + currentSubmissionId;
+        
+        const qrCanvas = document.getElementById('qrCanvas');
+        await QRCode.toCanvas(qrCanvas, summaryUrl, {
+            width: 200,
+            margin: 2,
+            color: {
+                dark: '#003c8f',
+                light: '#ffffff'
             }
-            
-            html += '<h3>Specimen Signatures</h3>';
-            html += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">';
-            
-            if (first.specimenSignature1) {
-                html += '<div><strong>Signature 1</strong><br><img src="' + first.specimenSignature1 + '" class="signature-img"><br>' + (first.specimenName1 || '') + '</div>';
-            }
-            if (first.specimenSignature2) {
-                html += '<div><strong>Signature 2</strong><br><img src="' + first.specimenSignature2 + '" class="signature-img"><br>' + (first.specimenName2 || '') + '</div>';
-            }
-            html += '</div>';
-            
-            if (first.employerSignature) {
-                html += '<h3>Employer Signature</h3>';
-                html += '<img src="' + first.employerSignature + '" class="signature-img"><br>' + (first.employerName2 || '');
-            }
-            
-            html += '</div>';
-            
-            html += '<div class="card">';
-            html += '<h2>SPECIMEN SIGNATURE CARD</h2>';
-            html += '<table>';
-            html += '<tr><td>Registered Name</td><td>' + (second.registeredName || first.employerName || 'N/A') + '</td></tr>';
-            html += '<tr><td>ID Number</td><td>' + (second.idNumber || first.employerId || 'N/A') + '</td></tr>';
-            html += '<tr><td>Address</td><td>' + (second.companyAddress || first.address || 'N/A') + '</td></tr>';
-            html += '<tr><td>Telephone</td><td>' + (second.telNumber || first.telephone || 'N/A') + '</td></tr>';
-            html += '</table>';
-            
-            if (officials.length > 0) {
-                html += '<h3>Officials</h3>';
-                html += '<table>';
-                html += '<tr><th>Name</th><th>Designation</th><th>Initials</th><th>Signature</th></tr>';
-                officials.forEach(o => {
-                    html += '<tr>';
-                    html += '<td>' + (o.name || '') + '</td>';
-                    html += '<td>' + (o.designation || '') + '</td>';
-                    html += '<td>' + (o.initial || '') + '</td>';
-                    html += '<td>' + (o.signature ? '<img src="' + o.signature + '" class="signature-img">' : '') + '</td>';
-                    html += '</tr>';
-                });
-                html += '</table>';
-            }
-            
-            if (granting.name) {
-                html += '<h3>Granting Authority</h3>';
-                html += '<p><strong>' + granting.name + '</strong></p>';
-                if (granting.signature) {
-                    html += '<img src="' + granting.signature + '" class="signature-img"><br>';
-                }
-                if (granting.date) {
-                    html += '<p>Date: ' + granting.date + '</p>';
-                }
-            }
-            
-            html += '<p><em>Generated: ' + new Date(data.timestamp).toLocaleString() + '</em></p>';
-            html += '</div>';
-            
-            document.getElementById('content').innerHTML = html;
+        });
+        
+        qrCanvas.style.display = 'block';
+        document.getElementById('qrPlaceholder').style.display = 'none';
+        document.getElementById('saveSection').style.display = 'block';
+        document.getElementById('qrSuccess').style.display = 'block';
+    }
+
+    function downloadQR() {
+        const qrCanvas = document.getElementById('qrCanvas');
+        const now = new Date();
+        const dateStr = now.toISOString().slice(0,10);
+        const filename = `SSS-QR-${dateStr}.png`;
+        
+        const link = document.createElement('a');
+        link.download = filename;
+        link.href = qrCanvas.toDataURL('image/png');
+        link.click();
+        
+        alert('✅ QR CODE DOWNLOADED!\n\nShow this QR at the SSS office.');
+    }
+
+    async function generateAndSave() {
+        if (!validateForm()) {
+            alert('Please complete all fields and signatures.');
+            return;
         }
-    </script>
+        
+        if (!firstFormData) {
+            alert('Error: No data from first form. Please go back and complete the first form.');
+            return;
+        }
+        
+        const btn = document.getElementById('submitBtn');
+        btn.disabled = true;
+        btn.innerHTML = 'Uploading... <span class="loading"></span>';
+        
+        try {
+            await uploadToFirebase();
+            await generateQRCode();
+            
+            btn.innerHTML = '✓ QR CODE READY';
+            
+            setTimeout(() => {
+                alert('✅ SUCCESS!\n\nData saved to cloud.\nQR Code ready for download.');
+            }, 500);
+            
+        } catch (error) {
+            console.error(error);
+            alert('Error: ' + error.message);
+            btn.disabled = false;
+            btn.innerHTML = 'GENERATE QR CODE';
+        }
+    }
+
+    window.openModal = openModal;
+    window.closeModal = closeModal;
+    window.clearModalCanvas = clearModalCanvas;
+    window.saveSignature = saveSignature;
+    window.clearCanvas = clearCanvas;
+    window.generateAndSave = generateAndSave;
+    window.downloadQR = downloadQR;
+</script>
 </body>
 </html>
