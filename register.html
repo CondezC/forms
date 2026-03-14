@@ -556,7 +556,6 @@
         appId: "1:81090026028:web:91dfd833462e2d95434f89"
     };
 
-    // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
@@ -911,35 +910,34 @@
     }
 
     async function submitSecondForm() {
-        if (!validateSecondForm()) {
-            alert('Please fill in all required fields and complete all signatures.');
-            return;
-        }
-        
-        const submitBtn = document.getElementById('submitBtn');
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = 'Uploading to Cloud... <span class="loading"></span>';
-        
-        try {
-            const summaryUrl = await generateQRCode();
-            
-            if (summaryUrl) {
-                submitBtn.innerHTML = '✓ QR CODE READY';
-                
-                window.open(summaryUrl, '_blank');
-                
-                setTimeout(() => {
-                    alert('✅ SUCCESS!\n\nData uploaded to cloud.\nQR Code generated.\n\nClick SAVE QR CODE to download.');
-                }, 500);
-            }
-        } catch (error) {
-            console.error('❌ Submission error:', error);
-            alert('Error: ' + error.message + '\n\nCheck console for details (F12)');
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = 'GENERATE QR CODE';
-        }
+    if (!validateSecondForm()) {
+        alert('Please fill in all required fields and complete all signatures.');
+        return;
     }
-
+    
+    const submitBtn = document.getElementById('submitBtn');
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Uploading to Cloud... <span class="loading"></span>';
+    
+    try {
+        const summaryUrl = await generateQRCode();
+        
+        if (summaryUrl) {
+            submitBtn.innerHTML = '✓ QR CODE READY';
+            
+            console.log('Summary URL:', summaryUrl);
+            
+            setTimeout(() => {
+                alert('✅ SUCCESS!\n\nData uploaded to cloud.\nQR Code generated.\n\nClick SAVE QR CODE to download.');
+            }, 500);
+        }
+    } catch (error) {
+        console.error('❌ Submission error:', error);
+        alert('Error: ' + error.message + '\n\nCheck console for details (F12)');
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'GENERATE QR CODE';
+    }
+}
     window.openModal = openModal;
     window.closeModal = closeModal;
     window.clearModalCanvas = clearModalCanvas;
