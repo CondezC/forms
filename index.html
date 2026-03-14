@@ -348,6 +348,87 @@
             text-align: center;
         }
 
+        /* Notification Styles */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    max-width: 350px;
+    padding: 15px 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 9999;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.notification.success {
+    background: linear-gradient(135deg, #4caf50, #45a049);
+    color: white;
+}
+
+.notification.error {
+    background: linear-gradient(135deg, #f44336, #d32f2f);
+    color: white;
+}
+
+.notification.warning {
+    background: linear-gradient(135deg, #ff9800, #f57c00);
+    color: white;
+}
+
+.notification.info {
+    background: linear-gradient(135deg, #2196f3, #1976d2);
+    color: white;
+}
+
+.notification-icon {
+    font-size: 24px;
+    line-height: 1;
+}
+
+.notification-content {
+    flex: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.notification-message {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
+.notification-close {
+    cursor: pointer;
+    font-size: 18px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+    padding: 0 5px;
+}
+
+.notification-close:hover {
+    opacity: 1;
+}
+
         .employer-signature {
             margin: 30px 0;
             text-align: center;
@@ -941,30 +1022,29 @@
         }
 
         function goToSecondForm() {
-            if (validateFirstForm()) {
-                const firstFormData = {
-                    employerName: document.getElementById('employerName').value,
-                    employerId: document.getElementById('employerId').value,
-                    address: document.getElementById('address').value,
-                    telephone: document.getElementById('telephone').value,
-                    certName: document.getElementById('certName').value,
-                    ssNumber: document.getElementById('ssNumber').value,
-                    specimenName1: document.getElementById('specimenName1').value,
-                    specimenName2: document.getElementById('specimenName2').value,
-                    employerName2: document.getElementById('employerName2').value,
-                    photo: document.getElementById('photoPreview').src || '',
-                    specimenSignature1: document.getElementById('specimenSignature1').toDataURL(),
-                    specimenSignature2: document.getElementById('specimenSignature2').toDataURL(),
-                    employerSignature: document.getElementById('employerSignature').toDataURL()
-                };
-                
-                localStorage.setItem('firstFormData', JSON.stringify(firstFormData));
-                
-                window.location.href = 'register.html';
-            } else {
-                alert('Please fill in all required fields and complete all signatures.');
-            }
-        }
+    if (validateFirstForm()) {
+        const firstFormData = {
+            employerName: document.getElementById('employerName').value,
+            employerId: document.getElementById('employerId').value,
+            address: document.getElementById('address').value,
+            telephone: document.getElementById('telephone').value,
+            certName: document.getElementById('certName').value,
+            ssNumber: document.getElementById('ssNumber').value,
+            specimenName1: document.getElementById('specimenName1').value,
+            specimenName2: document.getElementById('specimenName2').value,
+            employerName2: document.getElementById('employerName2').value,
+            photo: document.getElementById('photoPreview').src || '',
+            specimenSignature1: document.getElementById('specimenSignature1').toDataURL(),
+            specimenSignature2: document.getElementById('specimenSignature2').toDataURL(),
+            employerSignature: document.getElementById('employerSignature').toDataURL()
+        };
+        
+        localStorage.setItem('firstFormData', JSON.stringify(firstFormData));
+        window.location.href = 'register.html';
+    } else {
+        showNotification('Please fill in all required fields and complete all signatures.', 'error');
+    }
+}
 
         window.openModal = openModal;
         window.closeModal = closeModal;
