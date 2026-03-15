@@ -552,6 +552,136 @@
             display: none;
         }
 
+        /* ========== ADDED POPUP MESSAGE STYLES ========== */
+        .popup-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 10000;
+            text-align: center;
+            min-width: 300px;
+            max-width: 400px;
+            animation: popupFadeIn 0.3s ease-out;
+        }
+
+        @keyframes popupFadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+
+        .popup-message.error {
+            border-top: 5px solid #f44336;
+        }
+
+        .popup-message.success {
+            border-top: 5px solid #4caf50;
+        }
+
+        .popup-message.warning {
+            border-top: 5px solid #ff9800;
+        }
+
+        .popup-message.info {
+            border-top: 5px solid #2196f3;
+        }
+
+        .popup-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        .popup-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .popup-title.error {
+            color: #f44336;
+        }
+
+        .popup-title.success {
+            color: #4caf50;
+        }
+
+        .popup-title.warning {
+            color: #ff9800;
+        }
+
+        .popup-title.info {
+            color: #2196f3;
+        }
+
+        .popup-text {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .popup-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .popup-btn {
+            padding: 10px 25px;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 100px;
+        }
+
+        .popup-btn.primary {
+            background: #003c8f;
+            color: white;
+        }
+
+        .popup-btn.primary:hover {
+            background: #1976d2;
+            transform: translateY(-2px);
+        }
+
+        .popup-btn.secondary {
+            background: #f5f5f5;
+            color: #666;
+        }
+
+        .popup-btn.secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            animation: overlayFadeIn 0.3s ease-out;
+        }
+
+        @keyframes overlayFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* ========== END OF ADDED POPUP MESSAGE STYLES ========== */
+
         @media (max-width: 768px) {
             .employer-header {
                 flex-direction: column;
@@ -674,12 +804,12 @@
         </div>
 
         <div class="noted-section">
-    <div class="noted-label" style="font-weight: 600; color: #003c8f; margin-bottom: 5px;">Noted by:</div>
-    <br></br>
-    <div class="noted-line"></div>
-    <div class="noted-name">ELEANOR F. DEATO</div>
-    <div class="noted-title">Branch Head</div>
-</div>
+            <div class="noted-label" style="font-weight: 600; color: #003c8f; margin-bottom: 5px;">Noted by:</div>
+            <br></br>
+            <div class="noted-line"></div>
+            <div class="noted-name">ELEANOR F. DEATO</div>
+            <div class="noted-title">Branch Head</div>
+        </div>
 
         <div class="fs-button-group">
             <button class="fs-button" type="button" id="nextBtn" onclick="goToSecondForm()">NEXT: SPECIMEN SIGNATURE CARD</button>
@@ -898,6 +1028,70 @@
             isDrawing = false;
         }
 
+        // ========== ADDED POPUP MESSAGE FUNCTIONS ==========
+        function showPopup(message, type = 'info', title = '', autoClose = false) {
+            // Remove existing popup
+            const existingPopup = document.querySelector('.popup-message');
+            const existingOverlay = document.querySelector('.popup-overlay');
+            if (existingPopup) existingPopup.remove();
+            if (existingOverlay) existingOverlay.remove();
+            
+            // Set default titles
+            if (!title) {
+                if (type === 'error') title = 'ERROR';
+                else if (type === 'success') title = 'SUCCESS';
+                else if (type === 'warning') title = 'WARNING';
+                else title = 'INFO';
+            }
+            
+            // Set icons
+            let icon = 'ℹ️';
+            if (type === 'error') icon = '❌';
+            else if (type === 'success') icon = '✅';
+            else if (type === 'warning') icon = '⚠️';
+            
+            // Create overlay
+            const overlay = document.createElement('div');
+            overlay.className = 'popup-overlay';
+            overlay.onclick = function() {
+                popup.remove();
+                overlay.remove();
+            };
+            document.body.appendChild(overlay);
+            
+            // Create popup
+            const popup = document.createElement('div');
+            popup.className = `popup-message ${type}`;
+            
+            popup.innerHTML = `
+                <div class="popup-icon">${icon}</div>
+                <div class="popup-title ${type}">${title}</div>
+                <div class="popup-text">${message}</div>
+                <div class="popup-buttons">
+                    <button class="popup-btn primary" onclick="closePopup()">OK</button>
+                </div>
+            `;
+            
+            document.body.appendChild(popup);
+            
+            // Close function
+            window.closePopup = function() {
+                popup.remove();
+                overlay.remove();
+            };
+            
+            // Auto close if specified
+            if (autoClose) {
+                setTimeout(() => {
+                    if (document.body.contains(popup)) {
+                        popup.remove();
+                        overlay.remove();
+                    }
+                }, 3000);
+            }
+        }
+        // ========== END OF ADDED POPUP MESSAGE FUNCTIONS ==========
+
         function validateFirstForm() {
             let isValid = true;
             
@@ -960,9 +1154,15 @@
                 
                 localStorage.setItem('firstFormData', JSON.stringify(firstFormData));
                 
-                window.location.href = 'register.html';
+                // Show success popup before redirect
+                showPopup('First form completed! Proceeding to next form...', 'success', 'SUCCESS!');
+                
+                setTimeout(() => {
+                    window.location.href = 'register.html';
+                }, 2000);
             } else {
-                alert('Please fill in all required fields and complete all signatures.');
+                // Replace alert with popup
+                showPopup('Please fill in all required fields and complete all signatures.', 'error');
             }
         }
 
