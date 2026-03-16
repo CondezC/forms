@@ -1093,7 +1093,6 @@ fieldset {
     font-size: 1.2rem;
 }
 
-/* ===== RESPONSIVE ===== */
 @media (max-width: 768px) {
     .employer-header {
         flex-direction: column;
@@ -1136,23 +1135,19 @@ fieldset {
         text-align: center;
     }
 
-    /* ===== BETTER MOBILE EXPERIENCE ===== */
 
-/* Prevent zoom on input focus for iOS */
 @media (max-width: 768px) {
     input, 
     select, 
     textarea, 
     button {
-        font-size: 16px !important; /* Important para hindi mag-zoom sa iOS */
+        font-size: 16px !important; 
     }
     
-    /* Mas maluwag na padding sa mobile */
     .form-container {
         padding: 15px !important;
     }
     
-    /* Mas malaking touch targets */
     button, 
     .sign-btn, 
     .clear-btn, 
@@ -1160,11 +1155,10 @@ fieldset {
     .save-btn,
     .back-btn,
     .primary-btn {
-        min-height: 48px !important; /* Minimum touch target size */
+        min-height: 48px !important; 
         padding: 12px 20px !important;
     }
     
-    /* Table adjustments */
     .info-table td,
     .officials-table td {
         padding: 8px !important;
@@ -1175,7 +1169,6 @@ fieldset {
         width: 120px !important;
     }
     
-    /* Stack elements on mobile */
     .employer-header {
         flex-direction: column !important;
         align-items: center !important;
@@ -1190,21 +1183,18 @@ fieldset {
         margin: 0 auto !important;
     }
     
-    /* Signature canvases */
     .signature-canvas,
     .employer-canvas,
     .signature-canvas-small,
     .granting-canvas {
-        height: 70px !important; /* Mas malaki para madaling pirmahan sa mobile */
+        height: 70px !important; 
     }
     
-    /* QR code */
     .qr-code {
         width: 150px !important;
         height: 150px !important;
     }
     
-    /* Progress steps */
     .progress-steps {
         gap: 10px !important;
         flex-wrap: wrap !important;
@@ -1224,7 +1214,6 @@ fieldset {
         font-size: 11px !important;
     }
     
-    /* Bottom actions */
     .action-buttons {
         flex-direction: column !important;
         gap: 10px !important;
@@ -1237,7 +1226,6 @@ fieldset {
         margin: 0 !important;
     }
     
-    /* Date section */
     .date-section {
         flex-direction: column !important;
         align-items: flex-start !important;
@@ -1248,7 +1236,6 @@ fieldset {
         width: 100% !important;
     }
     
-    /* Modal */
     .modal-content {
         width: 95% !important;
         padding: 20px !important;
@@ -1267,7 +1254,6 @@ fieldset {
         min-width: 80px !important;
     }
     
-    /* Instruction page */
     .instruction-list li {
         flex-direction: column !important;
         gap: 10px !important;
@@ -1284,7 +1270,6 @@ fieldset {
         font-size: 14px !important;
     }
     
-    /* Summary page */
     .summary-header {
         flex-direction: column !important;
         text-align: center !important;
@@ -1305,7 +1290,6 @@ fieldset {
         gap: 15px !important;
     }
     
-    /* Popup messages */
     .popup-message {
         width: 90% !important;
         padding: 20px !important;
@@ -1328,12 +1312,10 @@ fieldset {
         width: 100% !important;
     }
     
-    /* Noted section */
     .noted-line {
         width: 200px !important;
     }
     
-    /* Granting section */
     .granting-container {
         flex-direction: column !important;
     }
@@ -1342,21 +1324,18 @@ fieldset {
         min-width: 100% !important;
     }
     
-    /* Fix overflow */
     .form-container,
     .instruction-container,
     .summary-card {
         overflow-x: hidden !important;
     }
     
-    /* Better scrolling */
     .officials-table {
         display: block !important;
         overflow-x: auto !important;
         -webkit-overflow-scrolling: touch !important;
     }
     
-    /* Remove fixed positioning on mobile */
     .theme-toggle {
         top: 10px !important;
         right: 10px !important;
@@ -1365,14 +1344,12 @@ fieldset {
         font-size: 1.2rem !important;
     }
     
-    /* Back button */
     .back-button {
         width: 100% !important;
         justify-content: center !important;
     }
 }
 
-/* Extra small devices (phones, 400px and down) */
 @media (max-width: 400px) {
     .form-container {
         padding: 10px !important;
@@ -1406,7 +1383,6 @@ fieldset {
     }
 }
 
-/* Landscape mode */
 @media (max-width: 900px) and (orientation: landscape) {
     .form-container {
         max-width: 100% !important;
@@ -1430,9 +1406,7 @@ fieldset {
     }
 }
 
-/* Touch-friendly improvements */
 @media (hover: none) and (pointer: coarse) {
-    /* Mas malaking tap target */
     button, 
     .sign-btn, 
     .clear-btn, 
@@ -1444,7 +1418,6 @@ fieldset {
         cursor: default !important;
     }
     
-    /* Remove hover effects on touch devices */
     button:hover,
     .sign-btn:hover,
     .clear-btn:hover,
@@ -1456,7 +1429,6 @@ fieldset {
         box-shadow: none !important;
     }
     
-    /* Active state instead */
     button:active,
     .sign-btn:active,
     .clear-btn:active,
@@ -1467,5 +1439,33 @@ fieldset {
         transform: scale(0.98) !important;
         opacity: 0.8 !important;
     }
+
+.instruction-btn {
+    background: #1976d2;
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.instruction-btn:hover {
+    background: #1565c0;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(25, 118, 210, 0.3);
+}
+
+body.dark-mode .instruction-btn {
+    background: #2d2d44;
+    color: #e0e0e0;
+}
+
+body.dark-mode .instruction-btn:hover {
+    background: #3d3d5a;
+}
 }
 }
