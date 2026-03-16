@@ -7,90 +7,43 @@ const firebaseConfig = {
     appId: "1:81090026028:web:91dfd833462e2d95434f89"
 };
 
-// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// Load data on page load
-window.addEventListener('load', function() {
+window.onload = async function() {
     displaySummary();
-    addPrintStyles();
-});
+};
 
-function addPrintStyles() {
-    const printStyles = document.createElement('style');
-    printStyles.textContent = `
-        @media print {
-            body {
-                background: white !important;
-                padding: 0 !important;
-            }
-            .print-btn, .theme-toggle, .back-btn {
-                display: none !important;
-            }
-            .summary-container {
-                max-width: 100% !important;
-                padding: 0 !important;
-            }
-            .summary-card {
-                box-shadow: none !important;
-                border: 1px solid #ddd !important;
-                page-break-inside: avoid !important;
-                margin-bottom: 20px !important;
-            }
-            .card-header {
-                background: #003c8f !important;
-                color: white !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-            .noted-section {
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-            }
-            .signature-img, .official-signature-img {
-                max-width: 150px !important;
-            }
-        }
-    `;
-    document.head.appendChild(printStyles);
-}
+
 
 async function displaySummary() {
     const container = document.getElementById('summaryContainer');
-    
-    // Show loading
-    container.innerHTML = '<div class="loading" style="text-align: center; padding: 50px;">Loading data from cloud...</div>';
     
     const urlParams = new URLSearchParams(window.location.search);
     const submissionId = urlParams.get('id');
     
     if (!submissionId) {
-        container.innerHTML = '<div class="error-message" style="text-align: center; padding: 50px; color: #f44336;">❌ No submission ID found</div>';
+        container.innerHTML = '<div class="error-message">❌ No submission ID found</div>';
         return;
     }
 
     try {
-        console.log("Fetching ID:", submissionId);
         const docRef = db.collection('sss-submissions').doc(submissionId);
         const docSnap = await docRef.get();
 
         if (!docSnap.exists()) {
-            container.innerHTML = '<div class="error-message" style="text-align: center; padding: 50px; color: #f44336;">❌ Submission not found in cloud</div>';
+            container.innerHTML = '<div class="error-message">❌ Submission not found in cloud</div>';
             return;
         }
 
         const formData = docSnap.data();
-        console.log("Data loaded:", formData);
         
         let html = '';
         
-        // Verified badge
         html += '<div style="text-align: center; margin-bottom: 20px;">';
-        html += '<span style="background: #4caf50; color: white; padding: 8px 20px; border-radius: 50px; display: inline-block;">✓ VERIFIED CLOUD DATA</span>';
+        html += '<span style="background: #4caf50; color: white; padding: 5px 15px; border-radius: 20px;">✓ VERIFIED CLOUD DATA</span>';
         html += '</div>';
         
-        // FIRST FORM
         html += '<div class="summary-card">';
         html += '<div class="card-header">📋 COMPANY REPRESENTATIVE AUTHORIZATION CARD</div>';
         html += '<div class="card-body">';
@@ -108,16 +61,14 @@ async function displaySummary() {
         
         const first = formData.firstForm || {};
         
-        // Photo
-        if (first.photo && first.photo !== '#' && first.photo !== '') {
+        if (first.photo && first.photo !== '#') {
             html += '<div style="text-align: right; margin-bottom: 20px;">';
             html += '<div style="width: 120px; height: 120px; border: 2px solid #003c8f; border-radius: 8px; overflow: hidden; margin-left: auto;">';
-            html += `<img src="${first.photo}" style="width: 100%; height: 100%; object-fit: cover;" alt="1x1 Photo">`;
+            html += `<img src="${first.photo}" style="width: 100%; height: 100%; object-fit: cover;">`;
             html += '</div>';
             html += '</div>';
         }
         
-        // Company Info
         html += '<table class="info-table">';
         html += '<tr><td>EMPLOYER NAME:</td><td>' + (first.employerName || 'N/A') + '</td></tr>';
         html += '<tr><td>EMPLOYER ID NO.:</td><td>' + (first.employerId || 'N/A') + '</td></tr>';
@@ -127,50 +78,46 @@ async function displaySummary() {
         html += '<tr><td>SS NUMBER:</td><td>' + (first.ssNumber || 'N/A') + '</td></tr>';
         html += '</table>';
         
-        // Signatures
         html += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">';
         
-        if (first.specimenSignature1 && first.specimenSignature1.length > 50) {
-            html += '<div style="text-align: center; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px;">';
+        if (first.specimenSignature1) {
+            html += '<div style="text-align: center;">';
             html += '<strong>SPECIMEN SIGNATURE</strong><br>';
-            html += `<img src="${first.specimenSignature1}" style="max-width: 100%; max-height: 60px; margin: 10px 0;"><br>`;
-            html += '<span style="color: #003c8f;">' + (first.specimenName1 || '') + '</span>';
+            html += `<img src="${first.specimenSignature1}" class="signature-img"><br>`;
+            html += (first.specimenName1 || '');
             html += '</div>';
         }
         
-        if (first.employerSignature && first.employerSignature.length > 50) {
-            html += '<div style="text-align: center; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px;">';
+        if (first.employerSignature) {
+            html += '<div style="text-align: center;">';
             html += '<strong>SIGNATURE OVER PRINTED NAME</strong><br>';
-            html += `<img src="${first.employerSignature}" style="max-width: 100%; max-height: 60px; margin: 10px 0;"><br>`;
-            html += '<span style="color: #003c8f;">' + (first.employerName2 || first.employerName || '') + '</span>';
+            html += `<img src="${first.employerSignature}" class="signature-img"><br>`;
+            html += (first.employerName2 || first.employerName || '');
             html += '</div>';
         }
         
         html += '</div>';
         
-        // Noted By
         html += '<div class="noted-section">';
         html += '<div class="noted-line"></div>';
         html += '<div class="noted-name">ELEANOR F. DEATO</div>';
         html += '<div class="noted-title">Branch Head</div>';
         html += '</div>';
         
-        html += '</div></div>'; // Close first form
+        html += '</div></div>'; 
         
-        // SECOND FORM
         html += '<div class="summary-card">';
         html += '<div class="card-header">📋 SPECIMEN SIGNATURE CARD</div>';
         html += '<div class="card-body">';
         
         html += '<div style="text-align: center; margin-bottom: 20px;">';
-        html += '<h2 style="color: #003c8f; margin: 0;">Republic of the Philippines</h2>';
-        html += '<h3 style="color: #1976d2; margin: 5px 0;">SOCIAL SECURITY SYSTEM</h3>';
-        html += '<div style="color: #666;">SSS Form L - 501 (07-94)</div>';
+        html += '<h2 style="color: #003c8f;">Republic of the Philippines</h2>';
+        html += '<h3 style="color: #1976d2;">SOCIAL SECURITY SYSTEM</h3>';
+        html += '<div>SSS Form L - 501 (07-94)</div>';
         html += '</div>';
         
         const second = formData.secondForm || {};
         
-        // Company Info
         html += '<table class="info-table">';
         html += '<tr><td>Registered Employer Name:</td><td>' + (second.registeredName || first.employerName || 'N/A') + '</td></tr>';
         html += '<tr><td>I.D. No.:</td><td>' + (second.idNumber || first.employerId || 'N/A') + '</td></tr>';
@@ -178,66 +125,55 @@ async function displaySummary() {
         html += '<tr><td>Tel. No.:</td><td>' + (second.telNumber || first.telephone || 'N/A') + '</td></tr>';
         html += '</table>';
         
-        // Officials
         if (second.officials && second.officials.length > 0) {
             html += '<h3 style="color: #003c8f; margin: 20px 0 10px;">Authorized Officials</h3>';
             html += '<table class="officials-table">';
-            html += '<thead><tr><th>Name</th><th>Designation</th><th>Initials</th><th>Signature</th></tr></thead>';
-            html += '<tbody>';
+            html += '<tr><th>Name</th><th>Designation</th><th>Initials</th><th>Signature</th></tr>';
             
-            second.officials.forEach((official, index) => {
+            second.officials.forEach(official => {
                 html += '<tr>';
                 html += '<td>' + (official.name || '') + '</td>';
                 html += '<td>' + (official.designation || '') + '</td>';
                 html += '<td>' + (official.initial || '') + '</td>';
                 html += '<td>';
-                if (official.signature && official.signature.length > 50) {
-                    html += `<img src="${official.signature}" style="max-width: 100px; max-height: 40px;" alt="Signature">`;
-                } else {
-                    html += 'No signature';
+                if (official.signature) {
+                    html += `<img src="${official.signature}" class="official-signature-img">`;
                 }
                 html += '</td>';
                 html += '</tr>';
             });
             
-            html += '</tbody></table>';
+            html += '</table>';
         }
         
-        // Granting Authority
         const granting = second.grantingAuthority || {};
         if (granting.name || granting.signature) {
             html += '<div style="margin-top: 20px; padding: 15px; background: #f8f9ff; border-radius: 8px;">';
-            html += '<h4 style="color: #003c8f; margin-bottom: 10px;">Granting Authority</h4>';
+            html += '<h4 style="color: #003c8f;">Granting Authority</h4>';
             html += '<p><strong>' + (granting.name || 'N/A') + '</strong></p>';
-            if (granting.signature && granting.signature.length > 50) {
-                html += `<img src="${granting.signature}" style="max-width: 200px; max-height: 60px; margin: 5px 0;" alt="Granting Signature"><br>`;
+            if (granting.signature) {
+                html += `<img src="${granting.signature}" class="signature-img"><br>`;
             }
             if (granting.date) {
-                html += '<p><strong>Date:</strong> ' + granting.date + '</p>';
+                html += '<p>Date: ' + granting.date + '</p>';
             }
             html += '</div>';
         }
         
-        html += '</div></div>'; // Close second form
+        html += '</div></div>'; 
         
-        // Timestamp
         if (formData.timestamp) {
             html += '<div style="text-align: center; color: #888; margin: 20px;">';
             html += '📅 Generated: ' + new Date(formData.timestamp).toLocaleString();
             html += '</div>';
         }
         
-        // Print Button
-        html += '<div style="text-align: center; margin: 30px 0;">';
-        html += '<button class="primary-btn print-btn" onclick="window.print()" style="background: #003c8f; padding: 15px 40px;">';
-        html += '🖨️ PRINT BOTH FORMS';
-        html += '</button>';
-        html += '</div>';
+        html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT SUMMARY</button>';
         
         container.innerHTML = html;
         
     } catch (error) {
-        console.error('Error:', error);
-        container.innerHTML = '<div class="error-message" style="text-align: center; padding: 50px; color: #f44336;">❌ Error: ' + error.message + '</div>';
+        console.error('Error loading from Firebase:', error);
+        container.innerHTML = '<div class="error-message">❌ Error loading data from cloud</div>';
     }
 }
