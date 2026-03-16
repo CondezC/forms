@@ -25,12 +25,154 @@
 </head>
 <body>
     <div class="form-container">
+        <div class="republic-header">
+            <div class="header-with-logo">
+                <div class="logo-container">
+                    <img src="republic-of-the-philippines-social-security-system-logo-png_seeklogo.png" alt="SSS Logo" onerror="this.style.display='none'; this.parentElement.innerHTML='SSS';">
+                </div>
+                <h1>Republic of the Philippines</h1>
+                <h2>SOCIAL SECURITY SYSTEM</h2>
+                <div class="form-number">SSS Form L - 501 (07-94)</div>
+            </div>
+        </div>
+
+        <div class="form-title">
+            <h2>SPECIMEN SIGNATURE CARD</h2>
+        </div>
+
+        <table class="info-table">
+            <tr>
+                <td>Registered Employer Name</td>
+                <td><input type="text" id="registeredName" readonly></td>
+            </tr>
+            <tr>
+                <td>I.D. No.</td>
+                <td><input type="text" id="idNumber" readonly></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><input type="text" id="companyAddress" readonly></td>
+            </tr>
+            <tr>
+                <td>Tel. No.</td>
+                <td><input type="text" id="telNumber" readonly></td>
+            </tr>
+        </table>
+
+        <div class="authorization-text">
+            <p>Authority to certify or sign documents on all social security matters is hereby delegated to the following officials of the company.</p>
+        </div>
+
+        <table class="officials-table">
+            <thead>
+                <tr>
+                    <th>Printed Name</th>
+                    <th>Designation</th>
+                    <th>Initial</th>
+                    <th>Signature</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="text" id="officialName1" placeholder="Full Name" required></td>
+                    <td><input type="text" id="officialDesignation1" placeholder="Designation" required></td>
+                    <td><input type="text" id="officialInitial1" placeholder="Initial" required></td>
+                    <td>
+                        <canvas class="signature-canvas-small" id="officialSignature1" width="150" height="60"></canvas>
+                        <div class="signature-actions-small">
+                            <button type="button" class="sign-btn-small" onclick="openModal('officialSignature1')">Sign</button>
+                            <button type="button" class="clear-btn-small" onclick="clearCanvas('officialSignature1')">Clear</button>
+                        </div>
+                        <div id="officialError1" class="error-message">Signature required</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="text" id="officialName2" placeholder="Full Name" required></td>
+                    <td><input type="text" id="officialDesignation2" placeholder="Designation" required></td>
+                    <td><input type="text" id="officialInitial2" placeholder="Initial" required></td>
+                    <td>
+                        <canvas class="signature-canvas-small" id="officialSignature2" width="150" height="60"></canvas>
+                        <div class="signature-actions-small">
+                            <button type="button" class="sign-btn-small" onclick="openModal('officialSignature2')">Sign</button>
+                            <button type="button" class="clear-btn-small" onclick="clearCanvas('officialSignature2')">Clear</button>
+                        </div>
+                        <div id="officialError2" class="error-message">Signature required</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="text" id="officialName3" placeholder="Full Name" required></td>
+                    <td><input type="text" id="officialDesignation3" placeholder="Designation" required></td>
+                    <td><input type="text" id="officialInitial3" placeholder="Initial" required></td>
+                    <td>
+                        <canvas class="signature-canvas-small" id="officialSignature3" width="150" height="60"></canvas>
+                        <div class="signature-actions-small">
+                            <button type="button" class="sign-btn-small" onclick="openModal('officialSignature3')">Sign</button>
+                            <button type="button" class="clear-btn-small" onclick="clearCanvas('officialSignature3')">Clear</button>
+                        </div>
+                        <div id="officialError3" class="error-message">Signature required</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="granting-section">
+            <div class="granting-title">Name and official capacity of person granting authority</div>
+            <div class="granting-container">
+                <div class="granting-signature">
+                    <input type="text" id="grantingName" placeholder="Full name and position" style="width: 100%; padding: 8px; margin-bottom: 10px;" required>
+                    <canvas class="granting-canvas" id="grantingSignature" width="400" height="80"></canvas>
+                    <div class="signature-actions-small" style="justify-content: center;">
+                        <button type="button" class="sign-btn-small" onclick="openModal('grantingSignature')">Sign</button>
+                        <button type="button" class="clear-btn-small" onclick="clearCanvas('grantingSignature')">Clear</button>
+                    </div>
+                    <div class="granting-label">(Please sign over printed name.)</div>
+                    <div id="grantingError" class="error-message">Signature required</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="date-section">
+            <div class="date-label">Date authority granted:</div>
+            <input type="date" id="grantingDate" class="date-input" required>
+        </div>
+
+        <div class="bottom-actions">
+            <div class="qr-section">
+                <h3>📱 OFFICIAL QR CODE</h3>
+                <div class="qr-code" id="qrCodeBox">
+                    <canvas id="qrCanvas" width="180" height="180"></canvas>
+                    <div class="qr-placeholder" id="qrPlaceholder">
+                        <i>📷</i>
+                        <span>Complete form<br>to generate QR</span>
+                    </div>
+                </div>
+                
+                <div class="save-section" id="saveSection" style="display: none;">
+                    <button class="save-btn" onclick="saveQRCode()">
+                        <span>💾</span> SAVE QR CODE
+                    </button>
+                </div>
+                
+                <div id="qrSuccess" class="success-message">✓ Uploaded to cloud! QR Code ready.</div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="primary-btn" type="button" id="submitBtn" onclick="submitSecondForm()">
+                    GENERATE QR CODE
+                </button>
+                
+                <button class="back-btn" onclick="goBackToIndex()">
+                    <span>←</span> BACK TO COMPANY REP AUTHORIZATION
+                </button>
+            </div>
+        </div>
     </div>
 
     <div id="registerInstructionPopup" class="popup-overlay" style="display: none;">
         <div class="popup-content instruction-popup register-instruction-popup">
             <div class="popup-header">
                 <h3>📋 IMPORTANT INFORMATION / INSTRUCTIONS</h3>
+                <button class="popup-close" onclick="closeRegisterInstruction()">✕</button>
             </div>
             <div class="popup-body">
                 <ul class="instruction-list">
@@ -72,6 +214,15 @@
     </div>
 
     <div id="signatureModal" class="modal">
+        <div class="modal-content">
+            <h3>Draw Your Signature</h3>
+            <canvas id="modalCanvas" class="modal-canvas" width="400" height="200"></canvas>
+            <div class="modal-buttons">
+                <button class="modal-btn clear-btn" onclick="clearModalCanvas()">Clear</button>
+                <button class="modal-btn cancel-btn" onclick="closeModal()">Cancel</button>
+                <button class="modal-btn save-btn" onclick="saveSignature()">Save</button>
+            </div>
+        </div>
     </div>
 
     <script src="register.js"></script>
