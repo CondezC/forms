@@ -144,7 +144,7 @@
             font-style: italic;
         }
 
-        /* 1x1 PICTURE - TOP RIGHT - AS IS */
+        /* 1x1 PICTURE - TOP RIGHT */
         .photo-section {
             display: flex;
             justify-content: flex-end;
@@ -178,6 +178,31 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+
+        /* Certification Text */
+        .certification-text {
+            background: #f8f9ff;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #1976d2;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .certification-text p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .certification-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .certification-text strong {
+            color: #003c8f;
         }
 
         /* Info Tables */
@@ -279,7 +304,7 @@
             max-height: 45px;
         }
 
-        /* Noted Section - AS IS */
+        /* Noted Section */
         .noted-section {
             margin-top: 25px;
             text-align: center;
@@ -576,6 +601,13 @@
             .granting-section p {
                 font-size: 0.9rem;
             }
+
+            .certification-text {
+                border-left: 1px solid #000 !important;
+                background: #f8f9ff !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
         }
     </style>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -602,11 +634,6 @@
         window.onload = function() {
             displaySummary();
         };
-
-        // Simple print function
-        function printForms() {
-            window.print();
-        }
 
         async function displaySummary() {
             const container = document.getElementById('summaryContainer');
@@ -656,7 +683,7 @@
                 
                 const first = formData.firstForm || {};
                 
-                // 1x1 Picture - TOP RIGHT (AS IS)
+                // 1x1 Picture
                 if (first.photo && first.photo !== '#' && first.photo !== '') {
                     html += '<div class="photo-section">';
                     html += '<div class="photo-container">';
@@ -668,7 +695,7 @@
                     html += '</div>';
                 }
                 
-                // Company Info (EMPLOYER NAME, ID, ADDRESS, TELEPHONE, CERTIFIED NAME, SS NUMBER)
+                // Company Info
                 html += '<table class="info-table">';
                 html += '<tr><td>EMPLOYER NAME:</td><td>' + (first.employerName || 'N/A') + '</td></tr>';
                 html += '<tr><td>EMPLOYER ID NO.:</td><td>' + (first.employerId || 'N/A') + '</td></tr>';
@@ -677,6 +704,12 @@
                 html += '<tr><td>CERTIFIED NAME:</td><td>' + (first.certName || 'N/A') + '</td></tr>';
                 html += '<tr><td>SS NUMBER:</td><td>' + (first.ssNumber || 'N/A') + '</td></tr>';
                 html += '</table>';
+                
+                // ===== CERTIFICATION TEXT =====
+                html += '<div class="certification-text">';
+                html += '<p>This is to certify that Mr./Ms. <strong>' + (first.certName || 'N/A') + '</strong> with SS # <strong>' + (first.ssNumber || 'N/A') + '</strong>, whose specimen signatures / initials appear below, is authorized to transact, verify and file Employer Data Change Request (R-8), Employer Registration Form (R-1), Employment Report (R-1A) and Member Data Change Request (E-4) of herein company\'s employees.</p>';
+                html += '<p>This Certification shall be valid within one (1) year from the date of issuance unless otherwise revoked and the SSS Eastwood Branch duly notified.</p>';
+                html += '</div>';
                 
                 // Signatures
                 html += '<div class="signature-grid">';
@@ -699,7 +732,7 @@
                 
                 html += '</div>';
                 
-                // Noted By (ELEANOR F. DEATO)
+                // Noted By
                 html += '<div class="noted-section">';
                 html += '<div class="noted-line"></div>';
                 html += '<div class="noted-name">ELEANOR F. DEATO</div>';
@@ -786,7 +819,7 @@
                     html += '</div>';
                 }
                 
-                // PRINT BUTTON - ISANG BUTTON LANG
+                // Print Button
                 html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT BOTH FORMS</button>';
                 
                 container.innerHTML = html;
