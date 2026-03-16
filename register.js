@@ -408,7 +408,6 @@ function showPopup(message, type = 'info', title = '', autoClose = false) {
     const existingPopup = document.querySelector('.popup-message');
     const existingOverlay = document.querySelector('.popup-overlay:not(#registerInstructionPopup)');
     if (existingPopup) existingPopup.remove();
-    if (existingOverlay) existingOverlay.remove();
     
     if (!title) {
         if (type === 'error') title = 'ERROR';
