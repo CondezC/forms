@@ -144,11 +144,11 @@
             font-style: italic;
         }
 
-        /* 1x1 PICTURE - RIGHT ALIGNED */
+        /* 1x1 PICTURE - TOP RIGHT */
         .photo-section {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .photo-container {
@@ -439,7 +439,7 @@
             .form-card {
                 box-shadow: none;
                 border: 1px solid #000;
-                page-break-after: auto !important; /* REMOVE page break */
+                page-break-after: auto !important;
                 page-break-inside: avoid;
                 margin: 0 0 15px 0;
                 border-radius: 0;
@@ -463,7 +463,7 @@
                 padding: 15px;
             }
 
-            /* Compact layout para magkasya sa isang papel */
+            /* Compact layout */
             .header-with-logo, .republic-header {
                 margin-bottom: 10px;
                 padding-bottom: 8px;
@@ -652,7 +652,7 @@
                 
                 const first = formData.firstForm || {};
                 
-                // 1x1 Picture
+                // 1x1 Picture - NASA ITAAS (BAGO ANG EMPLOYER NAME)
                 if (first.photo && first.photo !== '#' && first.photo !== '') {
                     html += '<div class="photo-section">';
                     html += '<div class="photo-container">';
@@ -664,7 +664,7 @@
                     html += '</div>';
                 }
                 
-                // Company Info
+                // Company Info (EMPLOYER NAME et al)
                 html += '<table class="info-table">';
                 html += '<tr><td>EMPLOYER NAME:</td><td>' + (first.employerName || 'N/A') + '</td></tr>';
                 html += '<tr><td>EMPLOYER ID NO.:</td><td>' + (first.employerId || 'N/A') + '</td></tr>';
