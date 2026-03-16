@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSS Instructions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #003c8f;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .instruction {
+            background: #f8f9ff;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #1976d2;
+            border-radius: 5px;
+        }
+        .number {
+            font-weight: bold;
+            color: #003c8f;
+            font-size: 1.2rem;
+        }
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        button {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .back {
+            background: #ccc;
+        }
+        .proceed {
+            background: #003c8f;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>IMPORTANT INFORMATION / INSTRUCTIONS</h1>
+        <h3 style="text-align: center; color: #666;">About Your Specimen Card</h3>
+
+        <div class="instruction">
+            <span class="number">1.</span> This form (SSS Form L-501) should be accomplished in two (2) copies by the responsible officials authorized by the employer to certify and/or sign documents on the Social Security System (SSS).
+        </div>
+
+        <div class="instruction">
+            <span class="number">2.</span> Any signature in the space for "Employer's Representative" in salary and calamity application forms shall not be honored unless signatures appear in this form and are filed with the SSS.
+        </div>
+
+        <div class="instruction">
+            <span class="number">3.</span> The SSS should be notified of any change/revocation or addition in authorized representative through the submission of a new specimen signature card to replace or supplement that on file with the SSS.
+        </div>
+
+        <div class="instruction">
+            <span class="number">4.</span> The registered name, ID number and address of the employer should be correctly indicated in this form.
+        </div>
+
+        <div style="background: #ffeb3b; padding: 15px; border-radius: 5px; margin: 20px 0;">
+            <strong>⚠️ Important:</strong> Make sure all fields are filled and signatures are provided.
+        </div>
+
+        <div class="buttons">
+            <button class="back" onclick="window.location.href='index.html'">◀ BACK</button>
+            <button class="proceed" onclick="window.location.href='register.html'">PROCEED TO SPECIMEN CARD ▶</button>
+        </div>
+    </div>
+</body>
+</html>
