@@ -58,7 +58,6 @@
             pointer-events: none;
         }
 
-        /* Small Back Button - Bottom Right */
         .back-button-small {
             position: fixed;
             bottom: 20px;
@@ -258,6 +257,35 @@
             text-align: center;
             font-style: italic;
         }
+
+        .header-with-logo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            text-align: center;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-container {
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        .logo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
 
         .date-section {
             margin-top: 20px;
@@ -583,6 +611,11 @@
 
     <div class="form-container">
         <div class="republic-header">
+             <div class="form-container">
+        <div class="header-with-logo">
+            <div class="logo-container">
+                <img src="republic-of-the-philippines-social-security-system-logo-png_seeklogo.png" alt="SSS Logo" onerror="this.style.display='none'; this.parentElement.innerHTML='SSS';">
+            </div>
             <h1>Republic of the Philippines</h1>
             <h2>SOCIAL SECURITY SYSTEM</h2>
             <div class="form-number">SSS Form L - 501 (07-94)</div>
