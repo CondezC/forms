@@ -288,6 +288,36 @@
             transform: translateY(-2px);
         }
 
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-btn {
+            background: #f44336;
+            color: white;
+        }
+
+        .back-btn:hover {
+            background: #d32f2f;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+
         .fs-button-group {
             text-align: center;
             margin-top: 30px;
@@ -302,6 +332,7 @@
             border-radius: 50px;
             cursor: pointer;
             text-transform: uppercase;
+            transition: all 0.3s ease;
         }
 
         .fs-button:hover {
@@ -605,7 +636,7 @@
                 </tr>
                 <tr>
                     <td><input type="text" id="officialName3" placeholder="Full Name" required></td>
-                    <td><input type="text" id="officialDesignation3"placeholder="Designation" required></td>
+                    <td><input type="text" id="officialDesignation3" placeholder="Designation" required></td>
                     <td><input type="text" id="officialInitial3" placeholder="Initial" required></td>
                     <td>
                         <canvas class="signature-canvas-small" id="officialSignature3" width="150" height="60"></canvas>
@@ -655,6 +686,11 @@
             </div>
             
             <div id="qrSuccess" class="success-message">✓ Uploaded to cloud! QR Code ready. Present this QR code at the SSS office.</div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <button class="nav-btn back-btn" onclick="goBackToIndex()">◀ BACK TO INDEX</button>
         </div>
 
         <div class="fs-button-group">
@@ -717,6 +753,10 @@
             document.getElementById('saveSection').style.display = 'none';
             document.getElementById('qrSuccess').style.display = 'none';
         };
+
+        function goBackToIndex() {
+            window.location.href = 'index.html';
+        }
 
         let currentCanvas = null;
         let currentCanvasId = null;
@@ -1127,6 +1167,7 @@
         window.clearCanvas = clearCanvas;
         window.submitSecondForm = submitSecondForm;
         window.saveQRCode = saveQRCode;
+        window.goBackToIndex = goBackToIndex;
     </script>
 </body>
 </html>
