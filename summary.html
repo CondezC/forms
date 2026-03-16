@@ -395,17 +395,9 @@
             
             if (first.specimenSignature1) {
                 html += '<div class="signature-box">';
-                html += '<div class="signature-title">Specimen Signature 1</div>';
+                html += '<div class="signature-title">Specimen Signature</div>';
                 html += `<img src="${first.specimenSignature1}" class="signature-image" alt="Signature 1">`;
                 html += '<div class="signature-name">' + (first.specimenName1 || '') + '</div>';
-                html += '</div>';
-            }
-            
-            if (first.specimenSignature2) {
-                html += '<div class="signature-box">';
-                html += '<div class="signature-title">Specimen Signature 2</div>';
-                html += `<img src="${first.specimenSignature2}" class="signature-image" alt="Signature 2">`;
-                html += '<div class="signature-name">' + (first.specimenName2 || '') + '</div>';
                 html += '</div>';
             }
             
