@@ -144,11 +144,11 @@
             font-style: italic;
         }
 
-        /* 1x1 PICTURE - TOP RIGHT */
+        /* 1x1 PICTURE - RIGHT ALIGNED */
         .photo-section {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
         }
 
         .photo-container {
@@ -439,7 +439,7 @@
             .form-card {
                 box-shadow: none;
                 border: 1px solid #000;
-                page-break-after: auto !important;
+                page-break-after: auto !important; /* REMOVE page break */
                 page-break-inside: avoid;
                 margin: 0 0 15px 0;
                 border-radius: 0;
@@ -463,6 +463,7 @@
                 padding: 15px;
             }
 
+            /* Compact layout para magkasya sa isang papel */
             .header-with-logo, .republic-header {
                 margin-bottom: 10px;
                 padding-bottom: 8px;
@@ -603,11 +604,6 @@
             displaySummary();
         };
 
-        // Simple print function
-        function printForms() {
-            window.print();
-        }
-
         async function displaySummary() {
             const container = document.getElementById('summaryContainer');
             
@@ -656,7 +652,7 @@
                 
                 const first = formData.firstForm || {};
                 
-                // 1x1 Picture - NASA ITAAS
+                // 1x1 Picture
                 if (first.photo && first.photo !== '#' && first.photo !== '') {
                     html += '<div class="photo-section">';
                     html += '<div class="photo-container">';
@@ -786,7 +782,7 @@
                     html += '</div>';
                 }
                 
-                // Print Button - WITH DIRECT ONCLICK FUNCTION
+                // Print Button
                 html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT BOTH FORMS (1 PAPER)</button>';
                 
                 container.innerHTML = html;
