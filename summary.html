@@ -401,11 +401,11 @@
             }
         }
 
-        /* ===== PERFECT PRINT LAYOUT - ISANG A4 LANDSCAPE ===== */
+        /* ===== PRINT STYLES - SAME SA PREVIEW ===== */
         @media print {
             @page {
                 size: A4 landscape;
-                margin: 0.4in;
+                margin: 0.5in;
             }
 
             body {
@@ -422,10 +422,10 @@
             .summary-container {
                 max-width: 100%;
                 padding: 0;
-                gap: 15px;
+                gap: 20px;
             }
 
-            /* Remove shadows and borders */
+            /* Remove shadows but keep borders */
             .form-card {
                 box-shadow: none;
                 border: 1px solid #000;
@@ -434,7 +434,7 @@
                 page-break-inside: avoid;
             }
 
-            /* Preserve colors */
+            /* Preserve all colors exactly like preview */
             .card-header {
                 background: #003c8f !important;
                 color: white !important;
@@ -443,7 +443,8 @@
             }
 
             .info-table td:first-child {
-                background: #f0f0f0 !important;
+                background: #f8f9ff !important;
+                color: #003c8f !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
@@ -464,154 +465,116 @@
 
             .certification-text {
                 background: #f8f9ff !important;
-                border-left: 4px solid #000 !important;
+                border-left: 4px solid #1976d2 !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
             }
 
-            /* Ensure borders are visible */
+            .signature-box {
+                background: #f8f9ff !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .granting-section {
+                background: #f8f9ff !important;
+                border: 1px solid #cfe3ff !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            /* Keep borders visible */
             .info-table td, .officials-table td, .signature-box {
                 border: 1px solid #000 !important;
             }
 
             .photo-frame {
-                border: 2px solid #000 !important;
+                border: 3px solid #003c8f !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
 
-            /* Compact layout para magkasya ang dalawang forms */
-            .card-header {
-                padding: 8px 15px;
-                font-size: 1.1rem;
-            }
-
-            .card-body {
-                padding: 15px;
-            }
-
-            .header-with-logo, .republic-header {
-                margin-bottom: 10px;
-                padding-bottom: 8px;
-            }
-
-            .header-text h1 {
-                font-size: 1.5rem;
-            }
-
-            .republic-text h2 {
-                font-size: 1.5rem;
-            }
-
-            .republic-text h3 {
-                font-size: 1.2rem;
-            }
-
-            .logo-right {
-                width: 70px;
-                height: 70px;
+            /* KEEP PHOTO ON THE RIGHT SIDE - SAME AS PREVIEW */
+            .company-info-section {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: flex-start !important;
+                gap: 20px !important;
             }
 
             .info-table {
-                margin: 8px 0;
-            }
-
-            .info-table td {
-                padding: 6px 10px;
-                font-size: 0.9rem;
-            }
-
-            .info-table td:first-child {
-                width: 140px;
+                flex: 1 !important;
             }
 
             .photo-container {
-                width: 120px;
+                width: 150px !important;
+                flex-shrink: 0 !important;
             }
 
             .photo-frame {
-                width: 120px;
-                height: 120px;
+                width: 150px !important;
+                height: 150px !important;
+            }
+
+            /* Keep header layout */
+            .header-with-logo, .republic-header {
+                display: flex !important;
+                justify-content: space-between !important;
+                align-items: flex-start !important;
+            }
+
+            .logo-right {
+                width: 80px !important;
+                height: 80px !important;
+            }
+
+            /* Keep signature grid */
+            .signature-grid {
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 20px !important;
+            }
+
+            /* Keep all original sizes - no shrinking */
+            .card-header {
+                padding: 15px 25px !important;
+                font-size: 1.3rem !important;
+            }
+
+            .card-body {
+                padding: 25px !important;
+            }
+
+            .header-text h1 {
+                font-size: 1.8rem !important;
+            }
+
+            .republic-text h2 {
+                font-size: 1.8rem !important;
+            }
+
+            .info-table td {
+                padding: 12px 15px !important;
+                font-size: 1rem !important;
             }
 
             .certification-text {
-                padding: 10px;
-                margin: 8px 0;
-                font-size: 0.85rem;
-            }
-
-            .signature-grid {
-                gap: 10px;
-                margin: 10px 0;
+                padding: 20px !important;
+                font-size: 0.95rem !important;
             }
 
             .signature-box {
-                padding: 12px;
-            }
-
-            .signature-box h4 {
-                font-size: 0.9rem;
-                margin-bottom: 8px;
-            }
-
-            .signature-img {
-                max-height: 50px;
-            }
-
-            .signature-name {
-                padding: 5px;
-                font-size: 0.85rem;
-            }
-
-            .officials-table {
-                margin: 8px 0;
-            }
-
-            .officials-table th {
-                padding: 6px;
-                font-size: 0.85rem;
-            }
-
-            .officials-table td {
-                padding: 4px;
-                font-size: 0.85rem;
-            }
-
-            .official-signature-img {
-                max-width: 70px;
-                max-height: 30px;
+                padding: 20px !important;
             }
 
             .noted-section {
-                margin-top: 10px;
-                padding: 10px;
+                padding: 20px !important;
             }
 
-            .noted-line {
-                width: 200px;
-                margin: 8px auto;
-            }
-
-            .noted-name {
-                font-size: 1rem;
-            }
-
-            .noted-title {
-                font-size: 0.9rem;
-            }
-
-            .granting-section {
-                margin-top: 10px;
-                padding: 12px;
-            }
-
-            .granting-section p {
-                font-size: 0.85rem;
-            }
-
-            /* Ensure both forms fit on one page */
+            /* Both forms on one page */
             .form-card {
                 height: auto;
-                max-height: 48%;
-                margin-bottom: 10px;
+                margin-bottom: 20px;
             }
 
             .form-card:last-child {
@@ -696,7 +659,7 @@
                 html += '</div>';
                 html += '</div>';
                 
-                // Company Info with Photo
+                // Company Info with Photo - PHOTO NASA GILID
                 html += '<div class="company-info-section">';
                 
                 // Company Info Table
@@ -707,7 +670,7 @@
                 html += '<tr><td>TELEPHONE NO.:</td><td>' + (data.telephone || 'N/A') + '</td></tr>';
                 html += '</table>';
                 
-                // Photo
+                // Photo - NASA GILID
                 html += '<div class="photo-container">';
                 html += '<div class="photo-label">1x1 PHOTO</div>';
                 html += '<div class="photo-frame">';
@@ -859,7 +822,7 @@
                 }
                 
                 // Print Button
-                html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT BOTH FORMS (1 PAGE A4)</button>';
+                html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT (SAME AS PREVIEW)</button>';
                 
                 container.innerHTML = html;
                 
