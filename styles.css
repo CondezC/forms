@@ -1121,258 +1121,236 @@ body.dark-mode .instruction-btn:hover {
 }
 
 .instruction-popup {
-    max-width: 650px !important;
-    width: 90% !important;
-    max-height: 85vh !important;
-    overflow: hidden !important;
-    border-radius: 20px !important;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.4) !important;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 650px;
+    width: 90%;
+    max-height: 85vh;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+    background: white;
+    z-index: 10001;
 }
 
 .instruction-popup .popup-header {
-    background: linear-gradient(135deg, #003c8f, #1a4fa2, #2a5fb5) !important;
-    padding: 20px 25px !important;
-    border-bottom: 3px solid #ffd700 !important;
-    position: sticky !important;
-    top: 0 !important;
-    z-index: 10 !important;
+    background: linear-gradient(135deg, #003c8f, #1a4fa2, #2a5fb5);
+    padding: 20px 25px;
+    border-bottom: 3px solid #ffd700;
+    position: sticky;
+    top: 0;
+    z-index: 10;
 }
 
 .instruction-popup .popup-header h3 {
-    font-size: 1.3rem !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.5px !important;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.2) !important;
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    color: white;
+    margin: 0;
 }
 
 .instruction-popup .popup-close {
-    background: rgba(255,255,255,0.2) !important;
-    border: none !important;
-    color: white !important;
-    width: 36px !important;
-    height: 36px !important;
-    border-radius: 50% !important;
-    font-size: 1.3rem !important;
-    cursor: pointer !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    transition: all 0.3s ease !important;
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    position: absolute;
+    top: 15px;
+    right: 15px;
 }
 
 .instruction-popup .popup-close:hover {
-    background: rgba(255,255,255,0.3) !important;
-    transform: rotate(90deg) scale(1.1) !important;
+    background: rgba(255,255,255,0.3);
+    transform: rotate(90deg) scale(1.1);
 }
 
 .instruction-popup .popup-body {
-    padding: 30px !important;
-    max-height: 55vh !important;
-    overflow-y: auto !important;
-    scrollbar-width: thin !important;
-    scrollbar-color: #1976d2 #f0f0f0 !important;
+    padding: 30px;
+    max-height: 55vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #1976d2 #f0f0f0;
+    background: white;
 }
 
 .instruction-popup .popup-body::-webkit-scrollbar {
-    width: 8px !important;
+    width: 8px;
 }
 
 .instruction-popup .popup-body::-webkit-scrollbar-track {
-    background: #f0f0f0 !important;
-    border-radius: 10px !important;
+    background: #f0f0f0;
+    border-radius: 10px;
 }
 
 .instruction-popup .popup-body::-webkit-scrollbar-thumb {
-    background: #1976d2 !important;
-    border-radius: 10px !important;
+    background: #1976d2;
+    border-radius: 10px;
 }
 
 .instruction-popup .popup-body::-webkit-scrollbar-thumb:hover {
-    background: #003c8f !important;
+    background: #003c8f;
 }
 
 .instruction-popup .instruction-list {
-    list-style: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 .instruction-popup .instruction-list li {
-    display: flex !important;
-    gap: 15px !important;
-    margin-bottom: 20px !important;
-    padding: 15px !important;
-    background: #f8f9ff !important;
-    border-radius: 12px !important;
-    border-left: 5px solid #1976d2 !important;
-    box-shadow: 0 4px 12px rgba(0,60,143,0.08) !important;
-    transition: all 0.3s ease !important;
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9ff;
+    border-radius: 12px;
+    border-left: 5px solid #1976d2;
+    box-shadow: 0 4px 12px rgba(0,60,143,0.08);
+    transition: all 0.3s ease;
 }
 
 .instruction-popup .instruction-list li:hover {
-    transform: translateX(5px) !important;
-    box-shadow: 0 6px 15px rgba(25,118,210,0.15) !important;
+    transform: translateX(5px);
+    box-shadow: 0 6px 15px rgba(25,118,210,0.15);
 }
 
-.instruction-number {
-    width: 32px !important;
-    height: 32px !important;
-    background: #003c8f !important;
-    color: white !important;
-    border-radius: 50% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    font-weight: 700 !important;
-    font-size: 1.1rem !important;
-    flex-shrink: 0 !important;
-    box-shadow: 0 4px 8px rgba(0,60,143,0.3) !important;
+.instruction-popup .instruction-number {
+    width: 32px;
+    height: 32px;
+    background: #003c8f;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    box-shadow: 0 4px 8px rgba(0,60,143,0.3);
 }
 
-.instruction-text {
-    flex: 1 !important;
-    color: #333 !important;
-    line-height: 1.6 !important;
-    font-size: 0.95rem !important;
+.instruction-popup .instruction-text {
+    flex: 1;
+    color: #333;
+    line-height: 1.6;
+    font-size: 0.95rem;
 }
 
-.instruction-text strong {
-    color: #003c8f !important;
-    font-weight: 700 !important;
+.instruction-popup .instruction-text strong {
+    color: #003c8f;
+    font-weight: 700;
 }
 
 .instruction-popup .important-note {
-    background: linear-gradient(135deg, #fff9e6, #fff3cd) !important;
-    border: 1px solid #ffc107 !important;
-    border-radius: 12px !important;
-    padding: 20px !important;
-    margin: 25px 0 10px !important;
-    box-shadow: 0 4px 12px rgba(255,193,7,0.2) !important;
+    background: linear-gradient(135deg, #fff9e6, #fff3cd);
+    border: 1px solid #ffc107;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 25px 0 10px;
+    box-shadow: 0 4px 12px rgba(255,193,7,0.2);
 }
 
 .instruction-popup .important-note h4 {
-    color: #856404 !important;
-    font-size: 1.1rem !important;
-    margin-bottom: 10px !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-    font-weight: 700 !important;
+    color: #856404;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
 }
 
 .instruction-popup .important-note h4::before {
-    content: '⚠️' !important;
-    font-size: 1.3rem !important;
+    content: '⚠️';
+    font-size: 1.3rem;
 }
 
 .instruction-popup .important-note p {
-    color: #856404 !important;
-    line-height: 1.6 !important;
-    font-size: 0.95rem !important;
+    color: #856404;
+    line-height: 1.6;
+    font-size: 0.95rem;
 }
 
 .instruction-popup .popup-footer {
-    padding: 20px 25px !important;
-    background: #f8f9fa !important;
-    border-top: 1px solid #e0e0e0 !important;
-    text-align: center !important;
-    position: sticky !important;
-    bottom: 0 !important;
-    z-index: 10 !important;
+    padding: 20px 25px;
+    background: #f8f9fa;
+    border-top: 1px solid #e0e0e0;
+    text-align: center;
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
 }
 
 .instruction-popup .popup-footer .primary-btn {
-    min-width: 200px !important;
-    padding: 14px 30px !important;
-    font-size: 1.1rem !important;
-    background: linear-gradient(135deg, #4caf50, #45a049) !important;
-    border: none !important;
-    box-shadow: 0 4px 15px rgba(76,175,80,0.4) !important;
-    transition: all 0.3s ease !important;
+    min-width: 200px;
+    padding: 14px 30px;
+    font-size: 1.1rem;
+    background: linear-gradient(135deg, #4caf50, #45a049);
+    border: none;
+    box-shadow: 0 4px 15px rgba(76,175,80,0.4);
+    transition: all 0.3s ease;
+    color: white;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
 }
 
 .instruction-popup .popup-footer .primary-btn:hover {
-    transform: translateY(-3px) scale(1.02) !important;
-    box-shadow: 0 8px 25px rgba(76,175,80,0.5) !important;
-}
-
-.instruction-btn {
-    background: linear-gradient(135deg, #1976d2, #1565c0) !important;
-    border: none !important;
-    color: white !important;
-    padding: 10px 20px !important;
-    border-radius: 50px !important;
-    cursor: pointer !important;
-    font-size: 0.95rem !important;
-    font-weight: 600 !important;
-    margin-top: 15px !important;
-    transition: all 0.3s ease !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 8px !important;
-    box-shadow: 0 4px 12px rgba(25,118,210,0.3) !important;
-    border: 1px solid rgba(255,255,255,0.2) !important;
-}
-
-.instruction-btn:hover {
-    background: linear-gradient(135deg, #1565c0, #0d47a1) !important;
-    transform: translateY(-3px) !important;
-    box-shadow: 0 8px 20px rgba(25,118,210,0.4) !important;
-}
-
-.instruction-btn:active {
-    transform: translateY(-1px) !important;
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 8px 25px rgba(76,175,80,0.5);
 }
 
 body.dark-mode .instruction-popup {
-    background: #1e1e2f !important;
+    background: #1e1e2f;
 }
 
 body.dark-mode .instruction-popup .popup-header {
-    background: linear-gradient(135deg, #2d2d44, #1a1a2e) !important;
+    background: linear-gradient(135deg, #2d2d44, #1a1a2e);
 }
 
 body.dark-mode .instruction-popup .instruction-list li {
-    background: #2a2a3a !important;
-    border-left-color: #4a9eff !important;
+    background: #2a2a3a;
+    border-left-color: #4a9eff;
 }
 
-body.dark-mode .instruction-text {
-    color: #e0e0e0 !important;
+body.dark-mode .instruction-popup .instruction-text {
+    color: #e0e0e0;
 }
 
-body.dark-mode .instruction-text strong {
-    color: #6cb2ff !important;
+body.dark-mode .instruction-popup .instruction-text strong {
+    color: #6cb2ff;
 }
 
-body.dark-mode .instruction-number {
-    background: #4a9eff !important;
-    color: #1a1a2e !important;
+body.dark-mode .instruction-popup .instruction-number {
+    background: #4a9eff;
+    color: #1a1a2e;
 }
 
 body.dark-mode .instruction-popup .important-note {
-    background: linear-gradient(135deg, #2d2d44, #252535) !important;
-    border-color: #ffc107 !important;
+    background: linear-gradient(135deg, #2d2d44, #252535);
+    border-color: #ffc107;
 }
 
 body.dark-mode .instruction-popup .important-note h4,
 body.dark-mode .instruction-popup .important-note p {
-    color: #ffd700 !important;
+    color: #ffd700;
 }
 
 body.dark-mode .instruction-popup .popup-footer {
-    background: #252535 !important;
-    border-top-color: #3d3d5a !important;
-}
-
-body.dark-mode .instruction-btn {
-    background: linear-gradient(135deg, #2d2d44, #252535) !important;
-    color: #e0e0e0 !important;
-    border-color: #3d3d5a !important;
-}
-
-body.dark-mode .instruction-btn:hover {
-    background: linear-gradient(135deg, #3d3d5a, #2d2d44) !important;
+    background: #252535;
+    border-top-color: #3d3d5a;
 }
 
 @keyframes pulse {
@@ -1381,7 +1359,7 @@ body.dark-mode .instruction-btn:hover {
 }
 
 .instruction-popup .popup-footer .primary-btn {
-    animation: pulse 2s infinite !important;
+    animation: pulse 2s infinite;
 }
 
 @media (max-width: 768px) {
@@ -1569,13 +1547,13 @@ body.dark-mode .instruction-btn:hover {
         padding: 12px !important;
     }
     
-    .instruction-number {
+    .instruction-popup .instruction-number {
         width: 28px !important;
         height: 28px !important;
         font-size: 1rem !important;
     }
     
-    .instruction-text {
+    .instruction-popup .instruction-text {
         font-size: 0.9rem !important;
     }
     
@@ -1629,7 +1607,7 @@ body.dark-mode .instruction-btn:hover {
         font-size: 1rem !important;
     }
     
-    .instruction-number {
+    .instruction-popup .instruction-number {
         width: 24px !important;
         height: 24px !important;
         font-size: 0.9rem !important;
