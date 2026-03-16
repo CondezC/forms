@@ -50,19 +50,21 @@
             padding: 20px;
         }
 
-        /* Header with Logo - RIGHT SIDE */
+        /* Header with Logo - RIGHT SIDE - PERFECT ALIGNMENT */
         .header-with-logo {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-between;
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 2px solid #e0e0e0;
             flex-wrap: wrap;
+            gap: 15px;
         }
 
         .header-text {
             flex: 1;
+            min-width: 250px;
         }
 
         .header-text h1 {
@@ -70,46 +72,54 @@
             color: #003c8f;
             text-transform: uppercase;
             margin-bottom: 3px;
+            line-height: 1.2;
         }
 
         .header-text .branch {
             color: #1976d2;
             font-size: 1rem;
             font-weight: 600;
+            margin-bottom: 2px;
         }
 
         .header-text .address {
             color: #666;
             font-size: 0.85rem;
+            line-height: 1.4;
         }
 
         .logo-right {
-            width: 70px;
-            height: 70px;
+            width: 80px;
+            height: 80px;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
             flex-shrink: 0;
-            margin-left: 15px;
+            align-self: flex-start;
         }
 
         .logo-right img {
             width: 100%;
             height: 100%;
+            object-fit: contain;
         }
 
         /* Republic Header - with logo sa kanan */
         .republic-header {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             justify-content: space-between;
             margin-bottom: 20px;
             padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .republic-text {
             flex: 1;
+            min-width: 250px;
         }
 
         .republic-text h2 {
@@ -117,6 +127,8 @@
             color: #003c8f;
             text-transform: uppercase;
             font-weight: 800;
+            margin-bottom: 5px;
+            line-height: 1.2;
         }
 
         .republic-text h3 {
@@ -124,6 +136,7 @@
             color: #1976d2;
             margin: 5px 0;
             text-transform: uppercase;
+            line-height: 1.2;
         }
 
         .republic-text .form-number {
@@ -223,6 +236,7 @@
             .header-with-logo, .republic-header {
                 flex-direction: column;
                 text-align: center;
+                align-items: center;
             }
             
             .logo-right {
@@ -465,6 +479,14 @@
                 print-color-adjust: exact;
             }
 
+            .header-with-logo, .republic-header {
+                align-items: flex-start !important;
+            }
+
+            .header-text h1, .republic-text h2 {
+                margin-top: 0;
+            }
+
             .info-table td:first-child {
                 background: #f0f0f0 !important;
             }
@@ -493,7 +515,11 @@
             }
             
             .logo-right {
-                border: 1px solid #000;
+                border: none;
+            }
+
+            .logo-right img {
+                border: none;
             }
         }
     </style>
@@ -556,7 +582,7 @@
                 html += '<div class="card-header">📋 COMPANY REPRESENTATIVE AUTHORIZATION CARD</div>';
                 html += '<div class="card-body">';
                 
-                // Header with Logo - RIGHT SIDE
+                // Header with Logo - RIGHT SIDE - PERFECT ALIGNMENT
                 html += '<div class="header-with-logo">';
                 html += '<div class="header-text">';
                 html += '<h1>Social Security System</h1>';
@@ -570,7 +596,7 @@
                 
                 const first = formData.firstForm || {};
                 
-                // ===== 1x1 PICTURE - RIGHT ALIGNED =====
+                // 1x1 PICTURE - RIGHT ALIGNED
                 if (first.photo && first.photo !== '#' && first.photo !== '') {
                     html += '<div class="photo-section">';
                     html += '<div class="photo-container">';
