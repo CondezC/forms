@@ -45,7 +45,7 @@ function addInstructionButton() {
         if (!document.querySelector('.instruction-btn')) {
             const btn = document.createElement('button');
             btn.className = 'instruction-btn';
-            btn.innerHTML = '📋 Show Instructions';
+            btn.innerHTML = '📋 Show Important Info/Instructions';
             btn.onclick = showRegisterInstruction;
             btn.style.marginTop = '10px';
             header.appendChild(btn);
