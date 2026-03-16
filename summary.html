@@ -49,6 +49,7 @@
 
         .card-body {
             padding: 25px;
+            position: relative;
         }
 
         /* Header with Logo - RIGHT SIDE */
@@ -144,24 +145,36 @@
             font-style: italic;
         }
 
-        /* 1x1 PICTURE - TOP RIGHT */
-        .photo-section {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 25px;
+        /* ===== OVERLAPPING PHOTO AND TEXT ===== */
+        .content-with-photo {
+            position: relative;
+            min-height: 150px;
+            margin-bottom: 20px;
+        }
+
+        .photo-overlap {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 130px;
+            z-index: 2;
         }
 
         .photo-container {
             display: inline-block;
             text-align: center;
+            width: 100%;
         }
 
         .photo-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             color: #003c8f;
             font-weight: 600;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
             text-transform: uppercase;
+            background: white;
+            padding: 2px 5px;
+            border-radius: 4px 4px 0 0;
         }
 
         .photo-frame {
@@ -170,7 +183,7 @@
             border: 3px solid #003c8f;
             border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             background: #f0f0f0;
         }
 
@@ -180,32 +193,13 @@
             object-fit: cover;
         }
 
-        /* Certification Text */
-        .certification-text {
-            background: #f8f9ff;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-            border-left: 4px solid #1976d2;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #333;
+        .text-content {
+            position: relative;
+            z-index: 1;
+            padding-right: 140px; /* Space for the photo */
         }
 
-        .certification-text p {
-            margin-bottom: 15px;
-            text-align: justify;
-        }
-
-        .certification-text p:last-child {
-            margin-bottom: 0;
-        }
-
-        .certification-text strong {
-            color: #003c8f;
-        }
-
-        /* Info Tables */
+        /* Info Tables - will flow around the photo */
         .info-table {
             width: 100%;
             border-collapse: collapse;
@@ -216,15 +210,40 @@
         }
 
         .info-table td {
-            padding: 12px 15px;
+            padding: 10px 12px;
             border: 1px solid #e0e0e0;
         }
 
         .info-table td:first-child {
             font-weight: 600;
             color: #003c8f;
-            width: 180px;
+            width: 160px;
             background: #f8f9ff;
+        }
+
+        /* Certification Text */
+        .certification-text {
+            background: #f8f9ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border-left: 4px solid #1976d2;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #333;
+        }
+
+        .certification-text p {
+            margin-bottom: 10px;
+            text-align: justify;
+        }
+
+        .certification-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .certification-text strong {
+            color: #003c8f;
         }
 
         /* Officials Table */
@@ -311,6 +330,7 @@
             padding: 20px;
             background: #f0f7ff;
             border-radius: 8px;
+            clear: both;
         }
 
         .noted-line {
@@ -429,8 +449,22 @@
                 margin-top: 10px;
             }
             
-            .photo-section {
-                justify-content: center;
+            .content-with-photo {
+                min-height: auto;
+            }
+            
+            .photo-overlap {
+                position: relative;
+                width: 100%;
+                margin-bottom: 15px;
+            }
+            
+            .photo-frame {
+                margin: 0 auto;
+            }
+            
+            .text-content {
+                padding-right: 0;
             }
             
             .info-table td:first-child {
@@ -510,13 +544,10 @@
                 height: 70px;
             }
 
-            .photo-section {
-                margin-bottom: 10px;
-            }
-
             .photo-frame {
                 width: 100px;
                 height: 100px;
+                border: 2px solid #000;
             }
 
             .info-table {
@@ -524,12 +555,12 @@
             }
 
             .info-table td {
-                padding: 6px 10px;
-                font-size: 0.9rem;
+                padding: 5px 8px;
+                font-size: 0.85rem;
             }
 
             .info-table td:first-child {
-                width: 140px;
+                width: 130px;
             }
 
             .signature-grid {
@@ -538,75 +569,81 @@
             }
 
             .signature-box {
-                padding: 12px;
+                padding: 10px;
             }
 
             .signature-box h4 {
-                font-size: 0.9rem;
-                margin-bottom: 8px;
+                font-size: 0.85rem;
+                margin-bottom: 5px;
             }
 
             .signature-img {
-                max-height: 50px;
-                padding: 4px;
+                max-height: 45px;
+                padding: 3px;
             }
 
             .signature-name {
-                padding: 4px;
-                font-size: 0.85rem;
+                padding: 3px;
+                font-size: 0.8rem;
             }
 
             .officials-table {
-                margin: 10px 0;
+                margin: 8px 0;
             }
 
             .officials-table th {
-                padding: 6px;
-                font-size: 0.85rem;
+                padding: 5px;
+                font-size: 0.8rem;
             }
 
             .officials-table td {
-                padding: 4px;
-                font-size: 0.85rem;
+                padding: 3px;
+                font-size: 0.8rem;
             }
 
             .official-signature-img {
-                max-width: 70px;
-                max-height: 30px;
+                max-width: 60px;
+                max-height: 25px;
             }
 
             .noted-section {
                 margin-top: 10px;
-                padding: 10px;
+                padding: 8px;
             }
 
             .noted-line {
-                width: 180px;
-                margin: 6px auto;
+                width: 150px;
+                margin: 5px auto;
             }
 
             .noted-name {
-                font-size: 1rem;
+                font-size: 0.95rem;
             }
 
             .noted-title {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
             }
 
             .granting-section {
-                margin-top: 10px;
-                padding: 12px;
+                margin-top: 8px;
+                padding: 10px;
             }
 
             .granting-section p {
-                font-size: 0.9rem;
+                font-size: 0.85rem;
             }
 
             .certification-text {
-                border-left: 1px solid #000 !important;
-                background: #f8f9ff !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
+                padding: 10px;
+                font-size: 0.85rem;
+            }
+
+            .text-content {
+                padding-right: 110px;
+            }
+            
+            .photo-overlap {
+                width: 100px;
             }
         }
     </style>
@@ -683,9 +720,12 @@
                 
                 const first = formData.firstForm || {};
                 
-                // 1x1 Picture
+                // CONTENT WITH OVERLAPPING PHOTO
+                html += '<div class="content-with-photo">';
+                
+                // Photo - absolute positioned sa kanan
                 if (first.photo && first.photo !== '#' && first.photo !== '') {
-                    html += '<div class="photo-section">';
+                    html += '<div class="photo-overlap">';
                     html += '<div class="photo-container">';
                     html += '<div class="photo-label">1x1 PHOTO</div>';
                     html += '<div class="photo-frame">';
@@ -694,6 +734,9 @@
                     html += '</div>';
                     html += '</div>';
                 }
+                
+                // Text content - may padding-right para sa photo
+                html += '<div class="text-content">';
                 
                 // Company Info
                 html += '<table class="info-table">';
@@ -705,13 +748,16 @@
                 html += '<tr><td>SS NUMBER:</td><td>' + (first.ssNumber || 'N/A') + '</td></tr>';
                 html += '</table>';
                 
-                // ===== CERTIFICATION TEXT =====
+                // Certification Text
                 html += '<div class="certification-text">';
                 html += '<p>This is to certify that Mr./Ms. <strong>' + (first.certName || 'N/A') + '</strong> with SS # <strong>' + (first.ssNumber || 'N/A') + '</strong>, whose specimen signatures / initials appear below, is authorized to transact, verify and file Employer Data Change Request (R-8), Employer Registration Form (R-1), Employment Report (R-1A) and Member Data Change Request (E-4) of herein company\'s employees.</p>';
                 html += '<p>This Certification shall be valid within one (1) year from the date of issuance unless otherwise revoked and the SSS Eastwood Branch duly notified.</p>';
                 html += '</div>';
                 
-                // Signatures
+                html += '</div>'; // Close text-content
+                html += '</div>'; // Close content-with-photo
+                
+                // Signatures (outside the overlapping area)
                 html += '<div class="signature-grid">';
                 
                 if (first.specimenSignature1 && first.specimenSignature1.length > 50) {
