@@ -12,6 +12,33 @@ const db = firebase.firestore();
 
 let firstFormData = null;
 
+// ===== DATA SANITIZER =====
+function sanitizeData(data) {
+    if (data === null || data === undefined) {
+        return '';
+    }
+    if (typeof data === 'string') {
+        // Remove any invalid characters
+        return data.replace(/[^\x20-\x7E]/g, '');
+    }
+    if (typeof data === 'number' || typeof data === 'boolean') {
+        return data;
+    }
+    if (Array.isArray(data)) {
+        return data.map(item => sanitizeData(item));
+    }
+    if (typeof data === 'object') {
+        const clean = {};
+        for (let key in data) {
+            if (data.hasOwnProperty(key)) {
+                clean[key] = sanitizeData(data[key]);
+            }
+        }
+        return clean;
+    }
+    return '';
+}
+
 // ===== INSTRUCTION POPUP FUNCTIONS =====
 function showRegisterInstruction() {
     const popup = document.getElementById('registerInstructionPopup');
@@ -319,8 +346,9 @@ async function generateQRCode() {
         throw new Error("No first form data found. Please complete first form.");
     }
     
-    // FIX: Create a clean copy of firstFormData without any circular references
-    const cleanFirstForm = {
+    // SIMPLE DATA - no nested objects
+    const allData = {
+        // First form - simple strings only
         employerName: firstFormData.employerName || '',
         employerId: firstFormData.employerId || '',
         address: firstFormData.address || '',
@@ -331,42 +359,36 @@ async function generateQRCode() {
         employerName2: firstFormData.employerName2 || '',
         photo: firstFormData.photo || '',
         specimenSignature1: firstFormData.specimenSignature1 || '',
-        employerSignature: firstFormData.employerSignature || ''
-    };
-    
-    const allData = {
-        firstForm: cleanFirstForm,
-        secondForm: {
-            registeredName: document.getElementById('registeredName').value || '',
-            idNumber: document.getElementById('idNumber').value || '',
-            companyAddress: document.getElementById('companyAddress').value || '',
-            telNumber: document.getElementById('telNumber').value || '',
-            officials: [
-                {
-                    name: document.getElementById('officialName1').value || '',
-                    designation: document.getElementById('officialDesignation1').value || '',
-                    initial: document.getElementById('officialInitial1').value || '',
-                    signature: document.getElementById('officialSignature1').toDataURL() || ''
-                },
-                {
-                    name: document.getElementById('officialName2').value || '',
-                    designation: document.getElementById('officialDesignation2').value || '',
-                    initial: document.getElementById('officialInitial2').value || '',
-                    signature: document.getElementById('officialSignature2').toDataURL() || ''
-                },
-                {
-                    name: document.getElementById('officialName3').value || '',
-                    designation: document.getElementById('officialDesignation3').value || '',
-                    initial: document.getElementById('officialInitial3').value || '',
-                    signature: document.getElementById('officialSignature3').toDataURL() || ''
-                }
-            ],
-            grantingAuthority: {
-                name: document.getElementById('grantingName').value || '',
-                signature: document.getElementById('grantingSignature').toDataURL() || '',
-                date: document.getElementById('grantingDate').value || ''
-            }
-        }
+        employerSignature: firstFormData.employerSignature || '',
+        
+        // Second form - simple strings and arrays
+        registeredName: document.getElementById('registeredName').value || '',
+        idNumber: document.getElementById('idNumber').value || '',
+        companyAddress: document.getElementById('companyAddress').value || '',
+        telNumber: document.getElementById('telNumber').value || '',
+        
+        // Officials as array of strings
+        officialName1: document.getElementById('officialName1').value || '',
+        officialDesignation1: document.getElementById('officialDesignation1').value || '',
+        officialInitial1: document.getElementById('officialInitial1').value || '',
+        officialSignature1: document.getElementById('officialSignature1').toDataURL() || '',
+        
+        officialName2: document.getElementById('officialName2').value || '',
+        officialDesignation2: document.getElementById('officialDesignation2').value || '',
+        officialInitial2: document.getElementById('officialInitial2').value || '',
+        officialSignature2: document.getElementById('officialSignature2').toDataURL() || '',
+        
+        officialName3: document.getElementById('officialName3').value || '',
+        officialDesignation3: document.getElementById('officialDesignation3').value || '',
+        officialInitial3: document.getElementById('officialInitial3').value || '',
+        officialSignature3: document.getElementById('officialSignature3').toDataURL() || '',
+        
+        // Granting authority
+        grantingName: document.getElementById('grantingName').value || '',
+        grantingSignature: document.getElementById('grantingSignature').toDataURL() || '',
+        grantingDate: document.getElementById('grantingDate').value || '',
+        
+        timestamp: new Date().toISOString()
     };
 
     try {
