@@ -178,6 +178,11 @@
             display: block;
         }
         
+        .print-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4);
+        }
+        
         .loading, .error-message {
             text-align: center;
             padding: 50px;
@@ -190,6 +195,64 @@
         
         .error-message {
             color: #f44336;
+        }
+
+        /* Print Styles */
+        @media print {
+            @page {
+                size: landscape;
+                margin: 0.5in;
+            }
+
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .print-btn, .verified-badge {
+                display: none !important;
+            }
+
+            .summary-container {
+                max-width: 100%;
+                padding: 0;
+                gap: 0;
+            }
+
+            .summary-card {
+                box-shadow: none;
+                border: 1px solid #000;
+                page-break-after: always;
+                page-break-inside: avoid;
+                margin: 0;
+            }
+
+            .summary-card:last-child {
+                page-break-after: auto;
+            }
+
+            .card-header {
+                background: #003c8f !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .noted-section {
+                background: #f0f7ff !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .info-table td, 
+            .officials-table td {
+                border-color: #000;
+            }
+
+            .signature-img, 
+            .official-signature-img {
+                max-width: 150px;
+            }
         }
         
         @media (max-width: 768px) {
@@ -212,7 +275,6 @@
     </div>
 
     <script>
-        // ==================== FIREBASE CONFIG ====================
         const firebaseConfig = {
             apiKey: "AIzaSyCfQTN7UTRcW9lBm-rhRqyAOcT5gFZDJIs",
             authDomain: "sss-qr-system-39b59.firebaseapp.com",
@@ -222,11 +284,9 @@
             appId: "1:81090026028:web:91dfd833462e2d95434f89"
         };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // ==================== DISPLAY SUMMARY ====================
         window.onload = function() {
             displaySummary();
         };
@@ -246,7 +306,6 @@
                 const docRef = db.collection('sss-submissions').doc(submissionId);
                 const docSnap = await docRef.get();
 
-                // FIX: Use .exists property, not .exists()
                 if (!docSnap.exists) {
                     container.innerHTML = '<div class="error-message">❌ Submission not found in cloud</div>';
                     return;
@@ -256,8 +315,8 @@
                 
                 let html = '';
                 
-                // Verified Badge
-                html += '<div style="text-align: center; margin-bottom: 20px;">';
+                // Verified Badge - HINDI MAAAPEKTOHAN NG PRINT
+                html += '<div class="verified-badge" style="text-align: center; margin-bottom: 20px;">';
                 html += '<span style="background: #4caf50; color: white; padding: 5px 15px; border-radius: 20px;">✓ VERIFIED CLOUD DATA</span>';
                 html += '</div>';
                 
@@ -279,7 +338,6 @@
                 
                 const first = formData.firstForm || {};
                 
-                // Photo
                 if (first.photo && first.photo !== '#') {
                     html += '<div style="text-align: right; margin-bottom: 20px;">';
                     html += '<div style="width: 120px; height: 120px; border: 2px solid #003c8f; border-radius: 8px; overflow: hidden; margin-left: auto;">';
@@ -288,7 +346,6 @@
                     html += '</div>';
                 }
                 
-                // Company Info
                 html += '<table class="info-table">';
                 html += '<tr><td>EMPLOYER NAME:</td><td>' + (first.employerName || 'N/A') + '</td></tr>';
                 html += '<tr><td>EMPLOYER ID NO.:</td><td>' + (first.employerId || 'N/A') + '</td></tr>';
@@ -298,35 +355,33 @@
                 html += '<tr><td>SS NUMBER:</td><td>' + (first.ssNumber || 'N/A') + '</td></tr>';
                 html += '</table>';
                 
-                // Signatures
                 html += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">';
                 
                 if (first.specimenSignature1) {
-                    html += '<div style="text-align: center;">';
+                    html += '<div style="text-align: center; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px;">';
                     html += '<strong>SPECIMEN SIGNATURE</strong><br>';
-                    html += `<img src="${first.specimenSignature1}" class="signature-img"><br>`;
-                    html += (first.specimenName1 || '');
+                    html += `<img src="${first.specimenSignature1}" class="signature-img" alt="Specimen Signature"><br>`;
+                    html += '<span style="color: #003c8f;">' + (first.specimenName1 || '') + '</span>';
                     html += '</div>';
                 }
                 
                 if (first.employerSignature) {
-                    html += '<div style="text-align: center;">';
+                    html += '<div style="text-align: center; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px;">';
                     html += '<strong>SIGNATURE OVER PRINTED NAME</strong><br>';
-                    html += `<img src="${first.employerSignature}" class="signature-img"><br>`;
-                    html += (first.employerName2 || first.employerName || '');
+                    html += `<img src="${first.employerSignature}" class="signature-img" alt="Employer Signature"><br>`;
+                    html += '<span style="color: #003c8f;">' + (first.employerName2 || first.employerName || '') + '</span>';
                     html += '</div>';
                 }
                 
                 html += '</div>';
                 
-                // Noted By
                 html += '<div class="noted-section">';
                 html += '<div class="noted-line"></div>';
                 html += '<div class="noted-name">ELEANOR F. DEATO</div>';
                 html += '<div class="noted-title">Branch Head</div>';
                 html += '</div>';
                 
-                html += '</div></div>'; // Close first form
+                html += '</div></div>'; 
                 
                 // ============ SECOND FORM ============
                 html += '<div class="summary-card">';
@@ -334,9 +389,9 @@
                 html += '<div class="card-body">';
                 
                 html += '<div style="text-align: center; margin-bottom: 20px;">';
-                html += '<h2 style="color: #003c8f;">Republic of the Philippines</h2>';
-                html += '<h3 style="color: #1976d2;">SOCIAL SECURITY SYSTEM</h3>';
-                html += '<div>SSS Form L - 501 (07-94)</div>';
+                html += '<h2 style="color: #003c8f; margin: 0;">Republic of the Philippines</h2>';
+                html += '<h3 style="color: #1976d2; margin: 5px 0;">SOCIAL SECURITY SYSTEM</h3>';
+                html += '<div style="color: #666;">SSS Form L - 501 (07-94)</div>';
                 html += '</div>';
                 
                 const second = formData.secondForm || {};
@@ -348,11 +403,11 @@
                 html += '<tr><td>Tel. No.:</td><td>' + (second.telNumber || first.telephone || 'N/A') + '</td></tr>';
                 html += '</table>';
                 
-                // Officials
                 if (second.officials && second.officials.length > 0) {
                     html += '<h3 style="color: #003c8f; margin: 20px 0 10px;">Authorized Officials</h3>';
                     html += '<table class="officials-table">';
-                    html += '<tr><th>Name</th><th>Designation</th><th>Initials</th><th>Signature</th></tr>';
+                    html += '<thead><tr><th>Name</th><th>Designation</th><th>Initials</th><th>Signature</th></tr></thead>';
+                    html += '<tbody>';
                     
                     second.officials.forEach(official => {
                         html += '<tr>';
@@ -361,41 +416,40 @@
                         html += '<td>' + (official.initial || '') + '</td>';
                         html += '<td>';
                         if (official.signature) {
-                            html += `<img src="${official.signature}" class="official-signature-img">`;
+                            html += `<img src="${official.signature}" class="official-signature-img" alt="Signature">`;
+                        } else {
+                            html += 'No signature';
                         }
                         html += '</td>';
                         html += '</tr>';
                     });
                     
-                    html += '</table>';
+                    html += '</tbody></table>';
                 }
                 
-                // Granting Authority
                 const granting = second.grantingAuthority || {};
                 if (granting.name || granting.signature) {
                     html += '<div style="margin-top: 20px; padding: 15px; background: #f8f9ff; border-radius: 8px;">';
-                    html += '<h4 style="color: #003c8f;">Granting Authority</h4>';
+                    html += '<h4 style="color: #003c8f; margin-bottom: 10px;">Granting Authority</h4>';
                     html += '<p><strong>' + (granting.name || 'N/A') + '</strong></p>';
                     if (granting.signature) {
-                        html += `<img src="${granting.signature}" class="signature-img"><br>`;
+                        html += `<img src="${granting.signature}" class="signature-img" alt="Granting Signature"><br>`;
                     }
                     if (granting.date) {
-                        html += '<p>Date: ' + granting.date + '</p>';
+                        html += '<p><strong>Date:</strong> ' + granting.date + '</p>';
                     }
                     html += '</div>';
                 }
                 
-                html += '</div></div>'; // Close second form
+                html += '</div></div>'; 
                 
-                // Timestamp
                 if (formData.timestamp) {
                     html += '<div style="text-align: center; color: #888; margin: 20px;">';
                     html += '📅 Generated: ' + new Date(formData.timestamp).toLocaleString();
                     html += '</div>';
                 }
                 
-                // Print Button
-                html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT SUMMARY</button>';
+                html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT BOTH FORMS</button>';
                 
                 container.innerHTML = html;
                 
