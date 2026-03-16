@@ -120,7 +120,7 @@
             font-style: italic;
         }
 
-        /* Photo Section */
+        /* SIMPLE LAYOUT - NO OVERLAP */
         .photo-section {
             display: flex;
             justify-content: flex-end;
@@ -156,7 +156,7 @@
 
         /* Info Tables */
         .info-table {
-            width: 100%;
+            width: 50%;
             border-collapse: collapse;
             margin: 15px 0;
             font-size: 1rem;
@@ -479,7 +479,7 @@
                 
                 const first = formData.firstForm || {};
                 
-                // Photo
+                // Photo (simple lang, walang overlap)
                 if (first.photo && first.photo !== '#') {
                     html += '<div class="photo-section">';
                     html += '<div class="photo-container">';
@@ -491,15 +491,17 @@
                     html += '</div>';
                 }
                 
-                // Company Info - CERTIFIED NAME at SS NUMBER INALIS NA
+                // Company Info
                 html += '<table class="info-table">';
                 html += '<tr><td>EMPLOYER NAME:</td><td>' + (first.employerName || 'N/A') + '</td></tr>';
                 html += '<tr><td>EMPLOYER ID NO.:</td><td>' + (first.employerId || 'N/A') + '</td></tr>';
                 html += '<tr><td>ADDRESS:</td><td>' + (first.address || 'N/A') + '</td></tr>';
                 html += '<tr><td>TELEPHONE NO.:</td><td>' + (first.telephone || 'N/A') + '</td></tr>';
+                html += '<tr><td>CERTIFIED NAME:</td><td>' + (first.certName || 'N/A') + '</td></tr>';
+                html += '<tr><td>SS NUMBER:</td><td>' + (first.ssNumber || 'N/A') + '</td></tr>';
                 html += '</table>';
                 
-                // Certification Text - UPDATED with certName and ssNumber
+                // Certification Text
                 html += '<div class="certification-text">';
                 html += '<p>This is to certify that Mr./Ms. <strong>' + (first.certName || 'N/A') + '</strong> with SS # <strong>' + (first.ssNumber || 'N/A') + '</strong>, whose specimen signatures / initials appear below, is authorized to transact, verify and file Employer Data Change Request (R-8), Employer Registration Form (R-1), Employment Report (R-1A) and Member Data Change Request (E-4) of herein company\'s employees.</p>';
                 html += '<p>This Certification shall be valid within one (1) year from the date of issuance unless otherwise revoked and the SSS Eastwood Branch duly notified.</p>';
