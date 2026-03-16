@@ -1140,39 +1140,33 @@
         }
 
         function goToSecondForm() {
-            if (validateFirstForm()) {
-                const firstFormData = {
-                    employerName: document.getElementById('employerName').value,
-                    employerId: document.getElementById('employerId').value,
-                    address: document.getElementById('address').value,
-                    telephone: document.getElementById('telephone').value,
-                    certName: document.getElementById('certName').value,
-                    ssNumber: document.getElementById('ssNumber').value,
-                    specimenName1: document.getElementById('specimenName1').value,
-                    employerName2: document.getElementById('employerName2').value,
-                    photo: document.getElementById('photoPreview').src || '',
-                    specimenSignature1: document.getElementById('specimenSignature1').toDataURL(),
-                    employerSignature: document.getElementById('employerSignature').toDataURL()
-                };
-                
-                localStorage.setItem('firstFormData', JSON.stringify(firstFormData));
-                
-                showPopup('First form completed! Proceeding to next form...', 'success', 'SUCCESS!');
-                
-                setTimeout(() => {
-                    window.location.href = 'register.html';
-                }, 2000);
-            } else {
-                showPopup('Please fill in all required fields and complete all signatures.', 'error');
-            }
-        }
-
-        window.openModal = openModal;
-        window.closeModal = closeModal;
-        window.clearModalCanvas = clearModalCanvas;
-        window.saveSignature = saveSignature;
-        window.clearCanvas = clearCanvas;
-        window.goToSecondForm = goToSecondForm;
+    if (validateFirstForm()) {
+        const firstFormData = {
+            employerName: document.getElementById('employerName').value,
+            employerId: document.getElementById('employerId').value,
+            address: document.getElementById('address').value,
+            telephone: document.getElementById('telephone').value,
+            certName: document.getElementById('certName').value,
+            ssNumber: document.getElementById('ssNumber').value,
+            specimenName1: document.getElementById('specimenName1').value,
+            employerName2: document.getElementById('employerName2').value,
+            photo: document.getElementById('photoPreview').src || '',
+            specimenSignature1: document.getElementById('specimenSignature1').toDataURL(),
+            employerSignature: document.getElementById('employerSignature').toDataURL()
+        };
+        
+        localStorage.setItem('firstFormData', JSON.stringify(firstFormData));
+        
+        // Show popup and redirect to instruction page
+        showPopup('First form completed! Proceeding to instructions...', 'success', 'SUCCESS!');
+        
+        setTimeout(() => {
+            window.location.href = 'instruction.html'; // Redirect to instruction page
+        }, 2000);
+    } else {
+        showPopup('Please fill in all required fields and complete all signatures.', 'error');
+    }
+}
     </script>
 </body>
 </html>
