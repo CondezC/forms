@@ -7,9 +7,11 @@ const firebaseConfig = {
     appId: "1:81090026028:web:91dfd833462e2d95434f89"
 };
 
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
+// Load data on page load
 window.addEventListener('load', function() {
     displaySummary();
     addPrintStyles();
@@ -49,9 +51,6 @@ function addPrintStyles() {
             .signature-img, .official-signature-img {
                 max-width: 150px !important;
             }
-            .info-table td, .officials-table td {
-                border-color: #000 !important;
-            }
         }
     `;
     document.head.appendChild(printStyles);
@@ -60,33 +59,38 @@ function addPrintStyles() {
 async function displaySummary() {
     const container = document.getElementById('summaryContainer');
     
-    container.innerHTML = '<div class="loading">Loading data from cloud...</div>';
+    // Show loading
+    container.innerHTML = '<div class="loading" style="text-align: center; padding: 50px;">Loading data from cloud...</div>';
     
     const urlParams = new URLSearchParams(window.location.search);
     const submissionId = urlParams.get('id');
     
     if (!submissionId) {
-        container.innerHTML = '<div class="error-message">❌ No submission ID found</div>';
+        container.innerHTML = '<div class="error-message" style="text-align: center; padding: 50px; color: #f44336;">❌ No submission ID found</div>';
         return;
     }
 
     try {
+        console.log("Fetching ID:", submissionId);
         const docRef = db.collection('sss-submissions').doc(submissionId);
         const docSnap = await docRef.get();
 
         if (!docSnap.exists()) {
-            container.innerHTML = '<div class="error-message">❌ Submission not found in cloud</div>';
+            container.innerHTML = '<div class="error-message" style="text-align: center; padding: 50px; color: #f44336;">❌ Submission not found in cloud</div>';
             return;
         }
 
         const formData = docSnap.data();
+        console.log("Data loaded:", formData);
         
         let html = '';
         
+        // Verified badge
         html += '<div style="text-align: center; margin-bottom: 20px;">';
         html += '<span style="background: #4caf50; color: white; padding: 8px 20px; border-radius: 50px; display: inline-block;">✓ VERIFIED CLOUD DATA</span>';
         html += '</div>';
         
+        // FIRST FORM
         html += '<div class="summary-card">';
         html += '<div class="card-header">📋 COMPANY REPRESENTATIVE AUTHORIZATION CARD</div>';
         html += '<div class="card-body">';
@@ -104,6 +108,7 @@ async function displaySummary() {
         
         const first = formData.firstForm || {};
         
+        // Photo
         if (first.photo && first.photo !== '#' && first.photo !== '') {
             html += '<div style="text-align: right; margin-bottom: 20px;">';
             html += '<div style="width: 120px; height: 120px; border: 2px solid #003c8f; border-radius: 8px; overflow: hidden; margin-left: auto;">';
@@ -112,6 +117,7 @@ async function displaySummary() {
             html += '</div>';
         }
         
+        // Company Info
         html += '<table class="info-table">';
         html += '<tr><td>EMPLOYER NAME:</td><td>' + (first.employerName || 'N/A') + '</td></tr>';
         html += '<tr><td>EMPLOYER ID NO.:</td><td>' + (first.employerId || 'N/A') + '</td></tr>';
@@ -121,9 +127,10 @@ async function displaySummary() {
         html += '<tr><td>SS NUMBER:</td><td>' + (first.ssNumber || 'N/A') + '</td></tr>';
         html += '</table>';
         
+        // Signatures
         html += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">';
         
-        if (first.specimenSignature1 && first.specimenSignature1 !== 'data:,') {
+        if (first.specimenSignature1 && first.specimenSignature1.length > 50) {
             html += '<div style="text-align: center; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px;">';
             html += '<strong>SPECIMEN SIGNATURE</strong><br>';
             html += `<img src="${first.specimenSignature1}" style="max-width: 100%; max-height: 60px; margin: 10px 0;"><br>`;
@@ -131,7 +138,7 @@ async function displaySummary() {
             html += '</div>';
         }
         
-        if (first.employerSignature && first.employerSignature !== 'data:,') {
+        if (first.employerSignature && first.employerSignature.length > 50) {
             html += '<div style="text-align: center; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px;">';
             html += '<strong>SIGNATURE OVER PRINTED NAME</strong><br>';
             html += `<img src="${first.employerSignature}" style="max-width: 100%; max-height: 60px; margin: 10px 0;"><br>`;
@@ -141,13 +148,16 @@ async function displaySummary() {
         
         html += '</div>';
         
+        // Noted By
         html += '<div class="noted-section">';
         html += '<div class="noted-line"></div>';
         html += '<div class="noted-name">ELEANOR F. DEATO</div>';
         html += '<div class="noted-title">Branch Head</div>';
         html += '</div>';
         
-        html += '</div></div>'; 
+        html += '</div></div>'; // Close first form
+        
+        // SECOND FORM
         html += '<div class="summary-card">';
         html += '<div class="card-header">📋 SPECIMEN SIGNATURE CARD</div>';
         html += '<div class="card-body">';
@@ -160,6 +170,7 @@ async function displaySummary() {
         
         const second = formData.secondForm || {};
         
+        // Company Info
         html += '<table class="info-table">';
         html += '<tr><td>Registered Employer Name:</td><td>' + (second.registeredName || first.employerName || 'N/A') + '</td></tr>';
         html += '<tr><td>I.D. No.:</td><td>' + (second.idNumber || first.employerId || 'N/A') + '</td></tr>';
@@ -167,10 +178,12 @@ async function displaySummary() {
         html += '<tr><td>Tel. No.:</td><td>' + (second.telNumber || first.telephone || 'N/A') + '</td></tr>';
         html += '</table>';
         
+        // Officials
         if (second.officials && second.officials.length > 0) {
             html += '<h3 style="color: #003c8f; margin: 20px 0 10px;">Authorized Officials</h3>';
             html += '<table class="officials-table">';
-            html += '<tr><th>Name</th><th>Designation</th><th>Initials</th><th>Signature</th></tr>';
+            html += '<thead><tr><th>Name</th><th>Designation</th><th>Initials</th><th>Signature</th></tr></thead>';
+            html += '<tbody>';
             
             second.officials.forEach((official, index) => {
                 html += '<tr>';
@@ -178,7 +191,7 @@ async function displaySummary() {
                 html += '<td>' + (official.designation || '') + '</td>';
                 html += '<td>' + (official.initial || '') + '</td>';
                 html += '<td>';
-                if (official.signature && official.signature !== 'data:,') {
+                if (official.signature && official.signature.length > 50) {
                     html += `<img src="${official.signature}" style="max-width: 100px; max-height: 40px;" alt="Signature">`;
                 } else {
                     html += 'No signature';
@@ -187,15 +200,16 @@ async function displaySummary() {
                 html += '</tr>';
             });
             
-            html += '</table>';
+            html += '</tbody></table>';
         }
         
+        // Granting Authority
         const granting = second.grantingAuthority || {};
         if (granting.name || granting.signature) {
             html += '<div style="margin-top: 20px; padding: 15px; background: #f8f9ff; border-radius: 8px;">';
             html += '<h4 style="color: #003c8f; margin-bottom: 10px;">Granting Authority</h4>';
             html += '<p><strong>' + (granting.name || 'N/A') + '</strong></p>';
-            if (granting.signature && granting.signature !== 'data:,') {
+            if (granting.signature && granting.signature.length > 50) {
                 html += `<img src="${granting.signature}" style="max-width: 200px; max-height: 60px; margin: 5px 0;" alt="Granting Signature"><br>`;
             }
             if (granting.date) {
@@ -204,14 +218,16 @@ async function displaySummary() {
             html += '</div>';
         }
         
-        html += '</div></div>'; 
+        html += '</div></div>'; // Close second form
         
+        // Timestamp
         if (formData.timestamp) {
             html += '<div style="text-align: center; color: #888; margin: 20px;">';
             html += '📅 Generated: ' + new Date(formData.timestamp).toLocaleString();
             html += '</div>';
         }
         
+        // Print Button
         html += '<div style="text-align: center; margin: 30px 0;">';
         html += '<button class="primary-btn print-btn" onclick="window.print()" style="background: #003c8f; padding: 15px 40px;">';
         html += '🖨️ PRINT BOTH FORMS';
@@ -221,7 +237,7 @@ async function displaySummary() {
         container.innerHTML = html;
         
     } catch (error) {
-        console.error('Error loading from Firebase:', error);
-        container.innerHTML = '<div class="error-message">❌ Error loading data from cloud: ' + error.message + '</div>';
+        console.error('Error:', error);
+        container.innerHTML = '<div class="error-message" style="text-align: center; padding: 50px; color: #f44336;">❌ Error: ' + error.message + '</div>';
     }
 }
