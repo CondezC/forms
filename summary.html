@@ -50,33 +50,15 @@
             padding: 20px;
         }
 
-        /* Header with Logo - FIXED: Isang logo lang */
+        /* Header with Logo - RIGHT SIDE LANG */
         .header-with-logo {
             display: flex;
             align-items: center;
-            gap: 15px;
+            justify-content: space-between;
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 2px solid #e0e0e0;
             flex-wrap: wrap;
-        }
-
-        .logo-circle {
-            width: 70px;
-            height: 70px;
-            background: #003c8f;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .logo-circle img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
         }
 
         .header-text {
@@ -101,27 +83,54 @@
             font-size: 0.85rem;
         }
 
-        /* Republic Header */
-        .republic-header {
-            text-align: center;
-            margin-bottom: 20px;
+        .logo-right {
+            width: 70px;
+            height: 70px;
+            background: #003c8f;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+            margin-left: 15px;
         }
 
-        .republic-header h2 {
+        .logo-right img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        /* Republic Header - may logo sa kanan din */
+        .republic-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .republic-text {
+            flex: 1;
+        }
+
+        .republic-text h2 {
             font-size: 1.5rem;
             color: #003c8f;
             text-transform: uppercase;
             font-weight: 800;
         }
 
-        .republic-header h3 {
+        .republic-text h3 {
             font-size: 1.3rem;
             color: #1976d2;
             margin: 5px 0;
             text-transform: uppercase;
         }
 
-        .form-number {
+        .republic-text .form-number {
             color: #666;
             font-size: 0.85rem;
             font-style: italic;
@@ -166,6 +175,16 @@
                 margin-bottom: 10px;
                 border: 1px solid #e0e0e0;
                 border-radius: 8px;
+            }
+            
+            .header-with-logo, .republic-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .logo-right {
+                margin-left: 0;
+                margin-top: 10px;
             }
         }
 
@@ -445,8 +464,11 @@
                 border: 2px solid #000;
             }
 
-            /* Ensure table doesn't break on print */
             .info-table td {
+                border: 1px solid #000;
+            }
+            
+            .logo-right {
                 border: 1px solid #000;
             }
         }
@@ -510,15 +532,15 @@
                 html += '<div class="card-header">📋 COMPANY REPRESENTATIVE AUTHORIZATION CARD</div>';
                 html += '<div class="card-body">';
                 
-                // Header with Logo (ISANG LOGO LANG)
+                // Header with Logo - RIGHT SIDE LANG
                 html += '<div class="header-with-logo">';
-                html += '<div class="logo-circle">';
-                html += '<img src="republic-of-the-philippines-social-security-system-logo-png_seeklogo.png" alt="SSS Logo" onerror="this.innerHTML=\'SSS\';">';
-                html += '</div>';
                 html += '<div class="header-text">';
                 html += '<h1>Social Security System</h1>';
                 html += '<div class="branch">EASTWOOD BRANCH</div>';
                 html += '<div class="address">187 ABQ Building, E. Rodriguez Jr. Ave., Bagumbayan, QC</div>';
+                html += '</div>';
+                html += '<div class="logo-right">';
+                html += '<img src="republic-of-the-philippines-social-security-system-logo-png_seeklogo.png" alt="SSS Logo" onerror="this.innerHTML=\'SSS\';">';
                 html += '</div>';
                 html += '</div>';
                 
@@ -578,10 +600,16 @@
                 html += '<div class="card-header">📋 SPECIMEN SIGNATURE CARD</div>';
                 html += '<div class="card-body">';
                 
+                // Republic Header with Logo - RIGHT SIDE LANG
                 html += '<div class="republic-header">';
+                html += '<div class="republic-text">';
                 html += '<h2>Republic of the Philippines</h2>';
                 html += '<h3>SOCIAL SECURITY SYSTEM</h3>';
                 html += '<div class="form-number">SSS Form L - 501 (07-94)</div>';
+                html += '</div>';
+                html += '<div class="logo-right">';
+                html += '<img src="republic-of-the-philippines-social-security-system-logo-png_seeklogo.png" alt="SSS Logo" onerror="this.innerHTML=\'SSS\';">';
+                html += '</div>';
                 html += '</div>';
                 
                 const second = formData.secondForm || {};
