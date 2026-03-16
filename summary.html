@@ -463,7 +463,6 @@
                 padding: 15px;
             }
 
-            /* Compact layout */
             .header-with-logo, .republic-header {
                 margin-bottom: 10px;
                 padding-bottom: 8px;
@@ -604,6 +603,11 @@
             displaySummary();
         };
 
+        // Simple print function
+        function printForms() {
+            window.print();
+        }
+
         async function displaySummary() {
             const container = document.getElementById('summaryContainer');
             
@@ -652,7 +656,7 @@
                 
                 const first = formData.firstForm || {};
                 
-                // 1x1 Picture - NASA ITAAS (BAGO ANG EMPLOYER NAME)
+                // 1x1 Picture - NASA ITAAS
                 if (first.photo && first.photo !== '#' && first.photo !== '') {
                     html += '<div class="photo-section">';
                     html += '<div class="photo-container">';
@@ -664,7 +668,7 @@
                     html += '</div>';
                 }
                 
-                // Company Info (EMPLOYER NAME et al)
+                // Company Info
                 html += '<table class="info-table">';
                 html += '<tr><td>EMPLOYER NAME:</td><td>' + (first.employerName || 'N/A') + '</td></tr>';
                 html += '<tr><td>EMPLOYER ID NO.:</td><td>' + (first.employerId || 'N/A') + '</td></tr>';
@@ -782,7 +786,7 @@
                     html += '</div>';
                 }
                 
-                // Print Button
+                // Print Button - WITH DIRECT ONCLICK FUNCTION
                 html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT BOTH FORMS (1 PAPER)</button>';
                 
                 container.innerHTML = html;
