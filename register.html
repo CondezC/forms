@@ -700,6 +700,10 @@
                 document.getElementById('idNumber').value = firstFormData.employerId || '';
                 document.getElementById('companyAddress').value = firstFormData.address || '';
                 document.getElementById('telNumber').value = firstFormData.telephone || '';
+                
+                console.log("✅ First form data loaded:", firstFormData.employerName);
+            } else {
+                console.warn("⚠️ No first form data found");
             }
             
             const canvases = [
