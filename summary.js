@@ -12,7 +12,57 @@ const db = firebase.firestore();
 
 window.onload = async function() {
     displaySummary();
+    addPrintStyles();
 };
+
+function addPrintStyles() {
+    const printStyles = document.createElement('style');
+    printStyles.textContent = `
+        @media print {
+            body {
+                background: white !important;
+                padding: 0 !important;
+            }
+            
+            .print-btn, .theme-toggle, .back-btn {
+                display: none !important;
+            }
+            
+            .summary-container {
+                max-width: 100% !important;
+                padding: 0 !important;
+            }
+            
+            .summary-card {
+                box-shadow: none !important;
+                border: 1px solid #ddd !important;
+                page-break-inside: avoid !important;
+                margin-bottom: 20px !important;
+            }
+            
+            .card-header {
+                background: #003c8f !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            .noted-section {
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+            
+            .signature-img, .official-signature-img {
+                max-width: 150px !important;
+            }
+            
+            .info-table td, .officials-table td {
+                border-color: #000 !important;
+            }
+        }
+    `;
+    document.head.appendChild(printStyles);
+}
 
 async function displaySummary() {
     const container = document.getElementById('summaryContainer');
@@ -62,7 +112,7 @@ async function displaySummary() {
         if (first.photo && first.photo !== '#') {
             html += '<div style="text-align: right; margin-bottom: 20px;">';
             html += '<div style="width: 120px; height: 120px; border: 2px solid #003c8f; border-radius: 8px; overflow: hidden; margin-left: auto;">';
-            html += `<img src="${first.photo}" style="width: 100%; height: 100%; object-fit: cover;">`;
+            html += `<img src="${first.photo}" style="width: 100%; height: 100%; object-fit: cover;" alt="1x1 Photo">`;
             html += '</div>';
             html += '</div>';
         }
@@ -81,7 +131,7 @@ async function displaySummary() {
         if (first.specimenSignature1) {
             html += '<div style="text-align: center;">';
             html += '<strong>SPECIMEN SIGNATURE</strong><br>';
-            html += `<img src="${first.specimenSignature1}" class="signature-img"><br>`;
+            html += `<img src="${first.specimenSignature1}" class="signature-img" alt="Specimen Signature"><br>`;
             html += (first.specimenName1 || '');
             html += '</div>';
         }
@@ -89,7 +139,7 @@ async function displaySummary() {
         if (first.employerSignature) {
             html += '<div style="text-align: center;">';
             html += '<strong>SIGNATURE OVER PRINTED NAME</strong><br>';
-            html += `<img src="${first.employerSignature}" class="signature-img"><br>`;
+            html += `<img src="${first.employerSignature}" class="signature-img" alt="Employer Signature"><br>`;
             html += (first.employerName2 || first.employerName || '');
             html += '</div>';
         }
@@ -102,7 +152,7 @@ async function displaySummary() {
         html += '<div class="noted-title">Branch Head</div>';
         html += '</div>';
         
-        html += '</div></div>'; 
+        html += '</div></div>';
         
         html += '<div class="summary-card">';
         html += '<div class="card-header">📋 SPECIMEN SIGNATURE CARD</div>';
@@ -135,7 +185,9 @@ async function displaySummary() {
                 html += '<td>' + (official.initial || '') + '</td>';
                 html += '<td>';
                 if (official.signature) {
-                    html += `<img src="${official.signature}" class="official-signature-img">`;
+                    html += `<img src="${official.signature}" class="official-signature-img" alt="Signature">`;
+                } else {
+                    html += 'No signature';
                 }
                 html += '</td>';
                 html += '</tr>';
@@ -150,15 +202,15 @@ async function displaySummary() {
             html += '<h4 style="color: #003c8f;">Granting Authority</h4>';
             html += '<p><strong>' + (granting.name || 'N/A') + '</strong></p>';
             if (granting.signature) {
-                html += `<img src="${granting.signature}" class="signature-img"><br>`;
+                html += `<img src="${granting.signature}" class="signature-img" alt="Granting Signature"><br>`;
             }
             if (granting.date) {
-                html += '<p>Date: ' + granting.date + '</p>';
+                html += '<p><strong>Date:</strong> ' + granting.date + '</p>';
             }
             html += '</div>';
         }
         
-        html += '</div></div>'; 
+        html += '</div></div>';
         
         if (formData.timestamp) {
             html += '<div style="text-align: center; color: #888; margin: 20px;">';
@@ -166,7 +218,11 @@ async function displaySummary() {
             html += '</div>';
         }
         
-        html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT SUMMARY</button>';
+        html += '<div style="text-align: center; margin: 30px 0;">';
+        html += '<button class="primary-btn print-btn" onclick="window.print()" style="background: #003c8f; padding: 15px 40px;">';
+        html += '🖨️ PRINT BOTH FORMS';
+        html += '</button>';
+        html += '</div>';
         
         container.innerHTML = html;
         
