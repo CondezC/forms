@@ -859,13 +859,6 @@
             employerSignature: false
         };
 
-            document.getElementById('certName').addEventListener('input', function(e) {
-                const value = e.target.value;
-                if (!document.getElementById('specimenName1').value && value) {
-                    document.getElementById('specimenName1').value = value;
-                }
-            });
-
         window.onload = function() {
             const canvases = [
                 'specimenSignature1', 'specimenSignature2', 'employerSignature'
