@@ -267,7 +267,6 @@
             text-align: center;
         }
 
-        /* ===== NEW: SIDE-BY-SIDE SIGNATURES ===== */
         .signatures-side-by-side {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -357,13 +356,6 @@
             font-size: 0.95rem;
             margin-top: 10px;
             text-align: center;
-        }
-
-        .employer-signature-text {
-            font-size: 0.9rem;
-            color: #666;
-            margin: 10px 0 5px 0;
-            font-style: italic;
         }
 
         .noted-section {
@@ -737,9 +729,7 @@
             <p>This Certification shall be valid within one (1) year from the date of issuance unless otherwise revoked and the SSS Eastwood Branch duly notified.</p>
         </div>
 
-        <!-- ===== SIDE-BY-SIDE SIGNATURES ===== -->
         <div class="signatures-side-by-side">
-            <!-- Specimen Signature -->
             <div class="signature-item">
                 <div class="signature-label">SPECIMEN SIGNATURE</div>
                 <div class="signature-container">
@@ -812,6 +802,19 @@
                 reader.readAsDataURL(file);
             }
         });
+
+        // ===== NAME VALIDATION =====
+        function validateNameInput(event) {
+            const input = event.target;
+            // Allow only letters, spaces, periods, and hyphens
+            input.value = input.value.replace(/[^a-zA-Z\s.-]/g, '');
+        }
+
+        // Apply validation to all name inputs
+        document.getElementById('specimenName1').addEventListener('input', validateNameInput);
+        document.getElementById('employerName2').addEventListener('input', validateNameInput);
+        document.getElementById('employerName').addEventListener('input', validateNameInput);
+        document.getElementById('certName').addEventListener('input', validateNameInput);
 
         let currentCanvas = null;
         let currentCanvasId = null;
