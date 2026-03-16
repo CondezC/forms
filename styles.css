@@ -1135,4 +1135,337 @@ fieldset {
         flex-direction: column;
         text-align: center;
     }
+
+    /* ===== BETTER MOBILE EXPERIENCE ===== */
+
+/* Prevent zoom on input focus for iOS */
+@media (max-width: 768px) {
+    input, 
+    select, 
+    textarea, 
+    button {
+        font-size: 16px !important; /* Important para hindi mag-zoom sa iOS */
+    }
+    
+    /* Mas maluwag na padding sa mobile */
+    .form-container {
+        padding: 15px !important;
+    }
+    
+    /* Mas malaking touch targets */
+    button, 
+    .sign-btn, 
+    .clear-btn, 
+    .upload-btn,
+    .save-btn,
+    .back-btn,
+    .primary-btn {
+        min-height: 48px !important; /* Minimum touch target size */
+        padding: 12px 20px !important;
+    }
+    
+    /* Table adjustments */
+    .info-table td,
+    .officials-table td {
+        padding: 8px !important;
+        font-size: 14px !important;
+    }
+    
+    .info-table td:first-child {
+        width: 120px !important;
+    }
+    
+    /* Stack elements on mobile */
+    .employer-header {
+        flex-direction: column !important;
+        align-items: center !important;
+    }
+    
+    .photo-section {
+        margin-bottom: 20px !important;
+        width: 100% !important;
+    }
+    
+    .photo-box {
+        margin: 0 auto !important;
+    }
+    
+    /* Signature canvases */
+    .signature-canvas,
+    .employer-canvas,
+    .signature-canvas-small,
+    .granting-canvas {
+        height: 70px !important; /* Mas malaki para madaling pirmahan sa mobile */
+    }
+    
+    /* QR code */
+    .qr-code {
+        width: 150px !important;
+        height: 150px !important;
+    }
+    
+    /* Progress steps */
+    .progress-steps {
+        gap: 10px !important;
+        flex-wrap: wrap !important;
+    }
+    
+    .step {
+        padding: 0 5px !important;
+    }
+    
+    .step-number {
+        width: 35px !important;
+        height: 35px !important;
+        font-size: 14px !important;
+    }
+    
+    .step-label {
+        font-size: 11px !important;
+    }
+    
+    /* Bottom actions */
+    .action-buttons {
+        flex-direction: column !important;
+        gap: 10px !important;
+    }
+    
+    .primary-btn,
+    .back-btn {
+        width: 100% !important;
+        min-width: auto !important;
+        margin: 0 !important;
+    }
+    
+    /* Date section */
+    .date-section {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+    
+    .date-input {
+        width: 100% !important;
+    }
+    
+    /* Modal */
+    .modal-content {
+        width: 95% !important;
+        padding: 20px !important;
+    }
+    
+    .modal-canvas {
+        height: 150px !important;
+    }
+    
+    .modal-buttons {
+        flex-wrap: wrap !important;
+    }
+    
+    .modal-btn {
+        flex: 1 1 auto !important;
+        min-width: 80px !important;
+    }
+    
+    /* Instruction page */
+    .instruction-list li {
+        flex-direction: column !important;
+        gap: 10px !important;
+        padding: 12px !important;
+    }
+    
+    .instruction-number {
+        width: 25px !important;
+        height: 25px !important;
+        font-size: 14px !important;
+    }
+    
+    .instruction-text {
+        font-size: 14px !important;
+    }
+    
+    /* Summary page */
+    .summary-header {
+        flex-direction: column !important;
+        text-align: center !important;
+        gap: 10px !important;
+    }
+    
+    .summary-logo {
+        width: 60px !important;
+        height: 60px !important;
+    }
+    
+    .summary-title h1 {
+        font-size: 1.5rem !important;
+    }
+    
+    .signature-grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    
+    /* Popup messages */
+    .popup-message {
+        width: 90% !important;
+        padding: 20px !important;
+    }
+    
+    .popup-icon {
+        font-size: 40px !important;
+    }
+    
+    .popup-title {
+        font-size: 1.2rem !important;
+    }
+    
+    .popup-buttons {
+        flex-direction: column !important;
+        gap: 8px !important;
+    }
+    
+    .popup-btn {
+        width: 100% !important;
+    }
+    
+    /* Noted section */
+    .noted-line {
+        width: 200px !important;
+    }
+    
+    /* Granting section */
+    .granting-container {
+        flex-direction: column !important;
+    }
+    
+    .granting-signature {
+        min-width: 100% !important;
+    }
+    
+    /* Fix overflow */
+    .form-container,
+    .instruction-container,
+    .summary-card {
+        overflow-x: hidden !important;
+    }
+    
+    /* Better scrolling */
+    .officials-table {
+        display: block !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+    }
+    
+    /* Remove fixed positioning on mobile */
+    .theme-toggle {
+        top: 10px !important;
+        right: 10px !important;
+        width: 40px !important;
+        height: 40px !important;
+        font-size: 1.2rem !important;
+    }
+    
+    /* Back button */
+    .back-button {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+}
+
+/* Extra small devices (phones, 400px and down) */
+@media (max-width: 400px) {
+    .form-container {
+        padding: 10px !important;
+    }
+    
+    .info-table td {
+        padding: 5px !important;
+        font-size: 12px !important;
+    }
+    
+    .info-table td:first-child {
+        width: 100px !important;
+    }
+    
+    .signature-label {
+        font-size: 14px !important;
+    }
+    
+    .name-input {
+        font-size: 14px !important;
+        padding: 6px !important;
+    }
+    
+    .step-number {
+        width: 30px !important;
+        height: 30px !important;
+    }
+    
+    .step-label {
+        font-size: 10px !important;
+    }
+}
+
+/* Landscape mode */
+@media (max-width: 900px) and (orientation: landscape) {
+    .form-container {
+        max-width: 100% !important;
+    }
+    
+    .employer-header {
+        flex-direction: row !important;
+    }
+    
+    .photo-section {
+        width: 100px !important;
+    }
+    
+    .photo-box {
+        width: 80px !important;
+        height: 80px !important;
+    }
+    
+    .signatures-side-by-side {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+    /* Mas malaking tap target */
+    button, 
+    .sign-btn, 
+    .clear-btn, 
+    .upload-btn,
+    .save-btn,
+    .back-btn,
+    .primary-btn,
+    .step {
+        cursor: default !important;
+    }
+    
+    /* Remove hover effects on touch devices */
+    button:hover,
+    .sign-btn:hover,
+    .clear-btn:hover,
+    .upload-btn:hover,
+    .save-btn:hover,
+    .back-btn:hover,
+    .primary-btn:hover {
+        transform: none !important;
+        box-shadow: none !important;
+    }
+    
+    /* Active state instead */
+    button:active,
+    .sign-btn:active,
+    .clear-btn:active,
+    .upload-btn:active,
+    .save-btn:active,
+    .back-btn:active,
+    .primary-btn:active {
+        transform: scale(0.98) !important;
+        opacity: 0.8 !important;
+    }
+}
 }
