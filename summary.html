@@ -246,7 +246,8 @@
                 const docRef = db.collection('sss-submissions').doc(submissionId);
                 const docSnap = await docRef.get();
 
-                if (!docSnap.exists()) {
+                // FIX: Use .exists property, not .exists()
+                if (!docSnap.exists) {
                     container.innerHTML = '<div class="error-message">❌ Submission not found in cloud</div>';
                     return;
                 }
