@@ -862,11 +862,11 @@
         function setupAutoFill() {
             document.getElementById('employerName').addEventListener('input', function(e) {
                 const value = e.target.value;
-                if (!document.getElementById('specimenName1').value) {
-                    document.getElementById('specimenName1').value = value;
+                if (!document.getElementById('specimenSignature1').value) {
+                    document.getElementById('specimenSignature1').value = value;
                 }
-                if (!document.getElementById('employerName2').value) {
-                    document.getElementById('employerName2').value = value;
+                if (!document.getElementById('employerSignature2').value) {
+                    document.getElementById('employerSignature2').value = value;
                 }
             });
 
