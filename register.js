@@ -11,8 +11,49 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 let firstFormData = null;
+let currentCanvas = null;
+let currentCanvasId = null;
+let isDrawing = false;
+let lastX = 0;
+let lastY = 0;
+let currentSubmissionId = null;
 
-window.onload = function() {
+const canvasSigned = {
+    officialSignature1: false,
+    officialSignature2: false,
+    officialSignature3: false,
+    grantingSignature: false
+};
+
+function showRegisterInstruction() {
+    const popup = document.getElementById('registerInstructionPopup');
+    if (popup) {
+        popup.style.display = 'flex';
+    }
+}
+
+function closeRegisterInstruction() {
+    const popup = document.getElementById('registerInstructionPopup');
+    if (popup) {
+        popup.style.display = 'none';
+    }
+}
+
+function addInstructionButton() {
+    const header = document.querySelector('.republic-header');
+    if (header) {
+        if (!document.querySelector('.instruction-btn')) {
+            const btn = document.createElement('button');
+            btn.className = 'instruction-btn';
+            btn.innerHTML = '📋 Show Instructions';
+            btn.onclick = showRegisterInstruction;
+            btn.style.marginTop = '10px';
+            header.appendChild(btn);
+        }
+    }
+}
+
+window.addEventListener('load', function() {
     console.log("✅ Register form loaded");
     
     const savedData = localStorage.getItem('firstFormData');
@@ -39,24 +80,13 @@ window.onload = function() {
     document.getElementById('qrPlaceholder').style.display = 'block';
     document.getElementById('saveSection').style.display = 'none';
     document.getElementById('qrSuccess').style.display = 'none';
-};
-
-function goBackToIndex() {
-    window.location.href = 'index.html';
-}
-
-let currentCanvas = null;
-let currentCanvasId = null;
-let isDrawing = false;
-let lastX = 0;
-let lastY = 0;
-
-const canvasSigned = {
-    officialSignature1: false,
-    officialSignature2: false,
-    officialSignature3: false,
-    grantingSignature: false
-};
+    
+    setTimeout(() => {
+        showRegisterInstruction();
+    }, 500);
+    
+    addInstructionButton();
+});
 
 function clearCanvas(canvasId) {
     const canvas = document.getElementById(canvasId);
@@ -122,7 +152,8 @@ function saveSignature() {
         
         const errorId = errorMap[currentCanvasId];
         if (errorId) {
-            document.getElementById(errorId).style.display = 'none';
+            const errorElement = document.getElementById(errorId);
+            if (errorElement) errorElement.style.display = 'none';
         }
     }
     closeModal();
@@ -266,8 +297,6 @@ async function uploadToFirebase(allData) {
     }
 }
 
-let currentSubmissionId = null;
-
 async function generateQRCode() {
     if (!firstFormData) {
         throw new Error("No first form data found. Please complete first form.");
@@ -366,7 +395,7 @@ function saveQRCode() {
 
 function showPopup(message, type = 'info', title = '', autoClose = false) {
     const existingPopup = document.querySelector('.popup-message');
-    const existingOverlay = document.querySelector('.popup-overlay');
+    const existingOverlay = document.querySelector('.popup-overlay:not(#registerInstructionPopup)');
     if (existingPopup) existingPopup.remove();
     if (existingOverlay) existingOverlay.remove();
     
@@ -398,16 +427,11 @@ function showPopup(message, type = 'info', title = '', autoClose = false) {
         <div class="popup-title ${type}">${title}</div>
         <div class="popup-text">${message}</div>
         <div class="popup-buttons">
-            <button class="popup-btn primary" onclick="closePopup()">OK</button>
+            <button class="popup-btn primary" onclick="this.closest('.popup-message').remove(); this.closest('.popup-overlay').remove();">OK</button>
         </div>
     `;
     
     document.body.appendChild(popup);
-    
-    window.closePopup = function() {
-        popup.remove();
-        overlay.remove();
-    };
     
     if (autoClose) {
         setTimeout(() => {
@@ -417,6 +441,10 @@ function showPopup(message, type = 'info', title = '', autoClose = false) {
             }
         }, 3000);
     }
+}
+
+function goBackToIndex() {
+    window.location.href = 'index.html';
 }
 
 async function submitSecondForm() {
@@ -455,3 +483,5 @@ window.clearCanvas = clearCanvas;
 window.submitSecondForm = submitSecondForm;
 window.saveQRCode = saveQRCode;
 window.goBackToIndex = goBackToIndex;
+window.showRegisterInstruction = showRegisterInstruction;
+window.closeRegisterInstruction = closeRegisterInstruction;
