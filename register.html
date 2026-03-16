@@ -403,7 +403,6 @@
             display: none;
         }
 
-        /* ========== ADDED POPUP MESSAGE STYLES (copy from index.html) ========== */
         .popup-message {
             position: fixed;
             top: 50%;
@@ -531,7 +530,6 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        /* ========== END OF ADDED POPUP MESSAGE STYLES ========== */
     </style>
 </head>
 <body>
@@ -702,10 +700,6 @@
                 document.getElementById('idNumber').value = firstFormData.employerId || '';
                 document.getElementById('companyAddress').value = firstFormData.address || '';
                 document.getElementById('telNumber').value = firstFormData.telephone || '';
-                
-                console.log("✅ First form data loaded:", firstFormData.employerName);
-            } else {
-                console.warn("⚠️ No first form data found");
             }
             
             const canvases = [
@@ -1036,19 +1030,15 @@
             link.href = qrCanvas.toDataURL('image/png');
             link.click();
             
-            // Replace alert with popup
             showPopup('✅ QR CODE SAVED!\n\nFile: ' + filename + '\n\nPresent this QR code at the SSS office.', 'success', 'DOWNLOADED');
         }
 
-        // ========== ADDED POPUP MESSAGE FUNCTIONS ==========
         function showPopup(message, type = 'info', title = '', autoClose = false) {
-            // Remove existing popup
             const existingPopup = document.querySelector('.popup-message');
             const existingOverlay = document.querySelector('.popup-overlay');
             if (existingPopup) existingPopup.remove();
             if (existingOverlay) existingOverlay.remove();
             
-            // Set default titles
             if (!title) {
                 if (type === 'error') title = 'ERROR';
                 else if (type === 'success') title = 'SUCCESS';
@@ -1056,13 +1046,11 @@
                 else title = 'INFO';
             }
             
-            // Set icons
             let icon = 'ℹ️';
             if (type === 'error') icon = '❌';
             else if (type === 'success') icon = '✅';
             else if (type === 'warning') icon = '⚠️';
             
-            // Create overlay
             const overlay = document.createElement('div');
             overlay.className = 'popup-overlay';
             overlay.onclick = function() {
@@ -1071,7 +1059,6 @@
             };
             document.body.appendChild(overlay);
             
-            // Create popup
             const popup = document.createElement('div');
             popup.className = `popup-message ${type}`;
             
@@ -1086,13 +1073,11 @@
             
             document.body.appendChild(popup);
             
-            // Close function
             window.closePopup = function() {
                 popup.remove();
                 overlay.remove();
             };
             
-            // Auto close if specified
             if (autoClose) {
                 setTimeout(() => {
                     if (document.body.contains(popup)) {
@@ -1102,11 +1087,9 @@
                 }, 3000);
             }
         }
-        // ========== END OF ADDED POPUP MESSAGE FUNCTIONS ==========
 
         async function submitSecondForm() {
             if (!validateSecondForm()) {
-                // Replace alert with popup
                 showPopup('Please fill in all required fields and complete all signatures.', 'error');
                 return;
             }
@@ -1123,12 +1106,10 @@
                     
                     console.log('Summary URL:', summaryUrl);
                     
-                    // Replace alert with popup
                     showPopup('✅ SUCCESS!\n\nData uploaded to cloud.\nQR Code generated.\n\nClick SAVE QR CODE to download.', 'success', 'SUCCESS!');
                 }
             } catch (error) {
                 console.error('❌ Submission error:', error);
-                // Replace alert with popup
                 showPopup('Error: ' + error.message, 'error');
                 submitBtn.disabled = false;
                 submitBtn.innerHTML = 'GENERATE QR CODE';
