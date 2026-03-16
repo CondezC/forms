@@ -862,20 +862,20 @@
         function setupAutoFill() {
             document.getElementById('employerName').addEventListener('input', function(e) {
                 const value = e.target.value;
-                if (!document.getElementById('specimenName1').value) {
-                    document.getElementById('specimenName1').value = value;
+                if (!document.getElementById('specimenSignature1').value) {
+                    document.getElementById('specimenSignature1').value = value;
                 }
                 if (!document.getElementById('employerName2').value) {
                     document.getElementById('employerName2').value = value;
                 }
             });
 
-            document.getElementById('specimenName1').addEventListener('input', function(e) {
+            document.getElementById('specimenSignature1').addEventListener('input', function(e) {
                 const value = e.target.value;
-                if (!document.getElementById('specimenName2').value && value) {
+                if (!document.getElementById('specimenSignature2').value && value) {
                     const initials = value.split(' ').map(word => word.charAt(0).toUpperCase()).join('');
                     if (initials) {
-                        document.getElementById('specimenName2').value = initials;
+                        document.getElementById('specimenSignture2').value = initials;
                     }
                 }
             });
