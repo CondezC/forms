@@ -472,19 +472,31 @@
                 html += '</div>';
                 
                 // Photo
-                if (data.photo && data.photo !== '#' && data.photo !== '') {
-                    html += '<div class="photo-section">';
-                    html += '<div class="photo-container">';
-                    html += '<div class="photo-label">1x1 PHOTO</div>';
-                    html += '<div class="photo-frame">';
-                    html += `<img src="${data.photo}" alt="1x1 Photo">`;
-                    html += '</div>';
-                    html += '</div>';
-                    html += '</div>';
-                }
-                
-                // Company Info
-                html += '<table class="info-table">';
+                html += '<div class="form-top-row">';
+
+// LEFT SIDE (EMPLOYER INFO)
+html += '<div class="form-left">';
+html += '<table class="info-table">';
+html += '<tr><td>EMPLOYER NAME:</td><td>' + (data.employerName || 'N/A') + '</td></tr>';
+html += '<tr><td>EMPLOYER ID NO.:</td><td>' + (data.employerId || 'N/A') + '</td></tr>';
+html += '<tr><td>ADDRESS:</td><td>' + (data.address || 'N/A') + '</td></tr>';
+html += '<tr><td>TELEPHONE NO.:</td><td>' + (data.telephone || 'N/A') + '</td></tr>';
+html += '</table>';
+html += '</div>';
+
+// RIGHT SIDE (PHOTO)
+html += '<div class="form-right">';
+if (data.photo && data.photo !== '#' && data.photo !== '') {
+    html += '<div class="photo-container">';
+    html += '<div class="photo-label">PHOTO 1x1</div>';
+    html += '<div class="photo-frame">';
+    html += `<img src="${data.photo}" alt="1x1 Photo">`;
+    html += '</div>';
+    html += '</div>';
+}
+html += '</div>';
+
+html += '</div>';
                 html += '<tr><td>EMPLOYER NAME:</td><td>' + (data.employerName || 'N/A') + '</td></tr>';
                 html += '<tr><td>EMPLOYER ID NO.:</td><td>' + (data.employerId || 'N/A') + '</td></tr>';
                 html += '<tr><td>ADDRESS:</td><td>' + (data.address || 'N/A') + '</td></tr>';
