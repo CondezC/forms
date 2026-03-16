@@ -7,43 +7,50 @@ const firebaseConfig = {
     appId: "1:81090026028:web:91dfd833462e2d95434f89"
 };
 
+// Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-window.onload = async function() {
+// Execute immediately
+(function() {
+    console.log("✅ Summary.js loaded");
     displaySummary();
-};
-
-
+})();
 
 async function displaySummary() {
+    console.log("✅ displaySummary() started");
+    
     const container = document.getElementById('summaryContainer');
+    if (!container) {
+        console.error("❌ Container not found");
+        return;
+    }
     
     const urlParams = new URLSearchParams(window.location.search);
     const submissionId = urlParams.get('id');
+    console.log("✅ Submission ID:", submissionId);
     
     if (!submissionId) {
-        container.innerHTML = '<div class="error-message">❌ No submission ID found</div>';
+        container.innerHTML = '<div class="error-message" style="text-align: center; padding: 50px; color: #f44336;">❌ No submission ID found</div>';
         return;
     }
 
     try {
+        console.log("⏳ Fetching from Firebase...");
         const docRef = db.collection('sss-submissions').doc(submissionId);
         const docSnap = await docRef.get();
 
         if (!docSnap.exists()) {
-            container.innerHTML = '<div class="error-message">❌ Submission not found in cloud</div>';
+            container.innerHTML = '<div class="error-message" style="text-align: center; padding: 50px; color: #f44336;">❌ Submission not found in cloud</div>';
             return;
         }
 
         const formData = docSnap.data();
+        console.log("✅ Data loaded:", formData);
         
         let html = '';
         
-        html += '<div style="text-align: center; margin-bottom: 20px;">';
-        html += '<span style="background: #4caf50; color: white; padding: 5px 15px; border-radius: 20px;">✓ VERIFIED CLOUD DATA</span>';
-        html += '</div>';
-        
+        // FIRST FORM
         html += '<div class="summary-card">';
         html += '<div class="card-header">📋 COMPANY REPRESENTATIVE AUTHORIZATION CARD</div>';
         html += '<div class="card-body">';
@@ -61,21 +68,11 @@ async function displaySummary() {
         
         const first = formData.firstForm || {};
         
-        if (first.photo && first.photo !== '#') {
-            html += '<div style="text-align: right; margin-bottom: 20px;">';
-            html += '<div style="width: 120px; height: 120px; border: 2px solid #003c8f; border-radius: 8px; overflow: hidden; margin-left: auto;">';
-            html += `<img src="${first.photo}" style="width: 100%; height: 100%; object-fit: cover;">`;
-            html += '</div>';
-            html += '</div>';
-        }
-        
         html += '<table class="info-table">';
         html += '<tr><td>EMPLOYER NAME:</td><td>' + (first.employerName || 'N/A') + '</td></tr>';
         html += '<tr><td>EMPLOYER ID NO.:</td><td>' + (first.employerId || 'N/A') + '</td></tr>';
         html += '<tr><td>ADDRESS:</td><td>' + (first.address || 'N/A') + '</td></tr>';
         html += '<tr><td>TELEPHONE NO.:</td><td>' + (first.telephone || 'N/A') + '</td></tr>';
-        html += '<tr><td>CERTIFIED NAME:</td><td>' + (first.certName || 'N/A') + '</td></tr>';
-        html += '<tr><td>SS NUMBER:</td><td>' + (first.ssNumber || 'N/A') + '</td></tr>';
         html += '</table>';
         
         html += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">';
@@ -104,8 +101,9 @@ async function displaySummary() {
         html += '<div class="noted-title">Branch Head</div>';
         html += '</div>';
         
-        html += '</div></div>'; 
+        html += '</div></div>';
         
+        // SECOND FORM
         html += '<div class="summary-card">';
         html += '<div class="card-header">📋 SPECIMEN SIGNATURE CARD</div>';
         html += '<div class="card-body">';
@@ -160,20 +158,17 @@ async function displaySummary() {
             html += '</div>';
         }
         
-        html += '</div></div>'; 
+        html += '</div></div>';
         
-        if (formData.timestamp) {
-            html += '<div style="text-align: center; color: #888; margin: 20px;">';
-            html += '📅 Generated: ' + new Date(formData.timestamp).toLocaleString();
-            html += '</div>';
-        }
-        
-        html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT SUMMARY</button>';
+        // Print Button
+        html += '<div style="text-align: center; margin: 30px 0;">';
+        html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT BOTH FORMS</button>';
+        html += '</div>';
         
         container.innerHTML = html;
         
     } catch (error) {
-        console.error('Error loading from Firebase:', error);
-        container.innerHTML = '<div class="error-message">❌ Error loading data from cloud</div>';
+        console.error('Error:', error);
+        container.innerHTML = '<div class="error-message" style="text-align: center; padding: 50px; color: #f44336;">❌ Error: ' + error.message + '</div>';
     }
 }
