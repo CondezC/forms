@@ -4,92 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SSS Instructions</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f0f0f0;
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            max-width: 800px;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-        h1 {
-            color: #003c8f;
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .instruction {
-            background: #f8f9ff;
-            padding: 20px;
-            margin: 15px 0;
-            border-left: 4px solid #1976d2;
-            border-radius: 5px;
-        }
-        .number {
-            font-weight: bold;
-            color: #003c8f;
-            font-size: 1.2rem;
-        }
-        .buttons {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        button {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        .back {
-            background: #ccc;
-        }
-        .proceed {
-            background: #003c8f;
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container">
-        <h1>IMPORTANT INFORMATION / INSTRUCTIONS</h1>
-        <h3 style="text-align: center; color: #666;">About Your Specimen Card</h3>
-
-        <div class="instruction">
-            <span class="number">1.</span> This form (SSS Form L-501) should be accomplished in two (2) copies by the responsible officials authorized by the employer to certify and/or sign documents on the Social Security System (SSS).
+    <div class="instruction-container">
+        <div class="header-with-logo">
+            <div class="logo-container">
+                <img src="republic-of-the-philippines-social-security-system-logo-png_seeklogo.png" alt="SSS Logo" onerror="this.style.display='none'; this.parentElement.innerHTML='SSS';">
+            </div>
+            <div class="sss-header">
+                <h1>Social Security System</h1>
+                <div class="branch">EASTWOOD BRANCH</div>
+            </div>
         </div>
 
-        <div class="instruction">
-            <span class="number">2.</span> Any signature in the space for "Employer's Representative" in salary and calamity application forms shall not be honored unless signatures appear in this form and are filed with the SSS.
+        <div class="instruction-title">
+            IMPORTANT INFORMATION / INSTRUCTIONS<br>ABOUT YOUR SPECIMEN CARD
         </div>
 
-        <div class="instruction">
-            <span class="number">3.</span> The SSS should be notified of any change/revocation or addition in authorized representative through the submission of a new specimen signature card to replace or supplement that on file with the SSS.
+        <ul class="instruction-list">
+            <li>
+                <span class="instruction-number">1</span>
+                <div class="instruction-text">
+                    <strong>Form L-501</strong> should be accomplished in <strong>two (2) copies</strong> by the responsible officials authorized by the employer to certify and/or sign documents on the Social Security System (SSS).
+                </div>
+            </li>
+            <li>
+                <span class="instruction-number">2</span>
+                <div class="instruction-text">
+                    Any signature in the space for <strong>"Employer's Representative"</strong> in salary and calamity application forms shall not be honored unless signatures appear in this form and are filed with the SSS.
+                </div>
+            </li>
+            <li>
+                <span class="instruction-number">3</span>
+                <div class="instruction-text">
+                    The SSS should be notified of any <strong>change/revocation or addition</strong> in authorized representative through the submission of a new specimen signature card to replace or supplement that on file with the SSS.
+                </div>
+            </li>
+            <li>
+                <span class="instruction-number">4</span>
+                <div class="instruction-text">
+                    The <strong>registered name, ID number and address</strong> of the employer should be correctly indicated in this form.
+                </div>
+            </li>
+        </ul>
+
+        <div class="important-note">
+            <h4>⚠️ IMPORTANT REMINDER</h4>
+            <p>Make sure to accomplish all fields and provide specimen signatures of all authorized representatives. Incomplete forms will not be processed by SSS.</p>
         </div>
 
-        <div class="instruction">
-            <span class="number">4.</span> The registered name, ID number and address of the employer should be correctly indicated in this form.
-        </div>
-
-        <div style="background: #ffeb3b; padding: 15px; border-radius: 5px; margin: 20px 0;">
-            <strong>⚠️ Important:</strong> Make sure all fields are filled and signatures are provided.
-        </div>
-
-        <div class="buttons">
-            <button class="back" onclick="window.location.href='index.html'">◀ BACK</button>
-            <button class="proceed" onclick="window.location.href='register.html'">PROCEED TO SPECIMEN CARD ▶</button>
+        <div class="action-buttons">
+            <button class="back-btn" onclick="goBack()">◀ BACK TO INDEX</button>
+            <button class="primary-btn" onclick="proceedToSpecimen()">PROCEED TO SPECIMEN CARD ▶</button>
         </div>
     </div>
+
+    <script>
+        function goBack() {
+            window.location.href = 'index.html';
+        }
+
+        function proceedToSpecimen() {
+            window.location.href = 'register.html';
+        }
+    </script>
 </body>
 </html>
