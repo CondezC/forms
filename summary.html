@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>SSS Form Summary</title>
     <style>
         * {
@@ -15,65 +15,62 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             min-height: 100vh;
-            padding: 20px;
+            padding: 15px;
         }
 
         .summary-container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
-            gap: 30px;
+            gap: 25px;
         }
 
+        /* Form Cards */
         .form-card {
             background: white;
             border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,60,143,0.15);
+            box-shadow: 0 10px 30px rgba(0,60,143,0.15);
             overflow: hidden;
             border: 1px solid #e0e0e0;
-            transition: transform 0.3s ease;
-        }
-
-        .form-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(0,60,143,0.2);
         }
 
         .card-header {
-            background: linear-gradient(135deg, #003c8f, #1a4fa2, #2a5fb5);
+            background: linear-gradient(135deg, #003c8f, #1a4fa2);
             color: white;
-            padding: 20px 30px;
-            font-size: 1.4rem;
+            padding: 15px 20px;
+            font-size: 1.2rem;
             font-weight: 700;
-            letter-spacing: 1px;
             text-transform: uppercase;
             border-bottom: 3px solid #ffd700;
+            letter-spacing: 0.5px;
         }
 
         .card-body {
-            padding: 30px;
+            padding: 20px;
         }
 
+        /* Header with Logo - FIXED: Isang logo lang */
         .header-with-logo {
             display: flex;
             align-items: center;
-            gap: 25px;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
             border-bottom: 2px solid #e0e0e0;
+            flex-wrap: wrap;
         }
 
         .logo-circle {
-            width: 90px;
-            height: 90px;
+            width: 70px;
+            height: 70px;
             background: #003c8f;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,60,143,0.2);
+            flex-shrink: 0;
         }
 
         .logo-circle img {
@@ -82,43 +79,43 @@
             object-fit: contain;
         }
 
+        .header-text {
+            flex: 1;
+        }
+
         .header-text h1 {
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: #003c8f;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
 
         .header-text .branch {
             color: #1976d2;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 600;
-            margin-bottom: 5px;
         }
 
         .header-text .address {
             color: #666;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
 
+        /* Republic Header */
         .republic-header {
             text-align: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 20px;
         }
 
         .republic-header h2 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: #003c8f;
             text-transform: uppercase;
             font-weight: 800;
-            margin-bottom: 5px;
         }
 
         .republic-header h3 {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             color: #1976d2;
             margin: 5px 0;
             text-transform: uppercase;
@@ -126,89 +123,115 @@
 
         .form-number {
             color: #666;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-style: italic;
         }
 
+        /* Info Tables - Mobile Optimized */
         .info-table {
             width: 100%;
             border-collapse: collapse;
             margin: 15px 0;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            font-size: 0.95rem;
         }
 
         .info-table td {
-            padding: 12px 15px;
+            padding: 10px;
             border: 1px solid #e0e0e0;
         }
 
         .info-table td:first-child {
             font-weight: 600;
             color: #003c8f;
-            width: 220px;
+            width: 140px;
             background: #f8f9ff;
         }
 
-        .info-table td:last-child {
-            background: white;
-            font-weight: 500;
+        /* Mobile: Stack table cells */
+        @media (max-width: 600px) {
+            .info-table td {
+                display: block;
+                width: 100%;
+            }
+            
+            .info-table td:first-child {
+                width: 100%;
+                background: #e8f0fe;
+            }
+            
+            .info-table tr {
+                display: block;
+                margin-bottom: 10px;
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+            }
         }
 
+        /* Officials Table - Horizontal Scroll on Mobile */
         .officials-table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            font-size: 0.9rem;
         }
 
         .officials-table th {
             background: #003c8f;
             color: white;
-            padding: 12px;
-            font-size: 0.95rem;
+            padding: 10px;
+            font-size: 0.85rem;
             text-transform: uppercase;
         }
 
         .officials-table td {
             border: 1px solid #e0e0e0;
-            padding: 12px;
+            padding: 8px;
             text-align: center;
             vertical-align: middle;
         }
 
-        .officials-table tr:nth-child(even) {
-            background: #f8f9ff;
+        /* Mobile: Allow horizontal scroll for officials table */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 15px 0;
         }
 
+        /* Signature Grid - Mobile Optimized */
         .signature-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 25px;
-            margin: 25px 0;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 600px) {
+            .signature-grid {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
         }
 
         .signature-box {
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             background: #f8f9ff;
-            border-radius: 12px;
+            border-radius: 10px;
             border: 1px solid #e0e0e0;
         }
 
         .signature-box h4 {
             color: #003c8f;
-            margin-bottom: 15px;
-            font-size: 1rem;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
             text-transform: uppercase;
         }
 
         .signature-img {
             max-width: 100%;
-            max-height: 70px;
+            max-height: 60px;
             margin: 10px 0;
             border: 1px dashed #003c8f;
             padding: 5px;
@@ -219,30 +242,30 @@
         .signature-name {
             color: #003c8f;
             font-weight: 600;
-            padding: 8px;
+            padding: 5px;
             background: white;
             border-radius: 5px;
-            border: 1px solid #e0e0e0;
+            font-size: 0.9rem;
         }
 
         .official-signature-img {
-            max-width: 100px;
-            max-height: 40px;
+            max-width: 80px;
+            max-height: 35px;
         }
 
+        /* Photo */
         .photo-container {
             display: flex;
             justify-content: flex-end;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .photo-frame {
-            width: 120px;
-            height: 120px;
+            width: 100px;
+            height: 100px;
             border: 3px solid #003c8f;
-            border-radius: 10px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
         .photo-frame img {
@@ -251,116 +274,117 @@
             object-fit: cover;
         }
 
+        /* Noted Section */
         .noted-section {
-            margin-top: 30px;
+            margin-top: 20px;
             text-align: center;
-            padding: 20px;
+            padding: 15px;
             background: #f0f7ff;
-            border-radius: 10px;
-            border: 1px solid #cfe3ff;
+            border-radius: 8px;
         }
 
         .noted-line {
-            width: 300px;
+            width: 200px;
             height: 2px;
             background: #003c8f;
             margin: 10px auto;
         }
 
         .noted-name {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
             font-weight: 700;
             color: #003c8f;
         }
 
         .noted-title {
             color: #666;
-            font-size: 1rem;
+            font-size: 0.9rem;
             font-style: italic;
         }
 
+        /* Granting Section */
         .granting-section {
             margin-top: 20px;
-            padding: 20px;
+            padding: 15px;
             background: #f8f9ff;
-            border-radius: 10px;
-            border: 1px solid #cfe3ff;
+            border-radius: 8px;
         }
 
         .granting-title {
             color: #003c8f;
-            font-size: 1.1rem;
+            font-size: 1rem;
             font-weight: 600;
             margin-bottom: 10px;
         }
 
+        /* Verified Badge */
         .verified-badge {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         .verified-badge span {
             background: #4caf50;
             color: white;
-            padding: 8px 25px;
+            padding: 5px 20px;
             border-radius: 50px;
             display: inline-block;
             font-weight: 600;
-            box-shadow: 0 4px 10px rgba(76,175,80,0.3);
+            font-size: 0.9rem;
         }
 
+        /* Timestamp */
         .timestamp {
             text-align: center;
             color: #888;
-            font-size: 0.9rem;
-            margin: 20px 0;
-            padding: 10px;
+            font-size: 0.85rem;
+            margin: 15px 0;
+            padding: 8px;
             background: #f5f5f5;
             border-radius: 8px;
         }
 
+        /* Print Button */
         .print-btn {
             background: linear-gradient(135deg, #003c8f, #1976d2);
             color: white;
             border: none;
-            padding: 15px 50px;
-            font-size: 1.2rem;
+            padding: 12px 40px;
+            font-size: 1.1rem;
             font-weight: 600;
             border-radius: 50px;
             cursor: pointer;
-            margin: 20px auto;
+            margin: 15px auto;
             display: block;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
         }
 
         .print-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(25, 118, 210, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(25, 118, 210, 0.3);
         }
 
+        /* Loading & Error */
         .loading, .error-message {
             text-align: center;
-            padding: 60px;
+            padding: 40px;
             background: white;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
         .loading {
             color: #1976d2;
-            font-size: 1.2rem;
         }
 
         .error-message {
             color: #f44336;
-            font-size: 1.2rem;
         }
 
+        /* ===== PRINT STYLES ===== */
         @media print {
             @page {
                 size: landscape;
-                margin: 0.4in;
+                margin: 0.5in;
             }
 
             body {
@@ -368,7 +392,7 @@
                 padding: 0;
             }
 
-            .print-btn, .verified-badge {
+            .print-btn, .verified-badge, .timestamp {
                 display: none !important;
             }
 
@@ -400,22 +424,16 @@
 
             .info-table td:first-child {
                 background: #f0f0f0 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
             }
 
             .noted-section {
                 background: #f0f7ff !important;
                 border: 1px solid #003c8f !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
             }
 
             .officials-table th {
                 background: #003c8f !important;
                 color: white !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
             }
 
             .signature-box {
@@ -423,36 +441,13 @@
                 background: white;
             }
 
-            .signature-img, .official-signature-img {
-                max-width: 150px;
-            }
-
             .photo-frame {
                 border: 2px solid #000;
             }
-        }
 
-        @media (max-width: 768px) {
-            .header-with-logo {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .signature-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .info-table td:first-child {
-                width: 140px;
-            }
-
-            .card-header {
-                font-size: 1.1rem;
-                padding: 15px 20px;
-            }
-
-            .card-body {
-                padding: 20px;
+            /* Ensure table doesn't break on print */
+            .info-table td {
+                border: 1px solid #000;
             }
         }
     </style>
@@ -505,14 +500,17 @@
                 
                 let html = '';
                 
+                // Verified Badge
                 html += '<div class="verified-badge">';
                 html += '<span>✓ VERIFIED CLOUD DATA</span>';
                 html += '</div>';
                 
+                // ============ FIRST FORM ============
                 html += '<div class="form-card">';
                 html += '<div class="card-header">📋 COMPANY REPRESENTATIVE AUTHORIZATION CARD</div>';
                 html += '<div class="card-body">';
                 
+                // Header with Logo (ISANG LOGO LANG)
                 html += '<div class="header-with-logo">';
                 html += '<div class="logo-circle">';
                 html += '<img src="republic-of-the-philippines-social-security-system-logo-png_seeklogo.png" alt="SSS Logo" onerror="this.innerHTML=\'SSS\';">';
@@ -526,6 +524,7 @@
                 
                 const first = formData.firstForm || {};
                 
+                // Photo
                 if (first.photo && first.photo !== '#' && first.photo !== '') {
                     html += '<div class="photo-container">';
                     html += '<div class="photo-frame">';
@@ -534,6 +533,7 @@
                     html += '</div>';
                 }
                 
+                // Company Info
                 html += '<table class="info-table">';
                 html += '<tr><td>EMPLOYER NAME:</td><td>' + (first.employerName || 'N/A') + '</td></tr>';
                 html += '<tr><td>EMPLOYER ID NO.:</td><td>' + (first.employerId || 'N/A') + '</td></tr>';
@@ -543,6 +543,7 @@
                 html += '<tr><td>SS NUMBER:</td><td>' + (first.ssNumber || 'N/A') + '</td></tr>';
                 html += '</table>';
                 
+                // Signatures
                 html += '<div class="signature-grid">';
                 
                 if (first.specimenSignature1 && first.specimenSignature1.length > 50) {
@@ -563,14 +564,16 @@
                 
                 html += '</div>';
                 
+                // Noted By
                 html += '<div class="noted-section">';
                 html += '<div class="noted-line"></div>';
                 html += '<div class="noted-name">ELEANOR F. DEATO</div>';
                 html += '<div class="noted-title">Branch Head</div>';
                 html += '</div>';
                 
-                html += '</div></div>'; 
+                html += '</div></div>'; // Close first form
                 
+                // ============ SECOND FORM ============
                 html += '<div class="form-card">';
                 html += '<div class="card-header">📋 SPECIMEN SIGNATURE CARD</div>';
                 html += '<div class="card-body">';
@@ -583,6 +586,7 @@
                 
                 const second = formData.secondForm || {};
                 
+                // Company Info
                 html += '<table class="info-table">';
                 html += '<tr><td>Registered Employer Name:</td><td>' + (second.registeredName || first.employerName || 'N/A') + '</td></tr>';
                 html += '<tr><td>I.D. No.:</td><td>' + (second.idNumber || first.employerId || 'N/A') + '</td></tr>';
@@ -590,8 +594,10 @@
                 html += '<tr><td>Tel. No.:</td><td>' + (second.telNumber || first.telephone || 'N/A') + '</td></tr>';
                 html += '</table>';
                 
+                // Officials - with horizontal scroll on mobile
                 if (second.officials && second.officials.length > 0) {
-                    html += '<h3 style="color: #003c8f; margin: 25px 0 15px;">Authorized Officials</h3>';
+                    html += '<h3 style="color: #003c8f; margin: 20px 0 10px;">Authorized Officials</h3>';
+                    html += '<div class="table-wrapper">';
                     html += '<table class="officials-table">';
                     html += '<thead><tr><th>Name</th><th>Designation</th><th>Initials</th><th>Signature</th></tr></thead>';
                     html += '<tbody>';
@@ -612,8 +618,10 @@
                     });
                     
                     html += '</tbody></table>';
+                    html += '</div>';
                 }
                 
+                // Granting Authority
                 const granting = second.grantingAuthority || {};
                 if (granting.name || granting.signature) {
                     html += '<div class="granting-section">';
@@ -628,14 +636,16 @@
                     html += '</div>';
                 }
                 
-                html += '</div></div>'; 
+                html += '</div></div>'; // Close second form
                 
+                // Timestamp
                 if (formData.timestamp) {
                     html += '<div class="timestamp">';
                     html += '📅 Generated: ' + new Date(formData.timestamp).toLocaleString();
                     html += '</div>';
                 }
                 
+                // Print Button
                 html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT BOTH FORMS</button>';
                 
                 container.innerHTML = html;
