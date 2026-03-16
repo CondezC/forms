@@ -552,7 +552,6 @@
             display: none;
         }
 
-        /* ========== ADDED POPUP MESSAGE STYLES ========== */
         .popup-message {
             position: fixed;
             top: 50%;
@@ -680,7 +679,6 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
-        /* ========== END OF ADDED POPUP MESSAGE STYLES ========== */
 
         @media (max-width: 768px) {
             .employer-header {
@@ -805,7 +803,7 @@
 
         <div class="noted-section">
             <div class="noted-label" style="font-weight: 600; color: #003c8f; margin-bottom: 5px;">Noted by:</div>
-            <br></br>
+            <br>
             <div class="noted-line"></div>
             <div class="noted-name">ELEANOR F. DEATO</div>
             <div class="noted-title">Branch Head</div>
@@ -861,11 +859,41 @@
             employerSignature: false
         };
 
+        function setupAutoFill() {
+            document.getElementById('employerName').addEventListener('input', function(e) {
+                const value = e.target.value;
+                if (!document.getElementById('specimenName1').value) {
+                    document.getElementById('specimenName1').value = value;
+                }
+                if (!document.getElementById('employerName2').value) {
+                    document.getElementById('employerName2').value = value;
+                }
+            });
+
+            document.getElementById('specimenName1').addEventListener('input', function(e) {
+                const value = e.target.value;
+                if (!document.getElementById('specimenName2').value && value) {
+                    const initials = value.split(' ').map(word => word.charAt(0).toUpperCase()).join('');
+                    if (initials) {
+                        document.getElementById('specimenName2').value = initials;
+                    }
+                }
+            });
+
+            document.getElementById('certName').addEventListener('input', function(e) {
+                const value = e.target.value;
+                if (!document.getElementById('specimenName1').value && value) {
+                    document.getElementById('specimenName1').value = value;
+                }
+            });
+        }
+
         window.onload = function() {
             const canvases = [
                 'specimenSignature1', 'specimenSignature2', 'employerSignature'
             ];
             canvases.forEach(id => clearCanvas(id));
+            setupAutoFill();
         };
 
         function clearCanvas(canvasId) {
@@ -1028,15 +1056,12 @@
             isDrawing = false;
         }
 
-        // ========== ADDED POPUP MESSAGE FUNCTIONS ==========
         function showPopup(message, type = 'info', title = '', autoClose = false) {
-            // Remove existing popup
             const existingPopup = document.querySelector('.popup-message');
             const existingOverlay = document.querySelector('.popup-overlay');
             if (existingPopup) existingPopup.remove();
             if (existingOverlay) existingOverlay.remove();
             
-            // Set default titles
             if (!title) {
                 if (type === 'error') title = 'ERROR';
                 else if (type === 'success') title = 'SUCCESS';
@@ -1044,13 +1069,11 @@
                 else title = 'INFO';
             }
             
-            // Set icons
             let icon = 'ℹ️';
             if (type === 'error') icon = '❌';
             else if (type === 'success') icon = '✅';
             else if (type === 'warning') icon = '⚠️';
             
-            // Create overlay
             const overlay = document.createElement('div');
             overlay.className = 'popup-overlay';
             overlay.onclick = function() {
@@ -1059,7 +1082,6 @@
             };
             document.body.appendChild(overlay);
             
-            // Create popup
             const popup = document.createElement('div');
             popup.className = `popup-message ${type}`;
             
@@ -1074,13 +1096,11 @@
             
             document.body.appendChild(popup);
             
-            // Close function
             window.closePopup = function() {
                 popup.remove();
                 overlay.remove();
             };
             
-            // Auto close if specified
             if (autoClose) {
                 setTimeout(() => {
                     if (document.body.contains(popup)) {
@@ -1090,7 +1110,6 @@
                 }, 3000);
             }
         }
-        // ========== END OF ADDED POPUP MESSAGE FUNCTIONS ==========
 
         function validateFirstForm() {
             let isValid = true;
@@ -1154,14 +1173,12 @@
                 
                 localStorage.setItem('firstFormData', JSON.stringify(firstFormData));
                 
-                // Show success popup before redirect
                 showPopup('First form completed! Proceeding to next form...', 'success', 'SUCCESS!');
                 
                 setTimeout(() => {
                     window.location.href = 'register.html';
                 }, 2000);
             } else {
-                // Replace alert with popup
                 showPopup('Please fill in all required fields and complete all signatures.', 'error');
             }
         }
