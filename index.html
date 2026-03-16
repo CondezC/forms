@@ -859,14 +859,6 @@
             employerSignature: false
         };
 
-        window.onload = function() {
-            const canvases = [
-                'specimenSignature1', 'specimenSignature2', 'employerSignature'
-            ];
-            canvases.forEach(id => clearCanvas(id));
-            setupAutoFill();
-        };
-
         function clearCanvas(canvasId) {
             const canvas = document.getElementById(canvasId);
             if (!canvas) return;
