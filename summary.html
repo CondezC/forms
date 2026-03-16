@@ -144,7 +144,7 @@
             font-style: italic;
         }
 
-        /* 1x1 PICTURE - TOP RIGHT */
+        /* 1x1 PICTURE - TOP RIGHT - AS IS */
         .photo-section {
             display: flex;
             justify-content: flex-end;
@@ -279,7 +279,7 @@
             max-height: 45px;
         }
 
-        /* Noted Section */
+        /* Noted Section - AS IS */
         .noted-section {
             margin-top: 25px;
             text-align: center;
@@ -350,15 +350,7 @@
             border-radius: 8px;
         }
 
-        /* Print Buttons */
-        .print-buttons {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin: 20px auto;
-            flex-wrap: wrap;
-        }
-
+        /* Print Button */
         .print-btn {
             background: linear-gradient(135deg, #003c8f, #1976d2);
             color: white;
@@ -368,16 +360,14 @@
             font-weight: 600;
             border-radius: 50px;
             cursor: pointer;
+            margin: 20px auto;
+            display: block;
             transition: all 0.3s ease;
         }
 
         .print-btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(25, 118, 210, 0.3);
-        }
-
-        .test-btn {
-            background: #4caf50;
         }
 
         /* Loading & Error */
@@ -436,7 +426,7 @@
                 margin: 0;
             }
 
-            .print-btn, .verified-badge, .timestamp, .print-buttons {
+            .print-btn, .verified-badge, .timestamp {
                 display: none !important;
             }
 
@@ -613,14 +603,8 @@
             displaySummary();
         };
 
-        // DIRECT PRINT FUNCTIONS - SIMPLE LANG
-        function printDirect() {
-            alert("Printing... Please wait.");
-            window.print();
-        }
-
-        function testPrint() {
-            alert("Test: Print dialog should appear now.");
+        // Simple print function
+        function printForms() {
             window.print();
         }
 
@@ -672,7 +656,7 @@
                 
                 const first = formData.firstForm || {};
                 
-                // 1x1 Picture
+                // 1x1 Picture - TOP RIGHT (AS IS)
                 if (first.photo && first.photo !== '#' && first.photo !== '') {
                     html += '<div class="photo-section">';
                     html += '<div class="photo-container">';
@@ -684,7 +668,7 @@
                     html += '</div>';
                 }
                 
-                // Company Info
+                // Company Info (EMPLOYER NAME, ID, ADDRESS, TELEPHONE, CERTIFIED NAME, SS NUMBER)
                 html += '<table class="info-table">';
                 html += '<tr><td>EMPLOYER NAME:</td><td>' + (first.employerName || 'N/A') + '</td></tr>';
                 html += '<tr><td>EMPLOYER ID NO.:</td><td>' + (first.employerId || 'N/A') + '</td></tr>';
@@ -715,7 +699,7 @@
                 
                 html += '</div>';
                 
-                // Noted By
+                // Noted By (ELEANOR F. DEATO)
                 html += '<div class="noted-section">';
                 html += '<div class="noted-line"></div>';
                 html += '<div class="noted-name">ELEANOR F. DEATO</div>';
@@ -802,11 +786,8 @@
                     html += '</div>';
                 }
                 
-                // PRINT BUTTONS - MULTIPLE OPTIONS
-                html += '<div class="print-buttons">';
-                html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT (DIRECT)</button>';
-                html += '<button class="print-btn test-btn" onclick="testPrint()">🧪 TEST PRINT</button>';
-                html += '</div>';
+                // PRINT BUTTON - ISANG BUTTON LANG
+                html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT BOTH FORMS</button>';
                 
                 container.innerHTML = html;
                 
