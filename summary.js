@@ -10,10 +10,10 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-window.onload = async function() {
+window.addEventListener('load', function() {
     displaySummary();
     addPrintStyles();
-};
+});
 
 function addPrintStyles() {
     const printStyles = document.createElement('style');
@@ -23,39 +23,32 @@ function addPrintStyles() {
                 background: white !important;
                 padding: 0 !important;
             }
-            
             .print-btn, .theme-toggle, .back-btn {
                 display: none !important;
             }
-            
             .summary-container {
                 max-width: 100% !important;
                 padding: 0 !important;
             }
-            
             .summary-card {
                 box-shadow: none !important;
                 border: 1px solid #ddd !important;
                 page-break-inside: avoid !important;
                 margin-bottom: 20px !important;
             }
-            
             .card-header {
                 background: #003c8f !important;
                 color: white !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            
             .noted-section {
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-            
             .signature-img, .official-signature-img {
                 max-width: 150px !important;
             }
-            
             .info-table td, .officials-table td {
                 border-color: #000 !important;
             }
@@ -66,6 +59,8 @@ function addPrintStyles() {
 
 async function displaySummary() {
     const container = document.getElementById('summaryContainer');
+    
+    container.innerHTML = '<div class="loading">Loading data from cloud...</div>';
     
     const urlParams = new URLSearchParams(window.location.search);
     const submissionId = urlParams.get('id');
@@ -89,7 +84,7 @@ async function displaySummary() {
         let html = '';
         
         html += '<div style="text-align: center; margin-bottom: 20px;">';
-        html += '<span style="background: #4caf50; color: white; padding: 5px 15px; border-radius: 20px;">✓ VERIFIED CLOUD DATA</span>';
+        html += '<span style="background: #4caf50; color: white; padding: 8px 20px; border-radius: 50px; display: inline-block;">✓ VERIFIED CLOUD DATA</span>';
         html += '</div>';
         
         html += '<div class="summary-card">';
@@ -109,7 +104,7 @@ async function displaySummary() {
         
         const first = formData.firstForm || {};
         
-        if (first.photo && first.photo !== '#') {
+        if (first.photo && first.photo !== '#' && first.photo !== '') {
             html += '<div style="text-align: right; margin-bottom: 20px;">';
             html += '<div style="width: 120px; height: 120px; border: 2px solid #003c8f; border-radius: 8px; overflow: hidden; margin-left: auto;">';
             html += `<img src="${first.photo}" style="width: 100%; height: 100%; object-fit: cover;" alt="1x1 Photo">`;
@@ -128,19 +123,19 @@ async function displaySummary() {
         
         html += '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">';
         
-        if (first.specimenSignature1) {
-            html += '<div style="text-align: center;">';
+        if (first.specimenSignature1 && first.specimenSignature1 !== 'data:,') {
+            html += '<div style="text-align: center; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px;">';
             html += '<strong>SPECIMEN SIGNATURE</strong><br>';
-            html += `<img src="${first.specimenSignature1}" class="signature-img" alt="Specimen Signature"><br>`;
-            html += (first.specimenName1 || '');
+            html += `<img src="${first.specimenSignature1}" style="max-width: 100%; max-height: 60px; margin: 10px 0;"><br>`;
+            html += '<span style="color: #003c8f;">' + (first.specimenName1 || '') + '</span>';
             html += '</div>';
         }
         
-        if (first.employerSignature) {
-            html += '<div style="text-align: center;">';
+        if (first.employerSignature && first.employerSignature !== 'data:,') {
+            html += '<div style="text-align: center; padding: 15px; border: 1px solid #e0e0e0; border-radius: 8px;">';
             html += '<strong>SIGNATURE OVER PRINTED NAME</strong><br>';
-            html += `<img src="${first.employerSignature}" class="signature-img" alt="Employer Signature"><br>`;
-            html += (first.employerName2 || first.employerName || '');
+            html += `<img src="${first.employerSignature}" style="max-width: 100%; max-height: 60px; margin: 10px 0;"><br>`;
+            html += '<span style="color: #003c8f;">' + (first.employerName2 || first.employerName || '') + '</span>';
             html += '</div>';
         }
         
@@ -152,16 +147,15 @@ async function displaySummary() {
         html += '<div class="noted-title">Branch Head</div>';
         html += '</div>';
         
-        html += '</div></div>';
-        
+        html += '</div></div>'; 
         html += '<div class="summary-card">';
         html += '<div class="card-header">📋 SPECIMEN SIGNATURE CARD</div>';
         html += '<div class="card-body">';
         
         html += '<div style="text-align: center; margin-bottom: 20px;">';
-        html += '<h2 style="color: #003c8f;">Republic of the Philippines</h2>';
-        html += '<h3 style="color: #1976d2;">SOCIAL SECURITY SYSTEM</h3>';
-        html += '<div>SSS Form L - 501 (07-94)</div>';
+        html += '<h2 style="color: #003c8f; margin: 0;">Republic of the Philippines</h2>';
+        html += '<h3 style="color: #1976d2; margin: 5px 0;">SOCIAL SECURITY SYSTEM</h3>';
+        html += '<div style="color: #666;">SSS Form L - 501 (07-94)</div>';
         html += '</div>';
         
         const second = formData.secondForm || {};
@@ -178,14 +172,14 @@ async function displaySummary() {
             html += '<table class="officials-table">';
             html += '<tr><th>Name</th><th>Designation</th><th>Initials</th><th>Signature</th></tr>';
             
-            second.officials.forEach(official => {
+            second.officials.forEach((official, index) => {
                 html += '<tr>';
                 html += '<td>' + (official.name || '') + '</td>';
                 html += '<td>' + (official.designation || '') + '</td>';
                 html += '<td>' + (official.initial || '') + '</td>';
                 html += '<td>';
-                if (official.signature) {
-                    html += `<img src="${official.signature}" class="official-signature-img" alt="Signature">`;
+                if (official.signature && official.signature !== 'data:,') {
+                    html += `<img src="${official.signature}" style="max-width: 100px; max-height: 40px;" alt="Signature">`;
                 } else {
                     html += 'No signature';
                 }
@@ -199,10 +193,10 @@ async function displaySummary() {
         const granting = second.grantingAuthority || {};
         if (granting.name || granting.signature) {
             html += '<div style="margin-top: 20px; padding: 15px; background: #f8f9ff; border-radius: 8px;">';
-            html += '<h4 style="color: #003c8f;">Granting Authority</h4>';
+            html += '<h4 style="color: #003c8f; margin-bottom: 10px;">Granting Authority</h4>';
             html += '<p><strong>' + (granting.name || 'N/A') + '</strong></p>';
-            if (granting.signature) {
-                html += `<img src="${granting.signature}" class="signature-img" alt="Granting Signature"><br>`;
+            if (granting.signature && granting.signature !== 'data:,') {
+                html += `<img src="${granting.signature}" style="max-width: 200px; max-height: 60px; margin: 5px 0;" alt="Granting Signature"><br>`;
             }
             if (granting.date) {
                 html += '<p><strong>Date:</strong> ' + granting.date + '</p>';
@@ -210,7 +204,7 @@ async function displaySummary() {
             html += '</div>';
         }
         
-        html += '</div></div>';
+        html += '</div></div>'; 
         
         if (formData.timestamp) {
             html += '<div style="text-align: center; color: #888; margin: 20px;">';
@@ -228,6 +222,6 @@ async function displaySummary() {
         
     } catch (error) {
         console.error('Error loading from Firebase:', error);
-        container.innerHTML = '<div class="error-message">❌ Error loading data from cloud</div>';
+        container.innerHTML = '<div class="error-message">❌ Error loading data from cloud: ' + error.message + '</div>';
     }
 }
