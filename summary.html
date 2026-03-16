@@ -50,6 +50,17 @@
             padding: 20px;
         }
 
+        /* Header with Logo - RIGHT SIDE LANG */
+        .header-with-logo {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+            flex-wrap: wrap;
+        }
+
         .header-text {
             flex: 1;
         }
@@ -528,6 +539,8 @@
                 html += '<div class="branch">EASTWOOD BRANCH</div>';
                 html += '<div class="address">187 ABQ Building, E. Rodriguez Jr. Ave., Bagumbayan, QC</div>';
                 html += '</div>';
+                html += '<div class="logo-right">';
+                html += '<img src="republic-of-the-philippines-social-security-system-logo-png_seeklogo.png" alt="SSS Logo" onerror="this.innerHTML=\'SSS\';">';
                 html += '</div>';
                 html += '</div>';
                 
@@ -595,7 +608,6 @@
                 html += '<div class="form-number">SSS Form L - 501 (07-94)</div>';
                 html += '</div>';
                 html += '<div class="logo-right">';
-                html += '<img src="republic-of-the-philippines-social-security-system-logo-png_seeklogo.png" alt="SSS Logo" onerror="this.innerHTML=\'SSS\';">';
                 html += '</div>';
                 html += '</div>';
                 
@@ -660,6 +672,7 @@
                     html += '</div>';
                 }
                 
+                // Print Button
                 html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT BOTH FORMS</button>';
                 
                 container.innerHTML = html;
