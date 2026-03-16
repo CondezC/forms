@@ -11,20 +11,8 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 let firstFormData = null;
-let currentCanvas = null;
-let currentCanvasId = null;
-let isDrawing = false;
-let lastX = 0;
-let lastY = 0;
-let currentSubmissionId = null;
 
-const canvasSigned = {
-    officialSignature1: false,
-    officialSignature2: false,
-    officialSignature3: false,
-    grantingSignature: false
-};
-
+// ===== INSTRUCTION POPUP FUNCTIONS =====
 function showRegisterInstruction() {
     const popup = document.getElementById('registerInstructionPopup');
     if (popup) {
@@ -45,7 +33,7 @@ function addInstructionButton() {
         if (!document.querySelector('.instruction-btn')) {
             const btn = document.createElement('button');
             btn.className = 'instruction-btn';
-            btn.innerHTML = '📋 Show Important Info/Instructions';
+            btn.innerHTML = '📋 Show Instructions';
             btn.onclick = showRegisterInstruction;
             btn.style.marginTop = '10px';
             header.appendChild(btn);
@@ -53,19 +41,24 @@ function addInstructionButton() {
     }
 }
 
+// ===== PAGE LOAD =====
 window.addEventListener('load', function() {
     console.log("✅ Register form loaded");
     
     const savedData = localStorage.getItem('firstFormData');
     if (savedData) {
-        firstFormData = JSON.parse(savedData);
-        
-        document.getElementById('registeredName').value = firstFormData.employerName || '';
-        document.getElementById('idNumber').value = firstFormData.employerId || '';
-        document.getElementById('companyAddress').value = firstFormData.address || '';
-        document.getElementById('telNumber').value = firstFormData.telephone || '';
-        
-        console.log("✅ First form data loaded:", firstFormData.employerName);
+        try {
+            firstFormData = JSON.parse(savedData);
+            
+            document.getElementById('registeredName').value = firstFormData.employerName || '';
+            document.getElementById('idNumber').value = firstFormData.employerId || '';
+            document.getElementById('companyAddress').value = firstFormData.address || '';
+            document.getElementById('telNumber').value = firstFormData.telephone || '';
+            
+            console.log("✅ First form data loaded:", firstFormData.employerName);
+        } catch (e) {
+            console.error("❌ Error parsing first form data:", e);
+        }
     } else {
         console.warn("⚠️ No first form data found");
     }
@@ -81,12 +74,34 @@ window.addEventListener('load', function() {
     document.getElementById('saveSection').style.display = 'none';
     document.getElementById('qrSuccess').style.display = 'none';
     
+    const linkContainer = document.getElementById('qrLinkContainer');
+    if (linkContainer) {
+        linkContainer.style.display = 'none';
+    }
+    
     setTimeout(() => {
         showRegisterInstruction();
     }, 500);
     
     addInstructionButton();
 });
+
+function goBackToIndex() {
+    window.location.href = 'index.html';
+}
+
+let currentCanvas = null;
+let currentCanvasId = null;
+let isDrawing = false;
+let lastX = 0;
+let lastY = 0;
+
+const canvasSigned = {
+    officialSignature1: false,
+    officialSignature2: false,
+    officialSignature3: false,
+    grantingSignature: false
+};
 
 function clearCanvas(canvasId) {
     const canvas = document.getElementById(canvasId);
@@ -297,42 +312,59 @@ async function uploadToFirebase(allData) {
     }
 }
 
+let currentSubmissionId = null;
+
 async function generateQRCode() {
     if (!firstFormData) {
         throw new Error("No first form data found. Please complete first form.");
     }
     
+    // FIX: Create a clean copy of firstFormData without any circular references
+    const cleanFirstForm = {
+        employerName: firstFormData.employerName || '',
+        employerId: firstFormData.employerId || '',
+        address: firstFormData.address || '',
+        telephone: firstFormData.telephone || '',
+        certName: firstFormData.certName || '',
+        ssNumber: firstFormData.ssNumber || '',
+        specimenName1: firstFormData.specimenName1 || '',
+        employerName2: firstFormData.employerName2 || '',
+        photo: firstFormData.photo || '',
+        specimenSignature1: firstFormData.specimenSignature1 || '',
+        employerSignature: firstFormData.employerSignature || ''
+    };
+    
     const allData = {
-        firstForm: firstFormData,
+        firstForm: cleanFirstForm,
         secondForm: {
-            registeredName: document.getElementById('registeredName').value,
-            idNumber: document.getElementById('idNumber').value,
-            companyAddress: document.getElementById('companyAddress').value,
-            telNumber: document.getElementById('telNumber').value,
+            registeredName: document.getElementById('registeredName').value || '',
+            idNumber: document.getElementById('idNumber').value || '',
+            companyAddress: document.getElementById('companyAddress').value || '',
+            telNumber: document.getElementById('telNumber').value || '',
             officials: [
                 {
-                    name: document.getElementById('officialName1').value,
-                    designation: document.getElementById('officialDesignation1').value,
-                    initial: document.getElementById('officialInitial1').value,
-                    signature: document.getElementById('officialSignature1').toDataURL()
+                    name: document.getElementById('officialName1').value || '',
+                    designation: document.getElementById('officialDesignation1').value || '',
+                    initial: document.getElementById('officialInitial1').value || '',
+                    signature: document.getElementById('officialSignature1').toDataURL() || ''
                 },
                 {
-                    name: document.getElementById('officialName2').value,
-                    designation: document.getElementById('officialDesignation2').value,
-                    initial: document.getElementById('officialInitial2').value,
-                    signature: document.getElementById('officialSignature2').toDataURL()
+                    name: document.getElementById('officialName2').value || '',
+                    designation: document.getElementById('officialDesignation2').value || '',
+                    initial: document.getElementById('officialInitial2').value || '',
+                    signature: document.getElementById('officialSignature2').toDataURL() || ''
                 },
                 {
-                    name: document.getElementById('officialName3').value,
-                    designation: document.getElementById('officialDesignation3').value,
-                    initial: document.getElementById('officialInitial3').value,
-                    signature: document.getElementById('officialSignature3').toDataURL()
+                    name: document.getElementById('officialName3').value || '',
+                    designation: document.getElementById('officialDesignation3').value || '',
+                    initial: document.getElementById('officialInitial3').value || '',
+                    signature: document.getElementById('officialSignature3').toDataURL() || ''
                 }
             ],
             grantingAuthority: {
-                name: document.getElementById('grantingName').value,
-                signature: document.getElementById('grantingSignature').toDataURL(),
-                date: document.getElementById('grantingDate').value
+                name: document.getElementById('grantingName').value || '',
+                signature: document.getElementById('grantingSignature').toDataURL() || '',
+                date: document.getElementById('grantingDate').value || ''
             }
         }
     };
@@ -366,20 +398,18 @@ async function generateQRCode() {
             }
         });
         
-        // Show QR code
         qrCanvas.style.display = 'block';
         document.getElementById('qrPlaceholder').style.display = 'none';
         document.getElementById('saveSection').style.display = 'block';
         document.getElementById('qrSuccess').style.display = 'block';
         
-        // ===== SHOW LINK FOR PC USERS =====
         const qrLink = document.getElementById('qrLink');
-        if (qrLink) {
+        const qrLinkContainer = document.getElementById('qrLinkContainer');
+        
+        if (qrLink && qrLinkContainer) {
             qrLink.href = summaryUrl;
-            document.getElementById('qrLinkContainer').style.display = 'block';
+            qrLinkContainer.style.display = 'block';
             console.log("✅ Link displayed:", summaryUrl);
-        } else {
-            console.warn("⚠️ qrLink element not found");
         }
         
         console.log("✅ QR Code generated successfully!");
@@ -406,8 +436,9 @@ function saveQRCode() {
 
 function showPopup(message, type = 'info', title = '', autoClose = false) {
     const existingPopup = document.querySelector('.popup-message');
-    const existingOverlay = document.querySelector('.popup-overlay:not(#registerInstructionPopup)');
+    const existingOverlay = document.querySelector('.popup-overlay');
     if (existingPopup) existingPopup.remove();
+    if (existingOverlay) existingOverlay.remove();
     
     if (!title) {
         if (type === 'error') title = 'ERROR';
@@ -437,7 +468,7 @@ function showPopup(message, type = 'info', title = '', autoClose = false) {
         <div class="popup-title ${type}">${title}</div>
         <div class="popup-text">${message}</div>
         <div class="popup-buttons">
-            <button class="popup-btn primary" onclick="this.closest('.popup-message').remove(); this.closest('.popup-overlay').remove();">OK</button>
+            <button class="popup-btn primary" onclick="closePopup(this)">OK</button>
         </div>
     `;
     
@@ -453,9 +484,12 @@ function showPopup(message, type = 'info', title = '', autoClose = false) {
     }
 }
 
-function goBackToIndex() {
-    window.location.href = 'index.html';
-}
+window.closePopup = function(btn) {
+    const popup = btn.closest('.popup-message');
+    const overlay = document.querySelector('.popup-overlay');
+    if (popup) popup.remove();
+    if (overlay) overlay.remove();
+};
 
 async function submitSecondForm() {
     if (!validateSecondForm()) {
@@ -472,9 +506,7 @@ async function submitSecondForm() {
         
         if (summaryUrl) {
             submitBtn.innerHTML = '✓ QR CODE READY';
-            
             console.log('Summary URL:', summaryUrl);
-            
             showPopup('✅ SUCCESS!\n\nQR Code generated.\n\nClick SAVE QR CODE to download.', 'success', 'SUCCESS!');
         }
     } catch (error) {
