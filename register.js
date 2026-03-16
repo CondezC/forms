@@ -366,10 +366,21 @@ async function generateQRCode() {
             }
         });
         
+        // Show QR code
         qrCanvas.style.display = 'block';
         document.getElementById('qrPlaceholder').style.display = 'none';
         document.getElementById('saveSection').style.display = 'block';
         document.getElementById('qrSuccess').style.display = 'block';
+        
+        // ===== SHOW LINK FOR PC USERS =====
+        const qrLink = document.getElementById('qrLink');
+        if (qrLink) {
+            qrLink.href = summaryUrl;
+            document.getElementById('qrLinkContainer').style.display = 'block';
+            console.log("✅ Link displayed:", summaryUrl);
+        } else {
+            console.warn("⚠️ qrLink element not found");
+        }
         
         console.log("✅ QR Code generated successfully!");
         return summaryUrl;

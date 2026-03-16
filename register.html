@@ -21,6 +21,70 @@
         .register-instruction-popup .important-note {
             margin: 15px 0 0;
         }
+
+        /* QR Link Styles */
+        .qr-link-container {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f0f7ff;
+            border-radius: 8px;
+            border: 1px solid #cfe3ff;
+            text-align: center;
+        }
+
+        .qr-link-label {
+            font-weight: 600;
+            color: #003c8f;
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .qr-link {
+            word-break: break-all;
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #1976d2;
+            font-size: 0.85rem;
+            color: #1976d2;
+            text-decoration: none;
+            display: inline-block;
+            max-width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .qr-link:hover {
+            background: #e3f2fd;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(25, 118, 210, 0.2);
+        }
+
+        .qr-link i {
+            margin-right: 5px;
+        }
+
+        .qr-note {
+            font-size: 0.8rem;
+            color: #666;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        /* Dark mode support */
+        body.dark-mode .qr-link-container {
+            background: #2a2a3a;
+            border-color: #3d3d5a;
+        }
+
+        body.dark-mode .qr-link {
+            background: #1e1e2f;
+            border-color: #4a9eff;
+            color: #6cb2ff;
+        }
+
+        body.dark-mode .qr-link:hover {
+            background: #2d2d44;
+        }
     </style>
 </head>
 <body>
@@ -145,6 +209,15 @@
                         <i>📷</i>
                         <span>Complete form<br>to generate QR</span>
                     </div>
+                </div>
+                
+                <!-- QR LINK CONTAINER (hidden by default) -->
+                <div class="qr-link-container" id="qrLinkContainer" style="display: none;">
+                    <div class="qr-link-label">🔗 DIRECT LINK (for PC users):</div>
+                    <a href="#" id="qrLink" class="qr-link" target="_blank">
+                        <i>🔗</i> Click here to view form summary
+                    </a>
+                    <div class="qr-note">Same content as scanning the QR code</div>
                 </div>
                 
                 <div class="save-section" id="saveSection" style="display: none;">
