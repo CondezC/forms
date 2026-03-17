@@ -637,7 +637,7 @@
                 color: #666 !important;
             }
 
-            /* ===== SECOND FORM - INAYOS ===== */
+            /* ===== SECOND FORM - 2 ROWS LANG ===== */
             .form-card:last-child .info-table {
                 width: 100% !important;
                 border-collapse: collapse !important;
@@ -848,23 +848,20 @@
                 html += '</div>';
                 html += '</div>';
                 
-                // Company Info - 2 ROWS 2 COLUMNS na pare-pareho ang design
-                html += '<table class="info-table">';
-                html += '<tr>';
-                html += '<td>Registered Employer Name:</td>';
-                html += '<td>' + (data.registeredName || data.employerName || 'N/A') + '</td>';
-                html += '<td>I.D. No.:</td>';
-                html += '<td>' + (data.idNumber || data.employerId || 'N/A') + '</td>';
-                html += '</tr>';
-                html += '<tr>';
-                html += '<td>Address:</td>';
-                html += '<td colspan="3">' + (data.companyAddress || data.address || 'N/A') + '</td>';
-                html += '</tr>';
-                html += '<tr>';
-                html += '<td>Tel. No.:</td>';
-                html += '<td colspan="3">' + (data.telNumber || data.telephone || 'N/A') + '</td>';
-                html += '</tr>';
-                html += '</table>';
+                <table class="info-table">
+                    <tr>
+                        <td>Registered Employer Name:</td>
+                        <td>' + (data.registeredName || data.employerName || 'N/A') + '</td>
+                        <td>I.D. No.:</td>
+                        <td>' + (data.idNumber || data.employerId || 'N/A') + '</td>
+                    </tr>
+                    <tr>
+                        <td>Address:</td>
+                        <td>' + (data.companyAddress || data.address || 'N/A') + '</td>
+                        <td>Tel. No.:</td>
+                        <td>' + (data.telNumber || data.telephone || 'N/A') + '</td>
+                    </tr>
+                </table>
                 
                 // Officials
                 html += '<h3 style="color:#003c8f; margin:20px 0 10px;">Authorized Officials</h3>';
