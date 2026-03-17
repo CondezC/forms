@@ -940,12 +940,12 @@
                 }
                 
                 // Print Button
-                html += '<button class="print-btn" onclick="window.print()">PRINT';
+                html += '<button class="print-btn" onclick="window.print()">PRINT (1 FORM PER PAGE)</button>';
                 
                 container.innerHTML = html;
                 
             } catch (error) {
-                console.error('❌ Error:', error);
+                console.error('Error:', error);
                 container.innerHTML = '<div class="error-message">❌ Error: ' + error.message + '</div>';
             }
         }
