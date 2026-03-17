@@ -828,7 +828,7 @@
                 
                 // ============ SECOND FORM ============
                 html += '<div class="form-card">';
-                html += '<div class="card-header">📋 SPECIMEN SIGNATURE CARD</div>';
+                html += '<div class="card-header">SPECIMEN SIGNATURE CARD</div>';
                 html += '<div class="card-body">';
                 
                 // Republic Header - with logo sa UPPER LEFT
@@ -936,11 +936,11 @@
                 
                 // Timestamp
                 if (data.timestamp) {
-                    html += '<div class="timestamp">📅 Generated: ' + new Date(data.timestamp).toLocaleString() + '</div>';
+                    html += '<div class="timestamp">Generated: ' + new Date(data.timestamp).toLocaleString() + '</div>';
                 }
                 
                 // Print Button
-                html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT (1 FORM PER PAGE)</button>';
+                html += '<button class="print-btn" onclick="window.print()">PRINT';
                 
                 container.innerHTML = html;
                 
