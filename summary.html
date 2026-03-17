@@ -410,11 +410,11 @@
             }
         }
 
-        /* ===== PRINT STYLES - LOGO SA UPPER LEFT ===== */
+        /* ===== PINASIMPLENG PRINT STYLES - LOGO LANG SA UPPER LEFT ===== */
         @media print {
             @page {
                 size: landscape;
-                margin: 0.4in;
+                margin: 0.3in;
             }
 
             body {
@@ -440,24 +440,37 @@
                 border-radius: 0;
                 page-break-after: always !important;
                 page-break-inside: avoid;
-                height: 50%;
             }
 
             .form-card:last-child {
                 page-break-after: auto !important;
             }
 
-            /* Logo sa UPPER LEFT sa print */
+            .card-header {
+                background: #003c8f !important;
+                color: white !important;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+                padding: 12px 20px !important;
+                font-size: 1.2rem !important;
+            }
+
+            .card-body {
+                padding: 15px !important;
+            }
+
+            /* LOGO LANG SA UPPER LEFT - PINASIMPLE */
             .header-with-logo, .republic-header {
                 display: flex !important;
                 flex-direction: row !important;
                 align-items: center !important;
-                gap: 15px !important;
+                gap: 10px !important;
+                margin-bottom: 15px !important;
             }
 
             .logo-left {
-                width: 70px !important;
-                height: 70px !important;
+                width: 60px !important;
+                height: 60px !important;
                 flex-shrink: 0 !important;
             }
 
@@ -466,12 +479,32 @@
                 text-align: left !important;
             }
 
-            /* Preserve colors */
-            .card-header {
-                background: #003c8f !important;
-                color: white !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
+            .header-text h1, .republic-text h2 {
+                font-size: 1.6rem !important;
+                margin: 0 !important;
+            }
+
+            .branch, .address {
+                font-size: 0.9rem !important;
+            }
+
+            /* COMPANY INFO WITH PHOTO SA KANAN */
+            .company-info-section {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: space-between !important;
+                align-items: flex-start !important;
+                gap: 15px !important;
+            }
+
+            .info-table {
+                flex: 1 !important;
+                font-size: 0.9rem !important;
+            }
+
+            .info-table td {
+                padding: 8px 12px !important;
+                border: 1px solid #000 !important;
             }
 
             .info-table td:first-child {
@@ -479,80 +512,103 @@
                 color: #003c8f !important;
                 -webkit-print-color-adjust: exact;
                 print-color-adjust: exact;
-            }
-
-            .noted-section {
-                background: #f0f7ff !important;
-                border: 1px solid #003c8f !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-
-            .officials-table th {
-                background: #003c8f !important;
-                color: white !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-
-            /* Photo sa kanan */
-            .company-info-section {
-                display: flex !important;
-                flex-direction: row !important;
-                justify-content: space-between !important;
-                align-items: flex-start !important;
-                gap: 20px !important;
-            }
-
-            .info-table {
-                flex: 1 !important;
+                width: 150px !important;
             }
 
             .photo-container {
-                width: 150px !important;
+                width: 130px !important;
                 flex-shrink: 0 !important;
             }
 
             .photo-frame {
-                width: 150px !important;
-                height: 150px !important;
-                border: 3px solid #003c8f !important;
+                width: 130px !important;
+                height: 130px !important;
+                border: 2px solid #003c8f !important;
             }
 
-            /* Original sizes */
-            .card-header {
-                padding: 15px 25px !important;
-                font-size: 1.3rem !important;
+            .photo-label {
+                font-size: 0.8rem !important;
+                margin-bottom: 5px !important;
             }
 
-            .card-body {
-                padding: 15px !important;
+            /* CERTIFICATION TEXT */
+            .certification-text {
+                padding: 12px !important;
+                margin: 10px 0 !important;
+                font-size: 0.85rem !important;
+                line-height: 1.4 !important;
+                border-left: 3px solid #1976d2 !important;
+                background: #f8f9ff !important;
             }
 
-            .header-text h1 {
-                font-size: 1.8rem !important;
-            }
-
-            .republic-text h2 {
-                font-size: 1.8rem !important;
-            }
-
-            .info-table td {
-                padding: 12px 15px !important;
-                font-size: 1rem !important;
-            }
-
+            /* SIGNATURES */
             .signature-grid {
-                gap: 20px !important;
+                display: grid !important;
+                grid-template-columns: 1fr 1fr !important;
+                gap: 15px !important;
+                margin: 15px 0 !important;
             }
 
             .signature-box {
-                padding: 20px !important;
+                padding: 12px !important;
+                border: 1px solid #000 !important;
+                background: #f8f9ff !important;
             }
 
-            /* Borders */
-            .info-table td, .officials-table td, .signature-box {
+            .signature-box h4 {
+                font-size: 0.9rem !important;
+                margin-bottom: 8px !important;
+            }
+
+            .signature-img {
+                max-height: 50px !important;
+                margin: 5px 0 !important;
+                border: 1px solid #003c8f !important;
+            }
+
+            .signature-name {
+                font-size: 0.8rem !important;
+                padding: 5px !important;
+            }
+
+            /* NOTED SECTION */
+            .noted-section {
+                margin-top: 15px !important;
+                padding: 15px !important;
+                background: #f0f7ff !important;
+                border: 1px solid #003c8f !important;
+            }
+
+            .noted-line {
+                width: 200px !important;
+                margin: 8px auto !important;
+            }
+
+            .noted-name {
+                font-size: 1rem !important;
+            }
+
+            .noted-title {
+                font-size: 0.9rem !important;
+            }
+
+            /* SECOND FORM */
+            .officials-table th {
+                background: #003c8f !important;
+                color: white !important;
+                padding: 8px !important;
+                font-size: 0.9rem !important;
+            }
+
+            .officials-table td {
+                padding: 8px !important;
+                font-size: 0.85rem !important;
                 border: 1px solid #000 !important;
+            }
+
+            .granting-section {
+                padding: 12px !important;
+                border: 1px solid #003c8f !important;
             }
         }
     </style>
