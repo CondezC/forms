@@ -644,8 +644,8 @@
                 border: 1px solid #000 !important;
             }
 
-            .form-card:last-child .info-table td:first-child,
-            .form-card:last-child .info-table td:nth-child(3) {
+            /* Lahat ng td na may label (odd numbered columns) */
+            .form-card:last-child .info-table td:nth-child(odd) {
                 background: #f8f9ff !important;
                 color: #003c8f !important;
                 font-weight: 600 !important;
