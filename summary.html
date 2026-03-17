@@ -48,14 +48,34 @@
             padding: 25px;
         }
 
-        /* Header with Logo */
+        /* Header with Logo - UPPER LEFT */
         .header-with-logo {
             display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 2px solid #e0e0e0;
+        }
+
+        .logo-left {
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .logo-left img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .header-text {
+            flex: 1;
         }
 
         .header-text h1 {
@@ -76,29 +96,18 @@
             font-size: 0.9rem;
         }
 
-        .logo-right {
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            flex-shrink: 0;
-        }
-
-        .logo-right img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
+        /* Republic Header - with logo sa UPPER LEFT */
         .republic-header {
             display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
             margin-bottom: 20px;
             padding-bottom: 15px;
             border-bottom: 2px solid #e0e0e0;
+        }
+
+        .republic-text {
+            flex: 1;
         }
 
         .republic-text h2 {
@@ -378,8 +387,8 @@
                 align-items: center;
             }
 
-            .logo-right {
-                margin-top: 15px;
+            .logo-left {
+                margin-bottom: 10px;
             }
 
             .company-info-section {
@@ -401,7 +410,7 @@
             }
         }
 
-        /* ===== PRINT STYLES - LANDSCAPE, ISANG FORM PER PAGE ===== */
+        /* ===== PRINT STYLES - LOGO SA UPPER LEFT ===== */
         @media print {
             @page {
                 size: landscape;
@@ -429,13 +438,32 @@
                 border: 1px solid #000;
                 margin: 0;
                 border-radius: 0;
-                page-break-after: always !important; /* Isang form per page */
+                page-break-after: always !important;
                 page-break-inside: avoid;
                 height: auto;
             }
 
             .form-card:last-child {
                 page-break-after: auto !important;
+            }
+
+            /* Logo sa UPPER LEFT sa print */
+            .header-with-logo, .republic-header {
+                display: flex !important;
+                flex-direction: row !important;
+                align-items: center !important;
+                gap: 15px !important;
+            }
+
+            .logo-left {
+                width: 70px !important;
+                height: 70px !important;
+                flex-shrink: 0 !important;
+            }
+
+            .header-text, .republic-text {
+                flex: 1 !important;
+                text-align: left !important;
             }
 
             /* Preserve colors */
@@ -467,14 +495,7 @@
                 print-color-adjust: exact;
             }
 
-            .certification-text {
-                background: #f8f9ff !important;
-                border-left: 4px solid #1976d2 !important;
-                -webkit-print-color-adjust: exact;
-                print-color-adjust: exact;
-            }
-
-            /* PHOTO SA KANAN - SAME AS PREVIEW */
+            /* Photo sa kanan */
             .company-info-section {
                 display: flex !important;
                 flex-direction: row !important;
@@ -498,7 +519,7 @@
                 border: 3px solid #003c8f !important;
             }
 
-            /* Keep original sizes - hindi na need mag-shrink */
+            /* Original sizes */
             .card-header {
                 padding: 15px 25px !important;
                 font-size: 1.3rem !important;
@@ -506,11 +527,6 @@
 
             .card-body {
                 padding: 25px !important;
-            }
-
-            .header-with-logo, .republic-header {
-                margin-bottom: 20px !important;
-                padding-bottom: 15px !important;
             }
 
             .header-text h1 {
@@ -521,86 +537,17 @@
                 font-size: 1.8rem !important;
             }
 
-            .republic-text h3 {
-                font-size: 1.4rem !important;
-            }
-
-            .logo-right {
-                width: 80px !important;
-                height: 80px !important;
-            }
-
             .info-table td {
                 padding: 12px 15px !important;
                 font-size: 1rem !important;
             }
 
-            .certification-text {
-                padding: 20px !important;
-                font-size: 0.95rem !important;
-            }
-
             .signature-grid {
                 gap: 20px !important;
-                margin: 20px 0 !important;
             }
 
             .signature-box {
                 padding: 20px !important;
-            }
-
-            .signature-box h4 {
-                font-size: 1rem !important;
-                margin-bottom: 15px !important;
-            }
-
-            .signature-img {
-                max-height: 70px !important;
-            }
-
-            .signature-name {
-                padding: 8px !important;
-                font-size: 0.95rem !important;
-            }
-
-            .officials-table {
-                margin: 20px 0 !important;
-            }
-
-            .officials-table th {
-                padding: 12px !important;
-                font-size: 0.9rem !important;
-            }
-
-            .officials-table td {
-                padding: 10px !important;
-                font-size: 0.9rem !important;
-            }
-
-            .noted-section {
-                margin-top: 25px !important;
-                padding: 20px !important;
-            }
-
-            .noted-line {
-                width: 250px !important;
-            }
-
-            .noted-name {
-                font-size: 1.2rem !important;
-            }
-
-            .noted-title {
-                font-size: 1rem !important;
-            }
-
-            .granting-section {
-                margin-top: 20px !important;
-                padding: 20px !important;
-            }
-
-            .granting-section p {
-                font-size: 0.95rem !important;
             }
 
             /* Borders */
@@ -674,15 +621,15 @@
                 html += '<div class="card-header">📋 COMPANY REPRESENTATIVE AUTHORIZATION CARD</div>';
                 html += '<div class="card-body">';
                 
-                // Header with Logo
+                // Header with Logo - UPPER LEFT
                 html += '<div class="header-with-logo">';
+                html += '<div class="logo-left">';
+                html += '<img src="republic-of-the-philippines-social-security-system-logo-png_seeklogo.png" alt="SSS Logo" onerror="this.innerHTML=\'SSS\';">';
+                html += '</div>';
                 html += '<div class="header-text">';
                 html += '<h1>Social Security System</h1>';
                 html += '<div class="branch">EASTWOOD BRANCH</div>';
                 html += '<div class="address">187 ABQ Building, E. Rodriguez Jr. Ave., Bagumbayan, QC</div>';
-                html += '</div>';
-                html += '<div class="logo-right">';
-                html += '<img src="republic-of-the-philippines-social-security-system-logo-png_seeklogo.png" alt="SSS Logo" onerror="this.innerHTML=\'SSS\';">';
                 html += '</div>';
                 html += '</div>';
                 
@@ -752,15 +699,15 @@
                 html += '<div class="card-header">📋 SPECIMEN SIGNATURE CARD</div>';
                 html += '<div class="card-body">';
                 
-                // Republic Header
+                // Republic Header - with logo sa UPPER LEFT
                 html += '<div class="republic-header">';
+                html += '<div class="logo-left">';
+                html += '<img src="republic-of-the-philippines-social-security-system-logo-png_seeklogo.png" alt="SSS Logo" onerror="this.innerHTML=\'SSS\';">';
+                html += '</div>';
                 html += '<div class="republic-text">';
                 html += '<h2>Republic of the Philippines</h2>';
                 html += '<h3>SOCIAL SECURITY SYSTEM</h3>';
                 html += '<div class="form-number">SSS Form L - 501 (07-94)</div>';
-                html += '</div>';
-                html += '<div class="logo-right">';
-                html += '<img src="republic-of-the-philippines-social-security-system-logo-png_seeklogo.png" alt="SSS Logo" onerror="this.innerHTML=\'SSS\';">';
                 html += '</div>';
                 html += '</div>';
                 
