@@ -410,7 +410,7 @@
             }
         }
 
-        /* ===== PINASIMPLENG PRINT STYLES - LOGO LANG SA UPPER LEFT ===== */
+        /* ===== PRINT STYLES - 1x1 PHOTO LANG ANG AYOS ===== */
         @media print {
             @page {
                 size: landscape;
@@ -459,7 +459,6 @@
                 padding: 15px !important;
             }
 
-            /* LOGO LANG SA UPPER LEFT - PINASIMPLE */
             .header-with-logo, .republic-header {
                 display: flex !important;
                 flex-direction: row !important;
@@ -515,20 +514,43 @@
                 width: 150px !important;
             }
 
+            /* ===== 1x1 PHOTO - PERFECT SQUARE ===== */
             .photo-container {
-                width: 130px !important;
+                width: 1.2in !important; /* Para may konting space sa label */
+                text-align: center !important;
                 flex-shrink: 0 !important;
+            }
+
+            .photo-label {
+                font-size: 0.8rem !important;
+                margin-bottom: 5px !important;
+                font-weight: 600 !important;
             }
 
             .photo-frame {
                 width: 1in !important;
                 height: 1in !important;
                 border: 2px solid #003c8f !important;
+                margin: 0 auto !important;
+                border-radius: 4px !important;
+                overflow: hidden !important;
+                background: #f0f0f0 !important;
             }
 
-            .photo-label {
+            .photo-frame img {
+                width: 100% !important;
+                height: 100% !important;
+                object-fit: cover !important;
+            }
+
+            .photo-placeholder {
+                width: 100% !important;
+                height: 100% !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                color: #999 !important;
                 font-size: 0.8rem !important;
-                margin-bottom: 10px !important;
             }
 
             /* CERTIFICATION TEXT */
