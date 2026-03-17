@@ -639,50 +639,22 @@
 
             /* ===== SECOND FORM - 2 ROWS 2 COLUMNS ===== */
             .form-card:last-child .info-table {
-                display: block !important;
                 width: 100% !important;
-            }
-
-            .form-card:last-child .info-table tbody {
-                display: flex !important;
-                flex-wrap: wrap !important;
-            }
-
-            .form-card:last-child .info-table tr {
-                display: flex !important;
-                width: 50% !important;
-                float: left !important;
-                border: 1px solid #000 !important;
                 border-collapse: collapse !important;
             }
 
-            .form-card:last-child .info-table tr:nth-child(odd) {
-                border-right: none !important;
-            }
-
             .form-card:last-child .info-table td {
-                display: table-cell !important;
                 padding: 6px 8px !important;
                 font-size: 0.8rem !important;
-                border: none !important;
+                border: 1px solid #000 !important;
             }
 
             .form-card:last-child .info-table td:first-child {
-                width: 140px !important;
                 background: #f8f9ff !important;
+                color: #003c8f !important;
                 font-weight: 600 !important;
+                width: 140px !important;
                 white-space: nowrap !important;
-            }
-
-            .form-card:last-child .info-table td:last-child {
-                width: auto !important;
-            }
-
-            /* Clear float */
-            .form-card:last-child .info-table::after {
-                content: "" !important;
-                display: table !important;
-                clear: both !important;
             }
 
             /* Officials table - pinaliit */
@@ -876,23 +848,23 @@
                 html += '</div>';
                 html += '</div>';
                 
-                <!-- Company Info - 2 ROWS 2 COLUMNS -->
-                <table class="info-table">;
-                    <tr>
-                        <td>Registered Employer Name:</td>
-                        <td>' + (data.registeredName || data.employerName || 'N/A') + '</td>
-                        <td>I.D. No.:</td>
-                        <td>' + (data.idNumber || data.employerId || 'N/A') + '</td>
-                    </tr>
-                    <tr>
-                        <td>Address:</td>
-                        <td colspan="3">' + (data.companyAddress || data.address || 'N/A') + '</td>
-                    </tr>
-                    <tr>
-                        <td>Tel. No.:</td>
-                        <td colspan="3">' + (data.telNumber || data.telephone || 'N/A') + '</td>
-                    </tr>
-                </table>
+                // Company Info - 2 ROWS 2 COLUMNS
+                html += '<table class="info-table">';
+                html += '<tr>';
+                html += '<td>Registered Employer Name:</td>';
+                html += '<td>' + (data.registeredName || data.employerName || 'N/A') + '</td>';
+                html += '<td>I.D. No.:</td>';
+                html += '<td>' + (data.idNumber || data.employerId || 'N/A') + '</td>';
+                html += '</tr>';
+                html += '<tr>';
+                html += '<td>Address:</td>';
+                html += '<td colspan="3">' + (data.companyAddress || data.address || 'N/A') + '</td>';
+                html += '</tr>';
+                html += '<tr>';
+                html += '<td>Tel. No.:</td>';
+                html += '<td colspan="3">' + (data.telNumber || data.telephone || 'N/A') + '</td>';
+                html += '</tr>';
+                html += '</table>';
                 
                 // Officials
                 html += '<h3 style="color:#003c8f; margin:20px 0 10px;">Authorized Officials</h3>';
