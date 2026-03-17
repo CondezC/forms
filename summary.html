@@ -638,20 +638,20 @@
             }
 
             /* ===== SECOND FORM - SAME DESIGN LAHAT NG LABELS ===== */
-.form-card:last-child .info-table td {
-    padding: 8px 10px !important;
-    font-size: 0.85rem !important;
-    border: 1px solid #000 !important;
-}
+            .form-card:last-child .info-table td {
+                padding: 8px 10px !important;
+                font-size: 0.85rem !important;
+                border: 1px solid #000 !important;
+            }
 
-/* Lahat ng odd-numbered columns (1st and 3rd) ay may background */
-.form-card:last-child .info-table td:nth-child(odd) {
-    background: #f8f9ff !important;
-    color: #003c8f !important;
-    font-weight: 600 !important;
-    width: 140px !important;
-    white-space: nowrap !important;
-}
+            /* Lahat ng odd-numbered columns (1st and 3rd) ay may background */
+            .form-card:last-child .info-table td:nth-child(odd) {
+                background: #f8f9ff !important;
+                color: #003c8f !important;
+                font-weight: 600 !important;
+                width: 140px !important;
+                white-space: nowrap !important;
+            }
 
             /* Officials table - pinaliit */
             .officials-table th {
@@ -750,7 +750,7 @@
                 
                 // ============ FIRST FORM ============
                 html += '<div class="form-card">';
-                html += '<div class="card-header">COMPANY REPRESENTATIVE AUTHORIZATION CARD</div>';
+                html += '<div class="card-header">📋 COMPANY REPRESENTATIVE AUTHORIZATION CARD</div>';
                 html += '<div class="card-body">';
                 
                 // Header with Logo - UPPER LEFT
@@ -933,11 +933,11 @@
                 
                 // Timestamp
                 if (data.timestamp) {
-                    html += '<div class="timestamp"> Generated: ' + new Date(data.timestamp).toLocaleString() + '</div>';
+                    html += '<div class="timestamp">📅 Generated: ' + new Date(data.timestamp).toLocaleString() + '</div>';
                 }
                 
                 // Print Button
-                html += '<button class="print-btn" onclick="window.print()"> PRINT </button>';
+                html += '<button class="print-btn" onclick="window.print()">🖨️ PRINT (1 FORM PER PAGE)</button>';
                 
                 container.innerHTML = html;
                 
