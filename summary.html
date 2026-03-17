@@ -279,6 +279,7 @@
             max-height: 45px;
         }
 
+        /* ===== NOTED SECTION - INAYOS ===== */
         .noted-section {
             margin-top: 25px;
             text-align: center;
@@ -287,17 +288,25 @@
             border-radius: 8px;
         }
 
+        .noted-label {
+            font-weight: 600;
+            color: #003c8f;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
         .noted-line {
             width: 250px;
             height: 2px;
             background: #003c8f;
-            margin: 12px auto;
+            margin: 5px auto 15px auto;
         }
 
         .noted-name {
             font-size: 1.2rem;
             font-weight: 700;
             color: #003c8f;
+            margin-bottom: 5px;
         }
 
         .noted-title {
@@ -410,7 +419,7 @@
             }
         }
 
-        /* ===== PRINT STYLES - 1x1 PHOTO LANG ANG AYOS ===== */
+        /* ===== PRINT STYLES ===== */
         @media print {
             @page {
                 size: landscape;
@@ -516,7 +525,7 @@
 
             /* ===== 1x1 PHOTO - PERFECT SQUARE ===== */
             .photo-container {
-                width: 1.2in !important; /* Para may konting space sa label */
+                width: 1.2in !important;
                 text-align: center !important;
                 flex-shrink: 0 !important;
             }
@@ -593,7 +602,7 @@
                 padding: 5px !important;
             }
 
-            /* NOTED SECTION */
+            /* ===== NOTED SECTION - PRINT STYLES ===== */
             .noted-section {
                 margin-top: 15px !important;
                 padding: 15px !important;
@@ -601,17 +610,31 @@
                 border: 1px solid #003c8f !important;
             }
 
+            .noted-label {
+                font-weight: 600 !important;
+                color: #003c8f !important;
+                margin-bottom: 5px !important;
+                text-align: center !important;
+            }
+
             .noted-line {
                 width: 200px !important;
-                margin: 8px auto !important;
+                height: 2px !important;
+                background: #003c8f !important;
+                margin: 5px auto 15px auto !important;
             }
 
             .noted-name {
                 font-size: 1rem !important;
+                font-weight: 700 !important;
+                color: #003c8f !important;
+                margin-bottom: 3px !important;
             }
 
             .noted-title {
                 font-size: 0.9rem !important;
+                font-style: italic !important;
+                color: #666 !important;
             }
 
             /* SECOND FORM */
@@ -763,11 +786,10 @@
                 
                 html += '</div>';
                 
-                // Noted By
+                // ===== NOTED BY - INAYOS =====
                 html += '<div class="noted-section">';
-                html += '<div class="noted-line"></div>';
                 html += '<div class="noted-label">Noted by:</div>';
-                html += '<div style="margin-bottom: 16px;"></div>'; // Space after Noted by
+                html += '<div class="noted-line"></div>';
                 html += '<div class="noted-name">ELEANOR F. DEATO</div>';
                 html += '<div class="noted-title">Branch Head</div>';
                 html += '</div>';
