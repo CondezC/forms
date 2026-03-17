@@ -844,109 +844,92 @@
                 html += '</div>';
                 html += '</div>';
                 
-                // ============ SECOND FORM ============
-html += '<div class="form-card">';
-html += '<div class="card-header">📋 SPECIMEN SIGNATURE CARD</div>';
-html += '<div class="card-body">';
-
-// Republic Header - with logo sa UPPER LEFT
-html += '<div class="republic-header">';
-html += '<div class="logo-left">';
-html += '<img src="republic-of-the-philippines-social-security-system-logo-png_seeklogo.png" alt="SSS Logo" onerror="this.innerHTML=\'SSS\';">';
-html += '</div>';
-html += '<div class="republic-text">';
-html += '<h2>Republic of the Philippines</h2>';
-html += '<h3>SOCIAL SECURITY SYSTEM</h3>';
-html += '<div class="form-number">SSS Form L - 501 (07-94)</div>';
-html += '</div>';
-html += '</div>';
-
-// Company Info - 2 ROWS LANG (SAME DESIGN LAHAT NG LABELS)
-html += '<table class="info-table">';
-html += '<tr>';
-html += '<td>Registered Employer Name:</td>';
-html += '<td>' + (data.registeredName || data.employerName || 'N/A') + '</td>';
-html += '<td>I.D. No.:</td>';
-html += '<td>' + (data.idNumber || data.employerId || 'N/A') + '</td>';
-html += '</tr>';
-html += '<tr>';
-html += '<td>Address:</td>';
-html += '<td>' + (data.companyAddress || data.address || 'N/A') + '</td>';
-html += '<td>Tel. No.:</td>';
-html += '<td>' + (data.telNumber || data.telephone || 'N/A') + '</td>';
-html += '</tr>';
-html += '</table>';
-
-// Officials
-html += '<h3 style="color:#003c8f; margin:20px 0 10px;">Authorized Officials</h3>';
-html += '<table class="officials-table">';
-html += '<tr><th>Name</th><th>Designation</th><th>Initials</th><th>Signature</th></tr>';
-
-// Official 1
-if (data.officialName1 || data.officialSignature1) {
-    html += '<tr>';
-    html += '<td>' + (data.officialName1 || '') + '</td>';
-    html += '<td>' + (data.officialDesignation1 || '') + '</td>';
-    html += '<td>' + (data.officialInitial1 || '') + '</td>';
-    html += '<td>';
-    if (data.officialSignature1) {
-        html += `<img src="${data.officialSignature1}" class="official-signature-img">`;
-    } else {
-        html += 'No signature';
-    }
-    html += '</td>';
-    html += '</tr>';
-}
-
-// Official 2
-if (data.officialName2 || data.officialSignature2) {
-    html += '<tr>';
-    html += '<td>' + (data.officialName2 || '') + '</td>';
-    html += '<td>' + (data.officialDesignation2 || '') + '</td>';
-    html += '<td>' + (data.officialInitial2 || '') + '</td>';
-    html += '<td>';
-    if (data.officialSignature2) {
-        html += `<img src="${data.officialSignature2}" class="official-signature-img">`;
-    } else {
-        html += 'No signature';
-    }
-    html += '</td>';
-    html += '</tr>';
-}
-
-// Official 3
-if (data.officialName3 || data.officialSignature3) {
-    html += '<tr>';
-    html += '<td>' + (data.officialName3 || '') + '</td>';
-    html += '<td>' + (data.officialDesignation3 || '') + '</td>';
-    html += '<td>' + (data.officialInitial3 || '') + '</td>';
-    html += '<td>';
-    if (data.officialSignature3) {
-        html += `<img src="${data.officialSignature3}" class="official-signature-img">`;
-    } else {
-        html += 'No signature';
-    }
-    html += '</td>';
-    html += '</tr>';
-}
-
-html += '</table>';
-
-// Granting Authority
-if (data.grantingName || data.grantingSignature) {
-    html += '<div class="granting-section">';
-    html += '<div class="granting-title">GRANTING AUTHORITY</div>';
-    html += '<p><strong>' + (data.grantingName || 'N/A') + '</strong></p>';
-    if (data.grantingSignature) {
-        html += `<img src="${data.grantingSignature}" class="signature-img">`;
-    }
-    if (data.grantingDate) {
-        html += '<p><strong>Date:</strong> ' + data.grantingDate + '</p>';
-    }
-    html += '</div>';
-}
-
-html += '</div></div>'; // Close second form
+                // Company Info - 2 ROWS LANG (SAME DESIGN LAHAT NG LABELS)
+                html += '<table class="info-table">';
+                html += '<tr>';
+                html += '<td>Registered Employer Name:</td>';
+                html += '<td>' + (data.registeredName || data.employerName || 'N/A') + '</td>';
+                html += '<td>I.D. No.:</td>';
+                html += '<td>' + (data.idNumber || data.employerId || 'N/A') + '</td>';
+                html += '</tr>';
+                html += '<tr>';
+                html += '<td>Address:</td>';
+                html += '<td>' + (data.companyAddress || data.address || 'N/A') + '</td>';
+                html += '<td>Tel. No.:</td>';
+                html += '<td>' + (data.telNumber || data.telephone || 'N/A') + '</td>';
+                html += '</tr>';
+                html += '</table>';
+                
+                // Officials
+                html += '<h3 style="color:#003c8f; margin:20px 0 10px;">Authorized Officials</h3>';
+                html += '<table class="officials-table">';
+                html += '<tr><th>Name</th><th>Designation</th><th>Initials</th><th>Signature</th></tr>';
+                
+                // Official 1
+                if (data.officialName1 || data.officialSignature1) {
+                    html += '<tr>';
+                    html += '<td>' + (data.officialName1 || '') + '</td>';
+                    html += '<td>' + (data.officialDesignation1 || '') + '</td>';
+                    html += '<td>' + (data.officialInitial1 || '') + '</td>';
+                    html += '<td>';
+                    if (data.officialSignature1) {
+                        html += `<img src="${data.officialSignature1}" class="official-signature-img">`;
+                    } else {
+                        html += 'No signature';
+                    }
+                    html += '</td>';
+                    html += '</tr>';
+                }
+                
+                // Official 2
+                if (data.officialName2 || data.officialSignature2) {
+                    html += '<tr>';
+                    html += '<td>' + (data.officialName2 || '') + '</td>';
+                    html += '<td>' + (data.officialDesignation2 || '') + '</td>';
+                    html += '<td>' + (data.officialInitial2 || '') + '</td>';
+                    html += '<td>';
+                    if (data.officialSignature2) {
+                        html += `<img src="${data.officialSignature2}" class="official-signature-img">`;
+                    } else {
+                        html += 'No signature';
+                    }
+                    html += '</td>';
+                    html += '</tr>';
+                }
+                
+                // Official 3
+                if (data.officialName3 || data.officialSignature3) {
+                    html += '<tr>';
+                    html += '<td>' + (data.officialName3 || '') + '</td>';
+                    html += '<td>' + (data.officialDesignation3 || '') + '</td>';
+                    html += '<td>' + (data.officialInitial3 || '') + '</td>';
+                    html += '<td>';
+                    if (data.officialSignature3) {
+                        html += `<img src="${data.officialSignature3}" class="official-signature-img">`;
+                    } else {
+                        html += 'No signature';
+                    }
+                    html += '</td>';
+                    html += '</tr>';
+                }
+                
+                html += '</table>';
+                
+                // Granting Authority
+                if (data.grantingName || data.grantingSignature) {
+                    html += '<div class="granting-section">';
+                    html += '<div class="granting-title">GRANTING AUTHORITY</div>';
+                    html += '<p><strong>' + (data.grantingName || 'N/A') + '</strong></p>';
+                    if (data.grantingSignature) {
+                        html += `<img src="${data.grantingSignature}" class="signature-img">`;
+                    }
+                    if (data.grantingDate) {
+                        html += '<p><strong>Date:</strong> ' + data.grantingDate + '</p>';
+                    }
+                    html += '</div>';
+                }
+                
+                html += '</div></div>'; // Close second form
                 
                 // Timestamp
                 if (data.timestamp) {
